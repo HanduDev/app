@@ -18,7 +18,7 @@ import 'package:provider/provider.dart';
 import 'routes.dart';
 
 GoRouter router(AuthProvider authProvider) => GoRouter(
-  initialLocation: Routes.home,
+  initialLocation: Routes.login,
   debugLogDiagnostics: true,
   refreshListenable: authProvider,
   redirect: (context, state) {

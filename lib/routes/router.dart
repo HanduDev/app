@@ -1,3 +1,4 @@
+import 'package:app/helpers/toast.dart';
 import 'package:app/providers/auth_provider.dart';
 import 'package:app/routes/destination.dart';
 import 'package:app/ui/cadastro/widgets/cadastro_page.dart';
@@ -156,7 +157,17 @@ GoRouter router(AuthProvider authProvider) => GoRouter(
               builder:
                   (context, state) => PrimaryButton(
                     text: 'Sair',
-                    onPressed: authProvider.signOut,
+                    onPressed: () async {
+                      try {
+                        await authProvider.signOut();
+                        if (!context.mounted) return;
+
+                        context.pushReplacement(Routes.login);
+                      } catch (e) {
+                        if (!context.mounted) return;
+                        Toast.error(context, 'Erro ao sair');
+                      }
+                    },
                   ),
             ),
           ],

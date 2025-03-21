@@ -3,6 +3,7 @@ import 'package:app/data/services/google_auth.dart';
 import 'package:app/data/services/http.dart';
 import 'package:app/data/services/secure_storage.dart';
 import 'package:app/providers/auth_provider.dart';
+import 'package:app/providers/notifier.dart';
 import 'package:app/routes/router.dart';
 import 'package:app/ui/core/themes/font.dart';
 import 'package:flutter/material.dart';
@@ -20,17 +21,14 @@ class _AppHanduState extends State<AppHandu> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<AuthProvider>.value(
-      value: authProvider,
-      child: Consumer<AuthProvider>(
-        builder: (context, authProvider, child) {
-          return MaterialApp.router(
-            theme: ThemeData(textTheme: Font.primaryTheme()),
-            routerConfig: router(
-              authProvider,
-            ), // Passa o AuthProvider para o router
-          );
-        },
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<AuthProvider>.value(value: authProvider),
+        ChangeNotifierProvider<Notifier>(create: (_) => Notifier()),
+      ],
+      child: MaterialApp.router(
+        theme: ThemeData(textTheme: Font.primaryTheme()),
+        routerConfig: router(authProvider),
       ),
     );
   }

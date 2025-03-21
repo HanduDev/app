@@ -1,7 +1,7 @@
 import 'package:app/ui/core/shared/text_input.dart';
 import 'package:app/ui/core/themes/app_colors.dart';
 import 'package:app/ui/libras/view_model/libras_view_model.dart';
-import 'package:app/ui/libras/widgets/chat_triangle.dart';
+import 'package:app/ui/core/shared/chat_triangle.dart';
 import 'package:app/ui/libras/widgets/vlibras_web_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

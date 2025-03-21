@@ -12,5 +12,7 @@ abstract final class AppColors {
   static Color white = const Color(0xFFFFFFFF);
   static Color overlayColor = const Color(0xFFC7C7C7);
   static Color transparent = const Color(0x00000000);
+  static Color yellow = const Color(0xFFFFAE00);
   static Color disabledIcon = const Color.fromARGB(255, 163, 160, 160);
+  
 }

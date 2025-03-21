@@ -6,5 +6,5 @@ abstract final class Routes {
   static const libras = '/libras';
   static const educacao = '/educacao';
   static const conta = '/conta';
+  static const login = '/login';
 }
-

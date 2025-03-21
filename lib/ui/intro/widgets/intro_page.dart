@@ -72,7 +72,7 @@ class _IntroPageState extends State<IntroPage> {
                 ),
                 Consumer<AuthProvider>(
                   builder: (context, authProvider, child) {
-                     void onLoginWithGoogle() async {
+                    void onLoginWithGoogle() async {
                       try {
                         await authProvider.signInWithGoogle();
 
@@ -141,9 +141,7 @@ class _IntroPageState extends State<IntroPage> {
                                   rounded: true,
                                   disabled: authProvider.isGoogleLoading,
                                   onPressed: () {
-                                    context.pushReplacement(
-                                      Routes.cadastro,
-                                    );
+                                    context.pushReplacement(Routes.cadastro);
                                   },
                                   text: 'Criar conta',
                                 ),
@@ -152,7 +150,7 @@ class _IntroPageState extends State<IntroPage> {
                                   rounded: true,
                                   disabled: authProvider.isGoogleLoading,
                                   onPressed: () {
-                                    Navigator.of(context).pushNamed('/login');
+                                    context.pushReplacement(Routes.login);
                                   },
                                   text: 'Entrar',
                                 ),
@@ -171,7 +169,7 @@ class _IntroPageState extends State<IntroPage> {
                         ),
                       ),
                     );
-                  }
+                  },
                 ),
               ],
             );

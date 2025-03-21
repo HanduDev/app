@@ -9,6 +9,8 @@ import 'package:app/ui/intro/view_model/intro_view_model.dart';
 import 'package:app/ui/intro/widgets/intro_page.dart';
 import 'package:app/ui/libras/view_model/libras_view_model.dart';
 import 'package:app/ui/libras/widgets/libras_page.dart';
+import 'package:app/ui/traducao_texto/widgets/translate_text_page.dart';
+import 'package:app/ui/login/widgets/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -16,7 +18,7 @@ import 'package:provider/provider.dart';
 import 'routes.dart';
 
 GoRouter router(AuthProvider authProvider) => GoRouter(
-  initialLocation: Routes.intro,
+  initialLocation: Routes.login,
   debugLogDiagnostics: true,
   refreshListenable: authProvider,
   redirect: (context, state) {
@@ -43,10 +45,16 @@ GoRouter router(AuthProvider authProvider) => GoRouter(
       },
     ),
     GoRoute(
+      path: Routes.login,
+      builder: (context, state) {
+        return LoginPage();
+      },
+    ),
+    GoRoute(
       path: Routes.cadastro,
       builder: (context, state) {
         return CadastroPage();
-      }
+      },
     ),
     GoRoute(
       path: Routes.confirmacaoCadastro,
@@ -117,7 +125,7 @@ GoRouter router(AuthProvider authProvider) => GoRouter(
           routes: [
             GoRoute(
               path: Routes.home,
-              builder: (context, state) => Text('Tradução'),
+              builder: (context, state) => TranslateTextPage(),
             ),
           ],
         ),

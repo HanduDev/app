@@ -19,7 +19,7 @@ import 'package:provider/provider.dart';
 import 'routes.dart';
 
 GoRouter router(AuthProvider authProvider) => GoRouter(
-  initialLocation: Routes.login,
+  initialLocation: Routes.intro,
   debugLogDiagnostics: true,
   refreshListenable: authProvider,
   redirect: (context, state) {
@@ -162,7 +162,7 @@ GoRouter router(AuthProvider authProvider) => GoRouter(
                         await authProvider.signOut();
                         if (!context.mounted) return;
 
-                        context.pushReplacement(Routes.login);
+                        context.pushReplacement(Routes.intro);
                       } catch (e) {
                         if (!context.mounted) return;
                         Toast.error(context, 'Erro ao sair');

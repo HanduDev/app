@@ -141,7 +141,7 @@ class _IntroPageState extends State<IntroPage> {
                                   rounded: true,
                                   disabled: authProvider.isGoogleLoading,
                                   onPressed: () {
-                                    context.pushReplacement(Routes.cadastro);
+                                    context.push(Routes.cadastro);
                                   },
                                   text: 'Criar conta',
                                 ),
@@ -150,7 +150,7 @@ class _IntroPageState extends State<IntroPage> {
                                   rounded: true,
                                   disabled: authProvider.isGoogleLoading,
                                   onPressed: () {
-                                    context.pushReplacement(Routes.login);
+                                    context.push(Routes.login);
                                   },
                                   text: 'Entrar',
                                 ),

@@ -62,4 +62,17 @@ class AuthRepositoryRemote extends AuthRepositoryImpl {
     await _secureStorage.write('token', token);
     return user;
   }
+
+  @override
+  Future<User> signIn({required String email, required String password}) async {
+    var response = await _httpService.post("/authentication/login", {
+      'user': {'email': email, 'password': password},
+    });
+
+    User user = User.fromJson(response);
+    String token = response['token'];
+
+    await _secureStorage.write('token', token);
+    return user;
+  }
 }

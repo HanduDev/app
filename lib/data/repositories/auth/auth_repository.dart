@@ -8,4 +8,5 @@ abstract class AuthRepositoryImpl {
     required String name,
     required String password,
   });
+  Future<User> signIn({required String email, required String password});
 }

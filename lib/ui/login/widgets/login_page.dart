@@ -34,68 +34,72 @@ class LoginPage extends StatelessWidget {
             }
           }
 
-          return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset('assets/images/Logo_1.png', height: 100),
-                SizedBox(height: 24),
-                Text(
-                  'Login',
-                  style: Font.primary(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.primary500,
-                  ),
-                ),
-                SizedBox(height: 48),
-                TextInput(label: 'Email'),
-                SizedBox(height: 56),
-                TextInput(label: 'Senha', obscureText: true),
-                SizedBox(height: 56),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          return SafeArea(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    Image.asset('assets/images/Logo_1.png', height: 100),
+                    SizedBox(height: 24),
+                    Text(
+                      'Login',
+                      style: Font.primary(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.primary500,
+                      ),
+                    ),
+                    SizedBox(height: 48),
+                    TextInput(label: 'Email'),
+                    SizedBox(height: 56),
+                    TextInput(label: 'Senha', obscureText: true),
+                    SizedBox(height: 56),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Checkbox(value: false, onChanged: (value) {}),
-                        Text(
-                          'Lembrar-Me',
-                          style: Font.primary(
-                            fontSize: 12,
-                            color: AppColors.primary500,
+                        Row(
+                          children: [
+                            Checkbox(value: false, onChanged: (value) {}),
+                            Text(
+                              'Lembrar-Me',
+                              style: Font.primary(
+                                fontSize: 12,
+                                color: AppColors.primary500,
+                              ),
+                            ),
+                          ],
+                        ),
+                        TextButton(
+                          onPressed: () {},
+                          child: Text(
+                            'Esqueceu a senha?',
+                            style: Font.primary(
+                              fontSize: 12,
+                              color: AppColors.primary500,
+                            ),
                           ),
                         ),
                       ],
                     ),
-                    TextButton(
-                      onPressed: () {},
-                      child: Text(
-                        'Esqueceu a senha?',
-                        style: Font.primary(
-                          fontSize: 12,
-                          color: AppColors.primary500,
-                        ),
+                    SizedBox(height: 88),
+                    PrimaryButton(text: 'Entrar', onPressed: () {}),
+                    SizedBox(height: 56),
+                    Text('Ou continue com'),
+                    SizedBox(height: 24),
+                    FlatButton(
+                      loading: authProvider.isGoogleLoading,
+                      onPressed: onLoginWithGoogle,
+                      leftIcon: SvgPicture.asset(
+                        'assets/images/icons/google.svg',
+                        height: 30,
+                        width: 30,
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: 88),
-                PrimaryButton(text: 'Entrar', onPressed: () {}),
-                SizedBox(height: 56),
-                Text('Ou continue com'),
-                SizedBox(height: 24),
-                FlatButton(
-                  loading: authProvider.isGoogleLoading,
-                  onPressed: onLoginWithGoogle,
-                  leftIcon: SvgPicture.asset(
-                    'assets/images/icons/google.svg',
-                    height: 30,
-                    width: 30,
-                  ),
-                ),
-              ],
+              ),
             ),
           );
         },

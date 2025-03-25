@@ -45,4 +45,21 @@ class AuthRepositoryRemote extends AuthRepositoryImpl {
     await _googleAuth.signOut();
     await _secureStorage.delete('token');
   }
+
+  @override
+  Future<User> signUp({
+    required String email,
+    required String name,
+    required String password,
+  }) async {
+    var response = await _httpService.post("/authentication/register", {
+      'user': {'email': email, 'full_name': name, 'password': password},
+    });
+
+    User user = User.fromJson(response);
+    String token = response['token'];
+
+    await _secureStorage.write('token', token);
+    return user;
+  }
 }

@@ -3,8 +3,6 @@ import 'package:app/helpers/toast.dart';
 import 'package:app/providers/auth_provider.dart';
 import 'package:app/routes/routes.dart';
 import 'package:app/ui/core/shared/flat_button.dart';
-import 'package:app/ui/core/shared/primary_button.dart';
-import 'package:app/ui/core/shared/text_input.dart';
 import 'package:app/ui/core/themes/app_colors.dart';
 import 'package:app/ui/core/themes/font.dart';
 import 'package:app/ui/login/widgets/form_validator.dart';

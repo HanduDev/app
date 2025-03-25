@@ -1,3 +1,5 @@
+import 'package:app/helpers/errors.dart';
+import 'package:app/helpers/toast.dart';
 import 'package:app/providers/auth_provider.dart';
 import 'package:app/routes/routes.dart';
 import 'package:app/ui/core/shared/flat_button.dart';
@@ -79,7 +81,10 @@ class _IntroPageState extends State<IntroPage> {
                         if (context.mounted) {
                           context.pushReplacement(Routes.home);
                         }
-                      } catch (e) {}
+                      } catch (e) {
+                        if (!context.mounted) return;
+                        Toast.error(context, getErrorMessage(e));
+                      }
                     }
 
                     return FractionalTranslation(

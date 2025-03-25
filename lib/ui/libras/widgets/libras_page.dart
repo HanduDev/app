@@ -56,6 +56,7 @@ class LibrasPage extends StatelessWidget {
                               const SizedBox(width: 10),
                               IconButton(
                                 onPressed: () {
+                                  FocusScope.of(context).unfocus();
                                   viewModel.sendText();
                                 },
                                 icon: Icon(Icons.send),

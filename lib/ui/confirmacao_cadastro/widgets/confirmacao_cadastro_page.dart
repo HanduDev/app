@@ -1,9 +1,13 @@
+import 'package:app/helpers/errors.dart';
+import 'package:app/helpers/toast.dart';
+import 'package:app/providers/auth_provider.dart';
 import 'package:app/ui/core/shared/primary_button.dart';
 import 'package:app/ui/core/themes/app_colors.dart';
 import 'package:app/ui/core/themes/font.dart';
 import 'package:flutter/material.dart';
 import 'package:app/routes/routes.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 class ConfirmacaoCadastroPage extends StatefulWidget {
   const ConfirmacaoCadastroPage({super.key});
@@ -17,74 +21,72 @@ class _ConfirmacaoCadastroPageState extends State<ConfirmacaoCadastroPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.primary100,
-      body: Column(
-        children: [
-          Expanded(
-            flex: 5,
-            child: Stack(
-              children: [
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: AssetImage(
-                        'assets/images/confirmacao_cadastro.png',
+      backgroundColor: AppColors.white,
+      body: Consumer<AuthProvider>(
+        builder: (context, authProvider, child) {
+          void onLoginWithGoogle() async {
+            try {
+              await authProvider.signInWithGoogle();
+
+              if (context.mounted) {
+                context.pushReplacement(Routes.home);
+              }
+            } catch (e) {
+              if (!context.mounted) return;
+              Toast.error(context, getErrorMessage(e));
+            }
+          }
+
+          return SafeArea(
+            child: Center(
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Image.asset('assets/images/Logo_1.png', height: 100),
+                      SizedBox(height: 24),
+                      Text(
+                        'Verifique seu Email',
+                        style: Font.primary(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.primary500,
+                        ),
                       ),
-                    ),
+                      SizedBox(height: 16),                      
+                      Text('Enviamos um código de seis dígitos para o email',
+                      style: Font.primary(
+                        fontSize: 12,
+                        fontWeight: FontWeight.normal,
+                        color: AppColors.grey,
+                      ),),
+                      Text('usuario***@email',
+                      style: Font.primary(
+                        fontSize: 12,
+                        fontWeight: FontWeight.normal,
+                        color: AppColors.grey,
+                      ),),
+                      Text('Entre com o código abaixo para verificação do email',
+                      style: Font.primary(
+                        fontSize: 12,
+                        fontWeight: FontWeight.normal,
+                        color: AppColors.grey,
+                      ),
+                      ),
+                      SizedBox(height: 24),
+                      PrimaryButton(
+                        text: 'Ir para o aplicativo',
+                        rounded: true,
+                      )
+                    ],
                   ),
                 ),
-                Positioned(
-                  top: 14,
-                  left: 14,
-                  child: Image.asset('assets/images/Logo.png'),
-                ),
-              ],
-            ),
-          ),
-          Expanded(
-            flex: 4,
-            child: Container(
-              padding: const EdgeInsets.fromLTRB(24, 64, 24, 16),
-              decoration: BoxDecoration(
-                color: AppColors.primary100,
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: Column(
-                children: [
-                  Text(
-                    'Cadastro realizado com sucesso!',
-                    style: Font.primary(
-                      fontSize: 17,
-                      fontWeight: FontWeight.w800,
-                      color: AppColors.grey,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 24),
-                  Text(
-                    'Agora você pode usar os benefícios do aplicativo.',
-                    style: Font.primary(
-                      fontSize: 13,
-                      fontWeight: FontWeight.w300,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 62),
-                  PrimaryButton(
-                    rounded: true,
-                    onPressed: () {
-                      context.pushReplacement(Routes.home);
-                    },
-                    text: 'Ir para o aplicativo',
-                  ),
-                ],
               ),
             ),
-          ),
-        ],
+          );
+        },
       ),
     );
   }

@@ -18,6 +18,8 @@ class TextInput extends StatelessWidget {
   final bool obscureText;
   final Color? color;
   final Color? borderColor;
+  final int? maxLines;
+  final int? minLines;
 
   const TextInput({
     super.key,
@@ -33,9 +35,11 @@ class TextInput extends StatelessWidget {
     this.sufixIcon,
     this.validator,
     this.controller,
-    this.keyboardType,
+    this.keyboardType = TextInputType.text,
     this.color,
     this.borderColor,
+    this.maxLines,
+    this.minLines,
   });
 
   @override
@@ -48,17 +52,23 @@ class TextInput extends StatelessWidget {
       controller: controller,
       obscureText: obscureText,
       readOnly: readOnly,
+      minLines: obscureText ? 1 : minLines,
+      maxLines: obscureText ? 1 : maxLines,
       style: Font.primary(
         fontWeight: FontWeight.w400,
         color: textColor ?? AppColors.black,
       ),
       decoration: InputDecoration(
         prefixIcon: prefixIcon,
+
         suffixIcon: sufixIcon,
         contentPadding: EdgeInsets.fromLTRB(16, 8, 16, 8),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
         enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: borderColor ?? AppColors.lightGrey, width: 1.5),
+          borderSide: BorderSide(
+            color: borderColor ?? AppColors.lightGrey,
+            width: 1.5,
+          ),
           borderRadius: BorderRadius.circular(8),
         ),
         focusedBorder: OutlineInputBorder(

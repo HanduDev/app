@@ -2,6 +2,7 @@ import 'package:app/ui/core/shared/text_input.dart';
 import 'package:app/ui/core/themes/app_colors.dart';
 import 'package:app/ui/libras/view_model/libras_view_model.dart';
 import 'package:app/ui/core/shared/chat_triangle.dart';
+import 'package:app/ui/libras/widgets/speech_button.dart';
 import 'package:app/ui/libras/widgets/vlibras_web_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -47,10 +48,13 @@ class LibrasPage extends StatelessWidget {
                             children: [
                               Expanded(
                                 child: TextInput(
+                                  keyboardType: TextInputType.multiline,
                                   controller: viewModel.textController,
                                   label: "Digite algo",
                                   textColor: AppColors.white,
                                   borderColor: AppColors.primary400,
+                                  maxLines: 3,
+                                  minLines: 1,
                                 ),
                               ),
                               const SizedBox(width: 10),
@@ -67,11 +71,10 @@ class LibrasPage extends StatelessWidget {
                           const SizedBox(height: 12),
                           Row(
                             children: [
-                              IconButton(
-                                onPressed: () {},
-                                icon: Icon(Icons.mic),
-                                color: AppColors.white,
-                                padding: EdgeInsets.all(0),
+                              SpeechButton(
+                                onRecognize: (value) {
+                                  viewModel.textController.text = value;
+                                },
                               ),
                               IconButton(
                                 onPressed: () {},

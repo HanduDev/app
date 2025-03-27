@@ -45,6 +45,7 @@ dependencies:
   provider:
   webview_flutter:
   flutter_secure_storage: ^9.2.2
+  speech_to_text:
 
 dev_dependencies:
   flutter_test:

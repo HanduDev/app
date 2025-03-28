@@ -19,12 +19,11 @@ import 'package:provider/provider.dart';
 import 'routes.dart';
 
 GoRouter router(AuthProvider authProvider) => GoRouter(
-  initialLocation: Routes.confirmacaoCadastro,
+  initialLocation: Routes.intro,
   debugLogDiagnostics: true,
   refreshListenable: authProvider,
   redirect: (context, state) {
-    return null;
-    final isLoggingIn = state.matchedLocation == Routes.intro;
+     final isLoggingIn = state.matchedLocation == Routes.intro;
 
     if (authProvider.isAuthenticated && isLoggingIn) {
       return Routes.home;

@@ -5,11 +5,6 @@ import 'package:flutter/material.dart';
 abstract class AuthProviderImpl extends ChangeNotifier {
   Future<void> signInWithGoogle();
   Future<void> signOut();
-  Future<void> signUp({
-    required String email,
-    required String name,
-    required String password,
-  });
   Future<void> signIn({required String email, required String password});
 }
 
@@ -62,30 +57,6 @@ class AuthProvider extends ChangeNotifier implements AuthProviderImpl {
     await _authRepository.signOut();
     _user = null;
     notifyListeners();
-  }
-
-  @override
-  Future<void> signUp({
-    required String email,
-    required String name,
-    required String password,
-  }) async {
-    try {
-      _isAuthenticating = true;
-      notifyListeners();
-
-      User user = await _authRepository.signUp(
-        email: email,
-        name: name,
-        password: password,
-      );
-
-      _user = user;
-      notifyListeners();
-    } finally {
-      _isAuthenticating = false;
-      notifyListeners();
-    }
   }
 
   @override

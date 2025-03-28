@@ -1,12 +1,8 @@
-import 'package:app/helpers/errors.dart';
-import 'package:app/helpers/toast.dart';
 import 'package:app/providers/auth_provider.dart';
 import 'package:app/ui/core/shared/primary_button.dart';
 import 'package:app/ui/core/themes/app_colors.dart';
 import 'package:app/ui/core/themes/font.dart';
 import 'package:flutter/material.dart';
-import 'package:app/routes/routes.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class ConfirmacaoCadastroPage extends StatefulWidget {
@@ -24,19 +20,6 @@ class _ConfirmacaoCadastroPageState extends State<ConfirmacaoCadastroPage> {
       backgroundColor: AppColors.white,
       body: Consumer<AuthProvider>(
         builder: (context, authProvider, child) {
-          void onLoginWithGoogle() async {
-            try {
-              await authProvider.signInWithGoogle();
-
-              if (context.mounted) {
-                context.pushReplacement(Routes.home);
-              }
-            } catch (e) {
-              if (!context.mounted) return;
-              Toast.error(context, getErrorMessage(e));
-            }
-          }
-
           return SafeArea(
             child: Center(
               child: SingleChildScrollView(
@@ -55,31 +38,36 @@ class _ConfirmacaoCadastroPageState extends State<ConfirmacaoCadastroPage> {
                           color: AppColors.primary500,
                         ),
                       ),
-                      SizedBox(height: 16),                      
-                      Text('Enviamos um código de seis dígitos para o email',
-                      style: Font.primary(
-                        fontSize: 12,
-                        fontWeight: FontWeight.normal,
-                        color: AppColors.grey,
-                      ),),
-                      Text('usuario***@email',
-                      style: Font.primary(
-                        fontSize: 12,
-                        fontWeight: FontWeight.normal,
-                        color: AppColors.grey,
-                      ),),
-                      Text('Entre com o código abaixo para verificação do email',
-                      style: Font.primary(
-                        fontSize: 12,
-                        fontWeight: FontWeight.normal,
-                        color: AppColors.grey,
+                      SizedBox(height: 16),
+                      Text(
+                        'Enviamos um código de seis dígitos para o email',
+                        style: Font.primary(
+                          fontSize: 12,
+                          fontWeight: FontWeight.normal,
+                          color: AppColors.grey,
+                        ),
                       ),
+                      Text(
+                        'usuario***@email',
+                        style: Font.primary(
+                          fontSize: 12,
+                          fontWeight: FontWeight.normal,
+                          color: AppColors.grey,
+                        ),
+                      ),
+                      Text(
+                        'Entre com o código abaixo para verificação do email',
+                        style: Font.primary(
+                          fontSize: 12,
+                          fontWeight: FontWeight.normal,
+                          color: AppColors.grey,
+                        ),
                       ),
                       SizedBox(height: 24),
                       PrimaryButton(
                         text: 'Ir para o aplicativo',
                         rounded: true,
-                      )
+                      ),
                     ],
                   ),
                 ),

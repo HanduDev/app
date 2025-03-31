@@ -93,7 +93,7 @@ class _CadastroPageState extends State<CadastroPage> {
                           TextButton(
                             onPressed: () {
                               context.pushReplacement(
-                                Routes.login, //Trocar para login quando tiver
+                                Routes.login,
                               );
                             },
                             child: Text(
@@ -138,17 +138,29 @@ class FormsValidatorState extends State<FormsValidator> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _password2Controller = TextEditingController();
 
-  Future<void> validatedAndSubmit() async {
-    try {
-      if (!_formKey.currentState!.validate()) return;
-    } catch (e) {}
-  }
-
   @override
   Widget build(BuildContext context) {
     return Form(
       key: _formKey,
-      child: Column(
+      child: Consumer<AuthProvider>(
+        builder: (context, authProvider, child) {
+          Future<void> validatedAndSubmit() async {
+            try {
+              await authProvider.signUp(
+                name: _nameController.text,
+                email: _emailController.text,
+                password: _passwordController.text,
+              );
+              if (context.mounted) {
+                context.pushReplacement(Routes.confirmacaoCadastro);
+              }
+            } catch (e) {
+              if (!context.mounted) return;
+              Toast.error(context, getErrorMessage(e));
+            }
+          }
+
+      return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           TextInput(
@@ -173,7 +185,7 @@ class FormsValidatorState extends State<FormsValidator> {
               }
               if (!RegExp(
                 r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
-              ) // Validar .dominio corretamente
+              )
               .hasMatch(value)) {
                 return 'Digite um e-mail válido';
               }
@@ -255,9 +267,12 @@ class FormsValidatorState extends State<FormsValidator> {
             text: ('Cadastrar conta'),
             rounded: true,
             onPressed: validatedAndSubmit,
+            loading: authProvider.isAuthenticating,
           ),
         ],
-      ),
-    );
+      );
+    }
+  ),
+  );
   }
 }

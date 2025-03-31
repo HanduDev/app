@@ -6,6 +6,7 @@ abstract class AuthProviderImpl extends ChangeNotifier {
   Future<void> signInWithGoogle();
   Future<void> signOut();
   Future<void> signIn({required String email, required String password});
+  Future<void> signUp({required String name, required String email, required String password});
 }
 
 class AuthProvider extends ChangeNotifier implements AuthProviderImpl {
@@ -66,6 +67,26 @@ class AuthProvider extends ChangeNotifier implements AuthProviderImpl {
       notifyListeners();
 
       User user = await _authRepository.signIn(
+        email: email,
+        password: password,
+      );
+
+      _user = user;
+      notifyListeners();
+    } finally {
+      _isAuthenticating = false;
+      notifyListeners();
+    }
+  }
+
+  @override
+  Future<void> signUp({required String name, required String email, required String password}) async {
+    try {
+      _isAuthenticating = true;
+      notifyListeners();
+
+      User user = await _authRepository.signUp(
+        name: name,
         email: email,
         password: password,
       );

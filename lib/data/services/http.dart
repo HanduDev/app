@@ -12,7 +12,7 @@ abstract class HttpServiceImpl {
 
 class HttpService extends HttpServiceImpl {
   final String _url = Environment.baseUrl;
-  SecureStorageImpl _secureStorage;
+  final SecureStorageImpl _secureStorage;
 
   HttpService({required SecureStorageImpl secureStorage})
     : _secureStorage = secureStorage;
@@ -22,7 +22,8 @@ class HttpService extends HttpServiceImpl {
     final httpRequest = await http.post(
       Uri.parse('$_url$path'),
       body: jsonEncode(body),
-      headers: await _getHeader(),   );
+      headers: await _getHeader(),
+    );
 
     var jsonBody = json.decode(utf8.decode(httpRequest.bodyBytes));
 
@@ -82,12 +83,13 @@ class HttpService extends HttpServiceImpl {
 
   Future<Map<String, String>> _getHeader() async {
     String? token = await _secureStorage.read("token");
+
     if (token == null) {
-      return {'Content-Type': 'application/json, charset=utf-8'};
+      return {'Content-Type': 'application/json; charset=utf-8'};
     }
 
     return {
-      'Content-Type': 'application/json, charset=utf-8',
+      'Content-Type': 'application/json; charset=utf-8',
       'Authorization': "Bearer $token",
     };
   }

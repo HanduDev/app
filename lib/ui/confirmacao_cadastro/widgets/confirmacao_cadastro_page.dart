@@ -87,13 +87,12 @@ class _ConfirmacaoCadastroPageState extends State<ConfirmacaoCadastroPage> {
                       showFieldAsBox: true,
                       fieldWidth: 55,
                       textStyle: Font.primary(
-                        fontSize: 32, 
+                        fontSize: 32,
                         height: 1.5,
                         color: AppColors.primary500,
-                        fontWeight: FontWeight.w300,),
-                      onCodeChanged: (String value) {
-                       
-                      },
+                        fontWeight: FontWeight.w300,
+                      ),
+                      onCodeChanged: (String value) {},
                       onSubmit: (String verificationCode) {
                         setState(() {
                           code = verificationCode;
@@ -114,10 +113,7 @@ class _ConfirmacaoCadastroPageState extends State<ConfirmacaoCadastroPage> {
                         ),
                         SizedBox(width: 8),
                         GestureDetector(
-                          onTap: () {
-                          
-                            
-                          },
+                          onTap: () {},
                           child: Text(
                             'Reenviar',
                             style: Font.primary(

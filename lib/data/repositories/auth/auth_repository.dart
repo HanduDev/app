@@ -11,4 +11,5 @@ abstract class AuthRepositoryImpl {
   });
   Future<User?> me();
   Future<void> verifyCode({required String code});
+  Future<void> resendCode({required String code});
 }

@@ -102,4 +102,10 @@ class AuthRepositoryRemote extends AuthRepositoryImpl {
       'user': {'code': code},
     });
   }
+  
+  @override
+  Future<void> resendCode({required String code}) async {
+    await _httpService.post("/users/resend_email_confirmation", {});
+
+  }
 }

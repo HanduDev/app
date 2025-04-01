@@ -32,8 +32,4 @@ class User {
       'isEmailConfirmed': isEmailConfirmed,
     };
   }
-
-  set isEmailConfirmed(bool value) {
-    isEmailConfirmed = value;
-  }
 }

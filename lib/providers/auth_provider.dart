@@ -126,9 +126,7 @@ class AuthProvider extends ChangeNotifier implements AuthProviderImpl {
       _isAuthenticating = true;
       notifyListeners();
 
-      await _authRepository.verifyCode(code: code);
-
-      _user!.isEmailConfirmed = true;
+      _user = await _authRepository.verifyCode(code: code);
 
       _isAuthenticating = false;
       notifyListeners();

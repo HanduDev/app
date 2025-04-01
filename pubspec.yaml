@@ -46,6 +46,7 @@ dependencies:
   webview_flutter:
   flutter_secure_storage: ^9.2.2
   speech_to_text:
+  flutter_otp_text_field: ^1.1.0+2
 
 dev_dependencies:
   flutter_test:

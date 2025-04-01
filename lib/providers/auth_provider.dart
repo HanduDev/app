@@ -11,6 +11,7 @@ abstract class AuthProviderImpl extends ChangeNotifier {
     required String email,
     required String password,
   });
+  Future<void> verifyCode({required String code});
 }
 
 class AuthProvider extends ChangeNotifier implements AuthProviderImpl {
@@ -116,5 +117,22 @@ class AuthProvider extends ChangeNotifier implements AuthProviderImpl {
       _isAuthenticating = false;
       notifyListeners();
     }
+  }
+
+  @override
+  Future<void> verifyCode({required String code}) async {
+    try {
+      _isAuthenticating = true;
+      notifyListeners();
+
+      await _authRepository.verifyCode(code: code);
+
+      _isAuthenticating = false;
+      notifyListeners();
+    } finally {
+      _isAuthenticating = false;
+      notifyListeners();
+    }
+
   }
 }

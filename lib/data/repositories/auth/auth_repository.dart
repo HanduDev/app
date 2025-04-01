@@ -10,4 +10,5 @@ abstract class AuthRepositoryImpl {
     required String password,
   });
   Future<User?> me();
+  Future<void>verifyCode({required String code});
 }

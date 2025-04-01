@@ -22,11 +22,9 @@ class ConfirmacaoCadastroPage extends StatefulWidget {
 
 class _ConfirmacaoCadastroPageState extends State<ConfirmacaoCadastroPage> {
   String code = '';
-  final FocusNode _focusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
-    print(code);
     return Scaffold(
       backgroundColor: AppColors.white,
       body: Consumer<AuthProvider>(

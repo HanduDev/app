@@ -115,7 +115,8 @@ class _ConfirmacaoCadastroPageState extends State<ConfirmacaoCadastroPage> {
                         SizedBox(width: 8),
                         GestureDetector(
                           onTap: () {
-                            // Lógica para reenviar o código
+                          
+                            
                           },
                           child: Text(
                             'Reenviar',

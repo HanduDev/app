@@ -22,8 +22,7 @@ class HttpService extends HttpServiceImpl {
     final httpRequest = await http.post(
       Uri.parse('$_url$path'),
       body: jsonEncode(body),
-      headers: {'Content-Type': 'application/json; charset=utf-8'},
-    );
+      headers: await _getHeader(),   );
 
     var jsonBody = json.decode(utf8.decode(httpRequest.bodyBytes));
 
@@ -83,7 +82,6 @@ class HttpService extends HttpServiceImpl {
 
   Future<Map<String, String>> _getHeader() async {
     String? token = await _secureStorage.read("token");
-
     if (token == null) {
       return {'Content-Type': 'application/json, charset=utf-8'};
     }

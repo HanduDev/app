@@ -36,11 +36,13 @@ class _AppHanduState extends State<AppHandu> {
   @override
   void initState() {
     super.initState();
+    SecureStorageImpl secureStorage = SecureStorage();
+
     authProvider = AuthProvider(
       authRepository: AuthRepositoryRemote(
         googleAuth: GoogleAuth(),
-        secureStorage: SecureStorage(),
-        httpService: HttpService(),
+        secureStorage: secureStorage,
+        httpService: HttpService(secureStorage: secureStorage),
       ),
     );
 

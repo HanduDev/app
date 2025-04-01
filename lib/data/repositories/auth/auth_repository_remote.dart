@@ -60,9 +60,13 @@ class AuthRepositoryRemote extends AuthRepositoryImpl {
   }
 
   @override
-  Future<User> signUp({required String name, required String email, required String password}) async {
+  Future<User> signUp({
+    required String name,
+    required String email,
+    required String password,
+  }) async {
     var response = await _httpService.post("/authentication/register", {
-      'user': {'name': name, 'email': email, 'password': password},
+      'user': {'full_name': name, 'email': email, 'password': password},
     });
 
     User user = User.fromJson(response);
@@ -70,5 +74,25 @@ class AuthRepositoryRemote extends AuthRepositoryImpl {
 
     await _secureStorage.write('token', token);
     return user;
+  }
+
+  @override
+  Future<User?> me() async {
+    try {
+      String? storage = await _secureStorage.read('token');
+
+      if (storage == null) {
+        return null;
+      }
+
+      var response = await _httpService.get("/users/me");
+
+      User user = User.fromJson(response);
+
+      return user;
+    } catch (_) {
+      await _secureStorage.delete('token');
+      rethrow;
+    }
   }
 }

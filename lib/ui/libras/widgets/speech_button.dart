@@ -20,7 +20,11 @@ class _SpeechButtonState extends State<SpeechButton> {
 
   Future<void> _initSpeech(BuildContext context) async {
     try {
-      _speechEnabled = await _speechToText.initialize();
+      _speechEnabled = await _speechToText.initialize(
+        onStatus: (status) {
+          setState(() {});
+        },
+      );
       setState(() {});
     } catch (e) {
       if (!context.mounted) return;

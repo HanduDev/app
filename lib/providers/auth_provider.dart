@@ -6,7 +6,11 @@ abstract class AuthProviderImpl extends ChangeNotifier {
   Future<void> signInWithGoogle();
   Future<void> signOut();
   Future<void> signIn({required String email, required String password});
-  Future<void> signUp({required String name, required String email, required String password});
+  Future<void> signUp({
+    required String name,
+    required String email,
+    required String password,
+  });
 }
 
 class AuthProvider extends ChangeNotifier implements AuthProviderImpl {
@@ -17,7 +21,7 @@ class AuthProvider extends ChangeNotifier implements AuthProviderImpl {
 
   User? _user;
   bool _isGoogleLoading = false;
-  bool _isLoading = false;
+  bool _isLoading = true;
   bool _isAuthenticating = false;
 
   bool get isAuthenticated => _user != null;
@@ -27,10 +31,21 @@ class AuthProvider extends ChangeNotifier implements AuthProviderImpl {
   bool get isAuthenticating => _isAuthenticating;
 
   Future<void> init() async {
-    _isLoading = true;
-    notifyListeners();
     try {
-      await Future.delayed(Duration(seconds: 2));
+      _isLoading = true;
+      notifyListeners();
+
+      User? user = await _authRepository.me();
+
+      if (user == null) {
+        _isLoading = false;
+        notifyListeners();
+        return;
+      }
+
+      _user = user;
+      notifyListeners();
+    } catch (_) {
     } finally {
       _isLoading = false;
       notifyListeners();
@@ -80,7 +95,11 @@ class AuthProvider extends ChangeNotifier implements AuthProviderImpl {
   }
 
   @override
-  Future<void> signUp({required String name, required String email, required String password}) async {
+  Future<void> signUp({
+    required String name,
+    required String email,
+    required String password,
+  }) async {
     try {
       _isAuthenticating = true;
       notifyListeners();

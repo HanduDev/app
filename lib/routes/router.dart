@@ -19,17 +19,25 @@ import 'package:provider/provider.dart';
 import 'routes.dart';
 
 GoRouter router(AuthProvider authProvider) => GoRouter(
-  initialLocation: Routes.intro,
+  initialLocation: Routes.splashLoading,
   debugLogDiagnostics: true,
   refreshListenable: authProvider,
   redirect: (context, state) {
-     final isLoggingIn = state.matchedLocation == Routes.intro;
+    if (authProvider.isLoading) return null;
 
-    if (authProvider.isAuthenticated && isLoggingIn) {
+    final isOnIntro = state.matchedLocation == Routes.splashLoading;
+    final isAuthenticated = authProvider.isAuthenticated;
+    final isEmailConfirmed = authProvider.user?.isEmailConfirmed ?? false;
+
+    if (isAuthenticated && !isEmailConfirmed) {
+      return Routes.confirmacaoCadastro;
+    }
+
+    if (isAuthenticated && isOnIntro) {
       return Routes.home;
     }
 
-    if (authProvider.isLoading && !isLoggingIn) {
+    if (!isAuthenticated && isOnIntro) {
       return Routes.intro;
     }
 
@@ -43,6 +51,12 @@ GoRouter router(AuthProvider authProvider) => GoRouter(
           create: (context) => IntroViewModel(),
           child: IntroPage(),
         );
+      },
+    ),
+    GoRoute(
+      path: Routes.splashLoading,
+      builder: (context, state) {
+        return Scaffold(body: Center(child: CircularProgressIndicator()));
       },
     ),
     GoRoute(

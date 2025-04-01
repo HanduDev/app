@@ -7,4 +7,5 @@ abstract final class Routes {
   static const educacao = '/educacao';
   static const conta = '/conta';
   static const login = '/login';
+  static const splashLoading = '/loading';
 }

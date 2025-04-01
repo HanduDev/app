@@ -3,11 +3,13 @@ class User {
   final String email;
   final String fullName;
   final String? photoURL;
+  final bool isEmailConfirmed;
 
   User({
     required this.id,
     required this.email,
     required this.fullName,
+    required this.isEmailConfirmed,
     this.photoURL,
   });
 
@@ -17,6 +19,7 @@ class User {
       email: json['email'],
       fullName: json['fullName'],
       photoURL: json['photoURL'],
+      isEmailConfirmed: json['isEmailConfirmed'],
     );
   }
 
@@ -26,6 +29,7 @@ class User {
       'email': email,
       'fullName': fullName,
       'photoURL': photoURL,
+      'isEmailConfirmed': isEmailConfirmed,
     };
   }
 }

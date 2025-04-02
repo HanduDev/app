@@ -3,12 +3,14 @@ import 'package:app/helpers/toast.dart';
 import 'package:app/providers/auth_provider.dart';
 import 'package:app/routes/routes.dart';
 import 'package:app/ui/core/shared/primary_button.dart';
+import 'package:app/ui/core/shared/secondary_button.dart';
 import 'package:app/ui/core/themes/app_colors.dart';
 import 'package:app/ui/core/themes/font.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
+import 'package:app/helpers/text_formatters.dart';
 
 class ConfirmacaoCadastroPage extends StatefulWidget {
   const ConfirmacaoCadastroPage({super.key});
@@ -20,11 +22,9 @@ class ConfirmacaoCadastroPage extends StatefulWidget {
 
 class _ConfirmacaoCadastroPageState extends State<ConfirmacaoCadastroPage> {
   String code = '';
-  final FocusNode _focusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
-    print(code);
     return Scaffold(
       backgroundColor: AppColors.white,
       body: Consumer<AuthProvider>(
@@ -85,6 +85,7 @@ class _ConfirmacaoCadastroPageState extends State<ConfirmacaoCadastroPage> {
                       borderColor: AppColors.lightGrey,
                       focusedBorderColor: AppColors.primary500,
                       showFieldAsBox: true,
+                      inputFormatters: [UpperCaseTextFormatter()],
                       fieldWidth: 55,
                       textStyle: Font.primary(
                         fontSize: 32,
@@ -113,7 +114,17 @@ class _ConfirmacaoCadastroPageState extends State<ConfirmacaoCadastroPage> {
                         ),
                         SizedBox(width: 8),
                         GestureDetector(
-                          onTap: () {},
+                          onTap: () async {
+                            try {
+                              await authProvider.resendCode(code: code);
+                              if (context.mounted) {
+                                Toast.success(context, 'Código reenviado!');
+                              }
+                            } catch (e) {
+                              if (!context.mounted) return;
+                              Toast.error(context, getErrorMessage(e));
+                            }
+                          },
                           child: Text(
                             'Reenviar',
                             style: Font.primary(
@@ -134,6 +145,22 @@ class _ConfirmacaoCadastroPageState extends State<ConfirmacaoCadastroPage> {
                           await authProvider.verifyCode(code: code);
                           if (context.mounted) {
                             context.pushReplacement(Routes.home);
+                          }
+                        } catch (e) {
+                          if (!context.mounted) return;
+                          Toast.error(context, getErrorMessage(e));
+                        }
+                      },
+                    ),
+                    SizedBox(height: 32),
+                    SecondaryButton(
+                      text: 'Entrar com outra conta',
+                      rounded: true,
+                      onPressed: () async {
+                        try {
+                          await authProvider.signOut();
+                          if (context.mounted) {
+                            context.pushReplacement(Routes.intro);
                           }
                         } catch (e) {
                           if (!context.mounted) return;

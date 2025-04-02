@@ -54,6 +54,7 @@ class _IntroPageState extends State<IntroPage> {
                   child: Stack(
                     children: [
                       CarouselSlider(
+                        key: Key('Slider'),
                         options: CarouselOptions(
                           height: double.infinity,
                           autoPlay: true,

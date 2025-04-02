@@ -92,9 +92,7 @@ class _CadastroPageState extends State<CadastroPage> {
                           ),
                           TextButton(
                             onPressed: () {
-                              context.pushReplacement(
-                                Routes.login,
-                              );
+                              context.pushReplacement(Routes.login);
                             },
                             child: Text(
                               'Entrar',
@@ -160,119 +158,124 @@ class FormsValidatorState extends State<FormsValidator> {
             }
           }
 
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          TextInput(
-            controller: _nameController,
-            label: 'Nome Completo',
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Digite um Nome';
-              }
-              return null;
-            },
-          ),
-          const SizedBox(height: 30),
-
-          TextInput(
-            controller: _emailController,
-            label: 'Email',
-            keyboardType: TextInputType.emailAddress,
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Digite um e-mail';
-              }
-              if (!RegExp(
-                r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
-              )
-              .hasMatch(value)) {
-                return 'Digite um e-mail válido';
-              }
-              return null;
-            },
-          ),
-          const SizedBox(height: 30),
-
-          TextInput(
-            controller: _passwordController,
-            label: 'Senha',
-            obscureText: _obscurePasswordText,
-            sufixIcon: IconButton(
-              onPressed: () {
-                setState(() {
-                  _obscurePasswordText = !_obscurePasswordText;
-                });
-              },
-              icon: Icon(
-                _obscurePasswordText ? Icons.visibility : Icons.visibility_off,
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              TextInput(
+                controller: _nameController,
+                label: 'Nome Completo',
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Digite um Nome';
+                  }
+                  return null;
+                },
               ),
-            ),
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Digite uma senha';
-              }
-              if (value.length < 8) {
-                return 'A senha deve ter pelo menos 8 caracteres';
-              }
-              if (!RegExp(r'^(?=.*[a-zA-Z])(?=.*\d)').hasMatch(value)) {
-                return 'A senha deve conter letras e números';
-              }
-              return null;
-            },
-          ),
-          const SizedBox(height: 10),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              'Utilizar letras e números',
-              style: Font.primary(
-                fontSize: 12,
-                color: AppColors.primary100,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-          const SizedBox(height: 20),
+              const SizedBox(height: 30),
 
-          TextInput(
-            controller: _password2Controller,
-            label: 'Confirmar Senha',
-            obscureText: _obscureConfirmPasswordText,
-            sufixIcon: IconButton(
-              onPressed: () {
-                setState(() {
-                  _obscureConfirmPasswordText = !_obscureConfirmPasswordText;
-                });
-              },
-              icon: Icon(
-                _obscureConfirmPasswordText
-                    ? Icons.visibility
-                    : Icons.visibility_off,
+              TextInput(
+                controller: _emailController,
+                label: 'Email',
+                keyboardType: TextInputType.emailAddress,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Digite um e-mail';
+                  }
+                  if (!RegExp(
+                    r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
+                  ).hasMatch(value)) {
+                    return 'Digite um e-mail válido';
+                  }
+                  return null;
+                },
               ),
-            ),
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Confirme sua senha';
-              }
-              if (value != _passwordController.text) {
-                return 'As senhas não são iguais';
-              }
-              return null;
-            },
-          ),
-          const SizedBox(height: 40),
+              const SizedBox(height: 30),
 
-          PrimaryButton(
-            text: ('Cadastrar conta'),
-            rounded: true,
-            onPressed: validatedAndSubmit,
-            loading: authProvider.isAuthenticating,
-          ),
-        ],
-      );
-    }
-  ),
-  );
+              TextInput(
+                controller: _passwordController,
+                label: 'Senha',
+                obscureText: _obscurePasswordText,
+                sufixIcon: IconButton(
+                  onPressed: () {
+                    setState(() {
+                      _obscurePasswordText = !_obscurePasswordText;
+                    });
+                  },
+                  icon: Icon(
+                    _obscurePasswordText
+                        ? Icons.visibility
+                        : Icons.visibility_off,
+                  ),
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Digite uma senha';
+                  }
+                  if (value.length < 8) {
+                    return 'A senha deve ter pelo menos 8 caracteres';
+                  }
+                  if (!RegExp(r'^(?=.*[a-zA-Z])(?=.*\d)').hasMatch(value)) {
+                    return 'A senha deve conter letras e números';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 10),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'Utilizar letras e números',
+                  style: Font.primary(
+                    fontSize: 12,
+                    color: AppColors.primary100,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+
+              TextInput(
+                controller: _password2Controller,
+                label: 'Confirmar Senha',
+                obscureText: _obscureConfirmPasswordText,
+                sufixIcon: IconButton(
+                  onPressed: () {
+                    setState(() {
+                      _obscureConfirmPasswordText =
+                          !_obscureConfirmPasswordText;
+                    });
+                  },
+                  icon: Icon(
+                    _obscureConfirmPasswordText
+                        ? Icons.visibility
+                        : Icons.visibility_off,
+                  ),
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Confirme sua senha';
+                  }
+                  if (value != _passwordController.text) {
+                    return 'As senhas não são iguais';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 40),
+
+              Hero(
+                tag: 'primary-button',
+                child: PrimaryButton(
+                  text: ('Cadastrar conta'),
+                  rounded: true,
+                  onPressed: validatedAndSubmit,
+                  loading: authProvider.isAuthenticating,
+                ),
+              ),
+            ],
+          );
+        },
+      ),
+    );
   }
 }

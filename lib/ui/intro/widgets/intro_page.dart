@@ -143,22 +143,29 @@ class _IntroPageState extends State<IntroPage> {
                                   textAlign: TextAlign.center,
                                 ),
                                 const SizedBox(height: 32),
-                                PrimaryButton(
-                                  rounded: true,
-                                  disabled: authProvider.isGoogleLoading,
-                                  onPressed: () {
-                                    context.push(Routes.cadastro);
-                                  },
-                                  text: 'Criar conta',
+
+                                Hero(
+                                  tag: 'primary-button',
+                                  child: PrimaryButton(
+                                    rounded: true,
+                                    disabled: authProvider.isGoogleLoading,
+                                    onPressed: () {
+                                      context.push(Routes.cadastro);
+                                    },
+                                    text: 'Criar conta',
+                                  ),
                                 ),
                                 const SizedBox(height: 16),
-                                SecondaryButton(
-                                  rounded: true,
-                                  disabled: authProvider.isGoogleLoading,
-                                  onPressed: () {
-                                    context.push(Routes.login);
-                                  },
-                                  text: 'Entrar',
+                                Hero(
+                                  tag: 'login-button',
+                                  child: SecondaryButton(
+                                    rounded: true,
+                                    disabled: authProvider.isGoogleLoading,
+                                    onPressed: () {
+                                      context.push(Routes.login);
+                                    },
+                                    text: 'Entrar',
+                                  ),
                                 ),
                                 const SizedBox(height: 32),
                                 FlatButton(

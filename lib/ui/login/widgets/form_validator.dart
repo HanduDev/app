@@ -130,11 +130,14 @@ class FormValidatorState extends State<FormValidator> {
                 ],
               ),
               const SizedBox(height: 88),
-              PrimaryButton(
-                text: 'Entrar',
-                rounded: true,
-                onPressed: validatedAndSubmit,
-                loading: authProvider.isAuthenticating,
+              Hero(
+                tag: 'primary-button',
+                child: PrimaryButton(
+                  text: 'Entrar',
+                  rounded: true,
+                  onPressed: validatedAndSubmit,
+                  loading: authProvider.isAuthenticating,
+                ),
               ),
             ],
           );

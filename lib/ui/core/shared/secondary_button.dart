@@ -9,14 +9,16 @@ class SecondaryButton extends BaseButton {
     super.onLongPress,
     super.width,
     super.height,
+    super.leftIcon,
     super.loading = false,
     super.disabled = false,
     super.rounded = false,
+    super.elevation,
   }) : super(
-          backgroundColor: AppColors.white,
-          textColor: AppColors.primary400,
-          disabledBackgroundColor: AppColors.white.withAlpha(160),
-          disabledTextColor: AppColors.primary400.withAlpha(160),
-          hasBorder: true,
-        );
+         backgroundColor: AppColors.white,
+         textColor: AppColors.primary400,
+         disabledBackgroundColor: AppColors.white.withAlpha(160),
+         disabledTextColor: AppColors.primary400.withAlpha(160),
+         hasBorder: true,
+       );
 }

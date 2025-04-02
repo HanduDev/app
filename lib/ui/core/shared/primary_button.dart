@@ -8,14 +8,16 @@ class PrimaryButton extends BaseButton {
     super.text,
     super.onLongPress,
     super.width,
+    super.leftIcon,
     super.height,
     super.loading = false,
     super.disabled = false,
     super.rounded = false,
+    super.elevation,
   }) : super(
-          backgroundColor: AppColors.primary400,
-          textColor: AppColors.white,
-          disabledBackgroundColor: AppColors.primary400.withAlpha(160),
-          disabledTextColor: AppColors.white.withAlpha(160),
-        );
+         backgroundColor: AppColors.primary400,
+         textColor: AppColors.white,
+         disabledBackgroundColor: AppColors.primary400.withAlpha(160),
+         disabledTextColor: AppColors.white.withAlpha(160),
+       );
 }

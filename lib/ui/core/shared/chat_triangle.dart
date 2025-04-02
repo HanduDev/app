@@ -6,7 +6,7 @@ class ChatTriangle extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final Paint paint =
         Paint()
-          ..color = AppColors.primary400
+          ..color = AppColors.primary500
           ..style = PaintingStyle.fill;
 
     Path path =

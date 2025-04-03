@@ -8,9 +8,9 @@ void main() {
       await tester.pumpWidget(MaterialApp(
         home: IntroPage(),
         routes: {
-          '/intro'
         },
       ));
+
     });
   });
 }

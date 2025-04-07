@@ -6,6 +6,7 @@ import 'package:app/ui/confirmacao_cadastro/widgets/confirmacao_cadastro_page.da
 import 'package:app/ui/core/shared/primary_button.dart';
 import 'package:app/ui/core/themes/app_colors.dart';
 import 'package:app/ui/core/themes/font.dart';
+import 'package:app/ui/educacao/widgets/educacao_page.dart';
 import 'package:app/ui/intro/view_model/intro_view_model.dart';
 import 'package:app/ui/intro/widgets/intro_page.dart';
 import 'package:app/ui/libras/view_model/libras_view_model.dart';
@@ -76,6 +77,12 @@ GoRouter router(AuthProvider authProvider) => GoRouter(
       builder: (context, state) {
         return ConfirmacaoCadastroPage();
       },
+    ),
+    GoRoute(
+      path: Routes.educacao,
+      builder: (context, state) {
+        return EducacaoPage();
+      }
     ),
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) {

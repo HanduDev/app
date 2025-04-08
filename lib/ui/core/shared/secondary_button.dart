@@ -7,6 +7,7 @@ class SecondaryButton extends BaseButton {
     super.onPressed,
     super.text,
     super.onLongPress,
+    super.padding,
     super.width,
     super.height,
     super.leftIcon,
@@ -14,6 +15,7 @@ class SecondaryButton extends BaseButton {
     super.disabled = false,
     super.rounded = false,
     super.elevation,
+    super.fontSize = 16,
   }) : super(
          backgroundColor: AppColors.white,
          textColor: AppColors.primary400,

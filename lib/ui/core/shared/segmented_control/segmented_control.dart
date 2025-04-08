@@ -46,7 +46,7 @@ class _SegmentedControlState extends State<SegmentedControl> {
               int index = entry.key;
               Icon? icon =
                   entry.value.icon != null
-                      ? Icon(entry.value.icon, size: 24.0)
+                      ? Icon(entry.value.icon, size: 20.0)
                       : null;
 
               bool isSelected = index == _index;
@@ -62,6 +62,11 @@ class _SegmentedControlState extends State<SegmentedControl> {
                           ? SecondaryButton(
                             key: ValueKey<int>(_index),
                             text: entry.value.text,
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 8,
+                              horizontal: 12,
+                            ),
+                            fontSize: 14,
                             rounded: true,
                             leftIcon: icon,
                             elevation: 0,
@@ -70,7 +75,12 @@ class _SegmentedControlState extends State<SegmentedControl> {
                           : PrimaryButton(
                             key: ValueKey<int>(index),
                             text: entry.value.text,
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 8,
+                              horizontal: 12,
+                            ),
                             leftIcon: icon,
+                            fontSize: 14,
                             rounded: true,
                             elevation: 0,
                             onPressed: () {

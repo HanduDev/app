@@ -26,6 +26,7 @@ dependencies:
   speech_to_text: ^7.0.0
   flutter_otp_text_field: ^1.1.0+2
   flutter_launcher_icons: "^0.13.1"
+  country_flags: ^3.0.0
 
 dev_dependencies:
   flutter_test:

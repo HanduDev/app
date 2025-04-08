@@ -6,6 +6,8 @@ class PrimaryButton extends BaseButton {
     super.key,
     super.onPressed,
     super.text,
+    super.fontSize = 16,
+    super.padding,
     super.onLongPress,
     super.width,
     super.leftIcon,

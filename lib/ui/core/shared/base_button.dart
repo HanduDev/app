@@ -19,11 +19,14 @@ abstract class BaseButton extends StatelessWidget {
   final bool hasBorder;
   final Widget? rightIcon;
   final Widget? leftIcon;
+  final double fontSize;
+  final EdgeInsets? padding;
 
   const BaseButton(
       {super.key,
       required this.onPressed,
       required this.text,
+      this.fontSize = 16,
       required this.onLongPress,
       required this.rounded,
       required this.disabled,
@@ -34,10 +37,13 @@ abstract class BaseButton extends StatelessWidget {
       required this.textColor,
       required this.disabledBackgroundColor,
       required this.disabledTextColor,
+      this.padding = const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       this.hasBorder = false,
       this.rightIcon,
       this.leftIcon,
       this.elevation = 2});
+      
+
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +58,7 @@ abstract class BaseButton extends StatelessWidget {
         surfaceTintColor: AppColors.transparent,
         disabledBackgroundColor: disabledBackgroundColor,
         disabledForegroundColor: disabledTextColor,
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        padding: padding,
         elevation: elevation,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(rounded ? 50 : 8),
@@ -82,7 +88,7 @@ abstract class BaseButton extends StatelessWidget {
           if (loading) const SizedBox(width: 8),
           Text(
             text ?? '',
-            style: Font.primary(fontSize: 16, fontWeight: FontWeight.bold),
+            style: Font.primary(fontSize: fontSize, fontWeight: FontWeight.bold),
           ),
           if (rightIcon != null) const SizedBox(width: 8),
           if (rightIcon != null) rightIcon!,

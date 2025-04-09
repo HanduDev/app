@@ -78,12 +78,7 @@ GoRouter router(AuthProvider authProvider) => GoRouter(
         return ConfirmacaoCadastroPage();
       },
     ),
-    GoRoute(
-      path: Routes.educacao,
-      builder: (context, state) {
-        return EducacaoPage();
-      }
-    ),
+    
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) {
         const destinations = [
@@ -167,7 +162,7 @@ GoRouter router(AuthProvider authProvider) => GoRouter(
           routes: [
             GoRoute(
               path: Routes.educacao,
-              builder: (context, state) => Text('Educação'),
+              builder: (context, state) => EducacaoPage(),
             ),
           ],
         ),

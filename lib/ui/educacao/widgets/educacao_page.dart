@@ -3,6 +3,7 @@ import 'package:app/ui/core/shared/primary_button.dart';
 import 'package:app/ui/core/themes/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:app/ui/educacao/widgets/card_progressbar.dart';
 
 class EducacaoPage extends StatelessWidget {
   const EducacaoPage({super.key});
@@ -110,7 +111,11 @@ class EducacaoPage extends StatelessWidget {
                 
                 const SizedBox(height: 30,),
 
-                // Criar o widget de cards de planos de estudos
+                CardProgressBar(
+                  title: 'Libras',
+                  progress: 0.5,
+                  progressText: '50%',
+                ),
 
                 ],
                 ),

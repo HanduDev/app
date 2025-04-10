@@ -84,6 +84,7 @@ class _SegmentedControlState extends State<SegmentedControl> {
                             rounded: true,
                             elevation: 0,
                             onPressed: () {
+                              widget.onChange(entry.value.key);
                               setState(() {
                                 _index = index;
                               });

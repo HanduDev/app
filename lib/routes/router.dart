@@ -13,6 +13,7 @@ import 'package:app/ui/libras/view_model/libras_view_model.dart';
 import 'package:app/ui/libras/widgets/libras_page.dart';
 import 'package:app/ui/traducao_texto/widgets/translate_text_page.dart';
 import 'package:app/ui/login/widgets/login_page.dart';
+import 'package:app/ui/translate_audio/widgets/translate_audio_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -143,6 +144,14 @@ GoRouter router(AuthProvider authProvider) => GoRouter(
             GoRoute(
               path: Routes.home,
               builder: (context, state) => TranslateTextPage(),
+            ),
+          ],
+        ),
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: Routes.audio,
+              builder: (context, state) => TranslateAudioPage(),
             ),
           ],
         ),

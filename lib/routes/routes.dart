@@ -3,6 +3,7 @@ abstract final class Routes {
   static const confirmacaoCadastro = '/confirmacao_cadastro';
   static const cadastro = '/cadastro';
   static const home = '/home';
+  static const audio = '/audio';
   static const libras = '/libras';
   static const educacao = '/educacao';
   static const conta = '/conta';

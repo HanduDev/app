@@ -31,32 +31,36 @@ class _LanguageSelectorState extends State<LanguageSelector> {
       onTap: () {
         _showLanguageModal(context);
       },
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(8.0),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.1),
-              blurRadius: 4,
-              offset: Offset(0, 2),
-            ),
-          ],
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              selectedLanguage, // Exibe a linguagem selecionada
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-                color: Colors.black87,
+      child: SizedBox(
+        height: 42,
+        width: 158, // Define a largura do botão
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(8.0),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.1),
+                blurRadius: 4,
+                offset: Offset(0, 2),
               ),
-            ),
-            Icon(Icons.arrow_drop_down, color: AppColors.grey),
-          ],
+            ],
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                selectedLanguage, // Exibe a linguagem selecionada
+                style: TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.black87,
+                ),
+              ),
+              Icon(Icons.arrow_drop_down, color: AppColors.grey),
+            ],
+          ),
         ),
       ),
     );
@@ -85,19 +89,7 @@ class _LanguageSelectorState extends State<LanguageSelector> {
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 16),
-                  TextField(
-                    decoration: InputDecoration(
-                      hintText: 'Pesquise a Linguagem',
-                      prefixIcon: Icon(
-                        Icons.search,
-                        color: AppColors.primary400,
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 16),
+
                   Expanded(
                     child: ListView.builder(
                       controller: scrollController, // Conecta o scroll ao modal

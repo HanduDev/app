@@ -2,11 +2,13 @@ import 'package:app/ui/core/shared/chat_field.dart';
 import 'package:app/ui/core/shared/segmented_control/segmented_control.dart';
 import 'package:app/ui/core/shared/segmented_control/segmented_control_item.dart';
 import 'package:app/ui/core/themes/app_colors.dart';
+import 'package:app/ui/core/themes/font.dart';
 import 'package:app/ui/libras/view_model/libras_view_model.dart';
 import 'package:app/ui/libras/widgets/speech_button.dart';
 import 'package:app/ui/libras/widgets/vlibras_web_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 class LibrasPage extends StatelessWidget {
   const LibrasPage({super.key});
@@ -19,7 +21,22 @@ class LibrasPage extends StatelessWidget {
           builder: (context, viewModel, child) {
             return Stack(
               children: [
-                VLibrasWebView(),
+                kIsWeb
+                    ? Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Text(
+                          "Seu dispositivo não tem suporte para esta funcionalidade",
+                          textAlign: TextAlign.center,
+                          style: Font.primary(
+                            color: AppColors.grey,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    )
+                    : VLibrasWebView(),
                 Positioned(
                   child: Padding(
                     padding: const EdgeInsets.all(24.0),

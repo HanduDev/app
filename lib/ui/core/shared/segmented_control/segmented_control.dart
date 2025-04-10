@@ -51,7 +51,7 @@ class _SegmentedControlState extends State<SegmentedControl> {
 
               bool isSelected = index == _index;
 
-              return Expanded(
+              return Flexible(
                 child: AnimatedSwitcher(
                   duration: Duration(milliseconds: 250),
                   transitionBuilder:
@@ -64,7 +64,7 @@ class _SegmentedControlState extends State<SegmentedControl> {
                             text: entry.value.text,
                             padding: const EdgeInsets.symmetric(
                               vertical: 8,
-                              horizontal: 12,
+                              horizontal: 0,
                             ),
                             fontSize: 14,
                             rounded: true,
@@ -77,7 +77,7 @@ class _SegmentedControlState extends State<SegmentedControl> {
                             text: entry.value.text,
                             padding: const EdgeInsets.symmetric(
                               vertical: 8,
-                              horizontal: 12,
+                              horizontal: 0,
                             ),
                             leftIcon: icon,
                             fontSize: 14,

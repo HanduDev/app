@@ -21,29 +21,30 @@ import 'package:provider/provider.dart';
 import 'routes.dart';
 
 GoRouter router(AuthProvider authProvider) => GoRouter(
-  initialLocation: Routes.splashLoading,
+  initialLocation: Routes.home,
   debugLogDiagnostics: true,
   refreshListenable: authProvider,
   redirect: (context, state) {
-    if (authProvider.isLoading) return null;
-
-    final isOnIntro = state.matchedLocation == Routes.splashLoading;
-    final isAuthenticated = authProvider.isAuthenticated;
-    final isEmailConfirmed = authProvider.user?.isEmailConfirmed ?? false;
-
-    if (isAuthenticated && !isEmailConfirmed) {
-      return Routes.confirmacaoCadastro;
-    }
-
-    if (isAuthenticated && isOnIntro) {
-      return Routes.home;
-    }
-
-    if (!isAuthenticated && isOnIntro) {
-      return Routes.intro;
-    }
-
     return null;
+    // if (authProvider.isLoading) return null;
+
+    // final isOnIntro = state.matchedLocation == Routes.splashLoading;
+    // final isAuthenticated = authProvider.isAuthenticated;
+    // final isEmailConfirmed = authProvider.user?.isEmailConfirmed ?? false;
+
+    // if (isAuthenticated && !isEmailConfirmed) {
+    //   return Routes.confirmacaoCadastro;
+    // }
+
+    // if (isAuthenticated && isOnIntro) {
+    //   return Routes.home;
+    // }
+
+    // if (!isAuthenticated && isOnIntro) {
+    //   return Routes.intro;
+    // }
+
+    // return null;
   },
   routes: [
     GoRoute(
@@ -79,7 +80,7 @@ GoRouter router(AuthProvider authProvider) => GoRouter(
         return ConfirmacaoCadastroPage();
       },
     ),
-    
+
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) {
         const destinations = [
@@ -145,10 +146,6 @@ GoRouter router(AuthProvider authProvider) => GoRouter(
               path: Routes.home,
               builder: (context, state) => TranslateTextPage(),
             ),
-          ],
-        ),
-        StatefulShellBranch(
-          routes: [
             GoRoute(
               path: Routes.audio,
               builder: (context, state) => TranslateAudioPage(),

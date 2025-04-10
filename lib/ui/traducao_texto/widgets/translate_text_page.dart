@@ -1,9 +1,8 @@
 import 'package:app/providers/auth_provider.dart';
-import 'package:app/ui/core/shared/chat_triangle.dart';
+import 'package:app/ui/core/shared/chat_field.dart';
 import 'package:app/ui/core/shared/dropdown_button.dart';
 import 'package:app/ui/core/shared/segmented_control/segmented_control.dart';
 import 'package:app/ui/core/shared/segmented_control/segmented_control_item.dart';
-import 'package:app/ui/core/shared/text_input.dart';
 import 'package:app/ui/core/themes/app_colors.dart';
 import 'package:app/ui/core/themes/font.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +14,9 @@ class TranslateTextPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final TextEditingController requestController = TextEditingController();
+    final TextEditingController responseController = TextEditingController();
+
     return Consumer<AuthProvider>(
       builder: (context, authProvider, child) {
         return Scaffold(
@@ -139,7 +141,9 @@ class TranslateTextPage extends StatelessWidget {
                                   shape: BoxShape.circle,
                                   boxShadow: [
                                     BoxShadow(
-                                      color: Colors.black.withOpacity(0.1),
+                                      color: Colors.black.withValues(
+                                        alpha: 300,
+                                      ),
                                       blurRadius: 4,
                                       offset: Offset(0, 2),
                                     ),
@@ -158,66 +162,16 @@ class TranslateTextPage extends StatelessWidget {
                         ],
                       ),
                       SizedBox(height: 48),
-                      Positioned(
-                        bottom: 44,
-                        left: 22,
-                        right: 22,
-                        child: Container(
-                          height: 135,
-                          padding: const EdgeInsets.all(8.0),
-                          decoration: BoxDecoration(
-                            color: AppColors.primary400,
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(12),
-                              topRight: Radius.circular(12),
-                              bottomLeft: Radius.circular(12),
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                blurRadius: 35,
-                                spreadRadius: 5,
-                                offset: Offset(0, 0),
-                                color: Colors.black.withAlpha(30),
-                              ),
-                            ],
-                          ),
-                          child: Column(
-                            children: [
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: TextInput(
-                                      keyboardType: TextInputType.multiline,
-                                      //controller: viewModel.textController,
-                                      label: "Digite algo",
-                                      textColor: AppColors.white,
-                                      borderColor: AppColors.primary400,
-                                      maxLines: 3,
-                                      minLines: 1,
-                                    ),
-                                  ),
-                                  const SizedBox(width: 10),
-                                  IconButton(
-                                    onPressed: () {
-                                      FocusScope.of(context).unfocus();
-                                      //viewModel.sendText();
-                                    },
-                                    icon: Icon(Icons.send),
-                                    color: AppColors.white,
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
+                      ChatField(
+                        controller: requestController,
+                        onSendMessage: (message) {},
                       ),
-                      Positioned(
-                        bottom: 0,
-                        left: 0, // Alinha o triângulo à borda esquerda
-                        child: CustomPaint(
-                          size: Size(20, 30), // Tamanho do triângulo
-                          painter: ChatTriangle(),
-                        ),
+                      ChatField(
+                        controller: responseController,
+                        onSendMessage: (message) {},
+                        trianglePosition: ChatFieldPosition.left,
+                        backgroundColor: AppColors.primary100,
+                        textColor: AppColors.primary300,
                       ),
                     ],
                   ),

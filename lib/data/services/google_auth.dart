@@ -1,5 +1,6 @@
 import 'package:app/config/environment.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 abstract class GoogleAuthImpl {
   Future<GoogleSignInAccount?> signIn();
@@ -7,17 +8,16 @@ abstract class GoogleAuthImpl {
 }
 
 class GoogleAuth extends GoogleAuthImpl {
-  final GoogleSignIn _googleSignIn = GoogleSignIn(
-    serverClientId: Environment.googleClientId,
-  );
+  final GoogleSignIn? _googleSignIn =
+      kIsWeb ? null : GoogleSignIn(serverClientId: Environment.googleClientId);
 
   @override
   Future<GoogleSignInAccount?> signIn() async {
-    return await _googleSignIn.signIn();
+    return await _googleSignIn?.signIn();
   }
 
   @override
   Future<void> signOut() async {
-    await _googleSignIn.signOut();
+    await _googleSignIn?.signOut();
   }
 }

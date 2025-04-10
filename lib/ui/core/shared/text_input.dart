@@ -20,6 +20,7 @@ class TextInput extends StatelessWidget {
   final Color? borderColor;
   final int? maxLines;
   final int? minLines;
+  final bool fixedBorderColor;
 
   const TextInput({
     super.key,
@@ -40,6 +41,7 @@ class TextInput extends StatelessWidget {
     this.borderColor,
     this.maxLines,
     this.minLines,
+    this.fixedBorderColor = false,
   });
 
   @override
@@ -60,7 +62,6 @@ class TextInput extends StatelessWidget {
       ),
       decoration: InputDecoration(
         prefixIcon: prefixIcon,
-
         suffixIcon: sufixIcon,
         contentPadding: EdgeInsets.fromLTRB(16, 8, 16, 8),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
@@ -72,17 +73,20 @@ class TextInput extends StatelessWidget {
           borderRadius: BorderRadius.circular(8),
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: AppColors.primary400, width: 1.5),
+          borderSide: BorderSide(
+            color: borderColor ?? AppColors.primary400,
+            width: 1.5,
+          ),
           borderRadius: BorderRadius.circular(8),
         ),
         labelText: label,
         labelStyle: Font.primary(
           fontWeight: FontWeight.w400,
-          color: color ?? AppColors.lightGrey,
+          color: textColor ?? AppColors.lightGrey,
         ),
         floatingLabelStyle: Font.primary(
           fontWeight: FontWeight.w500,
-          color: color ?? AppColors.primary400,
+          color: borderColor ?? AppColors.primary400,
         ),
         focusColor: color ?? AppColors.primary400,
       ),

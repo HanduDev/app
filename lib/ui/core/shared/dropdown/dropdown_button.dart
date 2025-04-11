@@ -128,10 +128,16 @@ class _DropdownState<T> extends State<Dropdown<T>> {
                       itemCount: widget.data.length,
                       itemBuilder: (context, index) {
                         T currentValue = widget.data[index];
+                        bool isSelected =
+                            widget.controller.value == currentValue;
+
                         return ListTile(
-                          leading: widget.leading?.call(currentValue),
+                          leading:
+                              isSelected
+                                  ? Icon(Icons.check, color: AppColors.green)
+                                  : widget.leading?.call(currentValue),
                           title: widget.render(currentValue),
-                          selected: widget.controller.value == currentValue,
+                          selected: isSelected,
                           onTap: () {
                             widget.controller.value = currentValue;
                             field.didChange(currentValue);

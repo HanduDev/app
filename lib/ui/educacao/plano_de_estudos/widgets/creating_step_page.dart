@@ -16,6 +16,8 @@ class CreatingStepPage extends StatefulWidget {
 class _CreatingStepPageState extends State<CreatingStepPage>
     with TickerProviderStateMixin {
   int _delaySeconds = 5;
+  int _afterCreatedSeconds = 5;
+
   late AnimationController _controller;
   late Animation<double> _animation;
 
@@ -50,6 +52,24 @@ class _CreatingStepPageState extends State<CreatingStepPage>
   Widget build(BuildContext context) {
     bool hasFinished = _delaySeconds == 0;
 
+    void startSeconds() {
+      Future.delayed(Duration(seconds: 1), () {
+        if (context.mounted) {
+          setState(() {
+            _afterCreatedSeconds -= 1;
+          });
+
+          if (_afterCreatedSeconds > 0) {
+            startSeconds();
+          }
+
+          if (_afterCreatedSeconds == 0) {
+            context.go(Routes.educacao);
+          }
+        }
+      });
+    }
+
     Widget content() {
       if (hasFinished) {
         return Container(
@@ -68,6 +88,7 @@ class _CreatingStepPageState extends State<CreatingStepPage>
                     setState(() {
                       _hasFinishedCheckAnimation = true;
                       _checkController.forward();
+                      startSeconds();
                     });
                   });
                 },
@@ -96,6 +117,14 @@ class _CreatingStepPageState extends State<CreatingStepPage>
                         onPressed: () {
                           context.go(Routes.educacao);
                         },
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        "Ou aguarde $_afterCreatedSeconds segundos",
+                        style: Font.primary(
+                          fontSize: 14,
+                          color: AppColors.white,
+                        ),
                       ),
                     ],
                   ),

@@ -181,7 +181,9 @@ class _BottomBarState<T> extends State<BottomBar> {
                   itemCount: widget.data.length,
                   itemBuilder: (context, index) {
                     final value = widget.data[index];
-                    bool isSelected = widget.controller.values.contains(value);
+                    bool isSelected = widget.controller.values.any(
+                      (element) => element.id == value.id,
+                    );
 
                     return ListTile(
                       leading: Checkbox(

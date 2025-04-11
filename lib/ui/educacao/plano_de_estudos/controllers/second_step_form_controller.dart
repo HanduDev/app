@@ -10,5 +10,7 @@ class SecondStepFormController {
   DropdownButtonController timeToLearn = DropdownButtonController();
   DropdownButtonController timeToStudy = DropdownButtonController();
 
-  void submit() {}
+  bool validate() {
+    return _formKey.currentState!.validate();
+  }
 }

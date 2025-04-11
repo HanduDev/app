@@ -192,6 +192,12 @@ class EstudosContainer extends StatelessWidget {
                                   return;
                                 }
 
+                                if (viewModel.currentIndex == 2 &&
+                                    !viewModel.secondStepFormController
+                                        .validate()) {
+                                  return;
+                                }
+
                                 if (viewModel.currentIndex ==
                                     viewModel.totalSteps) {
                                   onFinish();

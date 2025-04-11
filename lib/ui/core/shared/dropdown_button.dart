@@ -8,6 +8,7 @@ class Dropdown<T> extends StatefulWidget {
   final void Function(T)? onSelect;
   final Widget? placeholder;
   final T? value;
+  final double? width;
 
   const Dropdown({
     super.key,
@@ -17,6 +18,7 @@ class Dropdown<T> extends StatefulWidget {
     this.onSelect,
     this.value,
     this.placeholder,
+    this.width = 158,
   });
 
   @override
@@ -34,7 +36,7 @@ class _DropdownState<T> extends State<Dropdown<T>> {
       },
       child: SizedBox(
         height: 42,
-        width: 158, // Define a largura do botão
+        width: widget.width,
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
           decoration: BoxDecoration(
@@ -53,7 +55,7 @@ class _DropdownState<T> extends State<Dropdown<T>> {
             children: [
               value != null
                   ? widget.render(value as T)
-                  : widget.placeholder ?? Text("Selecione"),
+                  : widget.placeholder ?? Text('Selecione'),
               Icon(Icons.arrow_drop_down, color: AppColors.grey),
             ],
           ),
@@ -65,16 +67,16 @@ class _DropdownState<T> extends State<Dropdown<T>> {
   void _showLanguageModal(BuildContext context) {
     showModalBottomSheet(
       context: context,
-      isScrollControlled: true, // Permite que o modal ocupe mais espaço
+      isScrollControlled: true,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(16.0)),
       ),
       builder: (BuildContext context) {
         return DraggableScrollableSheet(
-          expand: false, // Permite que o modal seja arrastado
-          initialChildSize: 0.8, // Define o tamanho inicial (80% da tela)
-          minChildSize: 0.5, // Tamanho mínimo (50% da tela)
-          maxChildSize: 0.9, // Tamanho máximo (90% da tela)
+          expand: false,
+          initialChildSize: 0.8,
+          minChildSize: 0.5,
+          maxChildSize: 0.9,
           builder: (context, scrollController) {
             return Padding(
               padding: const EdgeInsets.all(16.0),
@@ -92,23 +94,21 @@ class _DropdownState<T> extends State<Dropdown<T>> {
                       itemCount: widget.data.length,
                       itemBuilder: (context, index) {
                         T currentValue = widget.data[index];
-
                         return ListTile(
                           leading:
                               widget.leading != null
                                   ? widget.leading!(currentValue)
                                   : null,
                           title: widget.render(currentValue),
+                          selected: widget.value == currentValue,
                           onTap: () {
                             if (widget.onSelect != null) {
                               widget.onSelect!(currentValue);
-                            }
-
-                            if (widget.value == null) {
                               setState(() {
                                 value = currentValue;
                               });
                             }
+
                             Navigator.pop(context);
                           },
                         );

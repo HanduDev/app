@@ -6,12 +6,19 @@ import 'package:app/ui/confirmacao_cadastro/widgets/confirmacao_cadastro_page.da
 import 'package:app/ui/core/shared/primary_button.dart';
 import 'package:app/ui/core/themes/app_colors.dart';
 import 'package:app/ui/core/themes/font.dart';
+import 'package:app/ui/educacao/plano_de_estudos/controllers/first_step_form_controller.dart';
+import 'package:app/ui/educacao/plano_de_estudos/controllers/second_step_form_controller.dart';
+import 'package:app/ui/educacao/plano_de_estudos/view_model/forms_container_view_model.dart';
+import 'package:app/ui/educacao/plano_de_estudos/widgets/creating_step_page.dart';
+import 'package:app/ui/educacao/plano_de_estudos/widgets/estudos_container.dart';
+import 'package:app/ui/educacao/plano_de_estudos/widgets/first_step_page.dart';
+import 'package:app/ui/educacao/plano_de_estudos/widgets/second_step_page.dart';
 import 'package:app/ui/educacao/widgets/educacao_page.dart';
 import 'package:app/ui/intro/view_model/intro_view_model.dart';
 import 'package:app/ui/intro/widgets/intro_page.dart';
 import 'package:app/ui/libras/view_model/libras_view_model.dart';
 import 'package:app/ui/libras/widgets/libras_page.dart';
-import 'package:app/ui/traducao_texto/view_model/translate_text_view_model.dart';
+import 'package:app/providers/languages_provider.dart';
 import 'package:app/ui/traducao_texto/widgets/translate_text_page.dart';
 import 'package:app/ui/login/widgets/login_page.dart';
 import 'package:app/ui/translate_audio/widgets/translate_audio_page.dart';
@@ -22,27 +29,27 @@ import 'package:provider/provider.dart';
 import 'routes.dart';
 
 GoRouter router(AuthProvider authProvider) => GoRouter(
-  initialLocation: Routes.splashLoading,
+  initialLocation: Routes.educacao,
   debugLogDiagnostics: true,
   refreshListenable: authProvider,
   redirect: (context, state) {
-    if (authProvider.isLoading) return null;
+    // if (authProvider.isLoading) return null;
 
-    final isOnIntro = state.matchedLocation == Routes.splashLoading;
-    final isAuthenticated = authProvider.isAuthenticated;
-    final isEmailConfirmed = authProvider.user?.isEmailConfirmed ?? false;
+    // final isOnIntro = state.matchedLocation == Routes.splashLoading;
+    // final isAuthenticated = authProvider.isAuthenticated;
+    // final isEmailConfirmed = authProvider.user?.isEmailConfirmed ?? false;
 
-    if (isAuthenticated && !isEmailConfirmed) {
-      return Routes.confirmacaoCadastro;
-    }
+    // if (isAuthenticated && !isEmailConfirmed) {
+    //   return Routes.confirmacaoCadastro;
+    // }
 
-    if (isAuthenticated && isOnIntro) {
-      return Routes.home;
-    }
+    // if (isAuthenticated && isOnIntro) {
+    //   return Routes.home;
+    // }
 
-    if (!isAuthenticated && isOnIntro) {
-      return Routes.intro;
-    }
+    // if (!isAuthenticated && isOnIntro) {
+    //   return Routes.intro;
+    // }
 
     return null;
   },
@@ -79,6 +86,38 @@ GoRouter router(AuthProvider authProvider) => GoRouter(
       builder: (context, state) {
         return ConfirmacaoCadastroPage();
       },
+    ),
+
+    StatefulShellRoute.indexedStack(
+      builder: (context, state, navigationShell) {
+        return MultiProvider(
+          providers: [
+            ChangeNotifierProvider(create: (context) => FormsContainerViewModel()),
+            ChangeNotifierProvider(create: (context) => FirstStepFormController()),
+          ],
+          child: navigationShell,
+        );
+      },
+      branches: [
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: Routes.planoDeEstudos,
+              builder:
+                  (context, state) => EstudosContainer(child: FirstStepPage()),
+            ),
+            GoRoute(
+              path: Routes.planoDeEstudosSecondStep,
+              builder:
+                  (context, state) => EstudosContainer(child: SecondStepPage()),
+            ),
+            GoRoute(
+              path: Routes.criandoPlanoDeEstudos,
+              builder: (context, state) => CreatingStepPage(),
+            ),
+          ],
+        ),
+      ],
     ),
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) {
@@ -144,7 +183,7 @@ GoRouter router(AuthProvider authProvider) => GoRouter(
             ShellRoute(
               builder:
                   (context, state, child) => ChangeNotifierProvider(
-                    create: (context) => TranslateTextViewModel(),
+                    create: (context) => LanguagesProvider(),
                     child: child,
                   ),
               routes: [

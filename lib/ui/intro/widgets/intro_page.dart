@@ -9,6 +9,7 @@ import 'package:app/ui/core/themes/font.dart';
 import 'package:app/ui/intro/view_model/intro_view_model.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:app/ui/core/themes/app_colors.dart';
 import 'package:go_router/go_router.dart';
@@ -43,150 +44,156 @@ class _IntroPageState extends State<IntroPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.primary100,
-      body: SafeArea(
-        child: Consumer<IntroViewModel>(
-          builder: (context, introViewModel, child) {
-            return Column(
-              children: [
-                Expanded(
-                  child: Stack(
-                    children: [
-                      CarouselSlider(
-                        key: Key('Slider'),
-                        options: CarouselOptions(
-                          height: double.infinity,
-                          autoPlay: true,
-                          viewportFraction: 1.0,
-                          onPageChanged: (index, reason) {
-                            introViewModel.onPageChanged(index);
-                          },
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle(
+        statusBarColor: AppColors.white,
+        statusBarIconBrightness: Brightness.dark,
+      ),
+      child: Scaffold(
+        backgroundColor: AppColors.primary100,
+        body: SafeArea(
+          child: Consumer<IntroViewModel>(
+            builder: (context, introViewModel, child) {
+              return Column(
+                children: [
+                  Expanded(
+                    child: Stack(
+                      children: [
+                        CarouselSlider(
+                          key: Key('Slider'),
+                          options: CarouselOptions(
+                            height: double.infinity,
+                            autoPlay: true,
+                            viewportFraction: 1.0,
+                            onPageChanged: (index, reason) {
+                              introViewModel.onPageChanged(index);
+                            },
+                          ),
+                          items: items,
                         ),
-                        items: items,
-                      ),
-                      Positioned(
-                        top: 14,
-                        left: 14,
-                        child: Image.asset('assets/images/Logo.png'),
-                      ),
-                    ],
+                        Positioned(
+                          top: 14,
+                          left: 14,
+                          child: Image.asset('assets/images/Logo.png'),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                Consumer<AuthProvider>(
-                  builder: (context, authProvider, child) {
-                    void onLoginWithGoogle() async {
-                      try {
-                        await authProvider.signInWithGoogle();
+                  Consumer<AuthProvider>(
+                    builder: (context, authProvider, child) {
+                      void onLoginWithGoogle() async {
+                        try {
+                          await authProvider.signInWithGoogle();
 
-                        if (context.mounted) {
-                          context.pushReplacement(Routes.home);
+                          if (context.mounted) {
+                            context.pushReplacement(Routes.home);
+                          }
+                        } catch (e) {
+                          if (!context.mounted) return;
+                          Toast.error(context, getErrorMessage(e));
                         }
-                      } catch (e) {
-                        if (!context.mounted) return;
-                        Toast.error(context, getErrorMessage(e));
                       }
-                    }
 
-                    return FractionalTranslation(
-                      translation: Offset(0, -0.025),
-                      child: Container(
-                        padding: const EdgeInsets.fromLTRB(24, 16, 24, 8),
-                        decoration: BoxDecoration(
-                          color: AppColors.primary100,
-                          borderRadius: BorderRadius.circular(16),
-                          boxShadow: [
-                            BoxShadow(
-                              color: AppColors.black.withAlpha(130),
-                              spreadRadius: 1,
-                              blurRadius: 22,
-                            ),
-                            BoxShadow(
-                              color: AppColors.primary100,
-                              spreadRadius: 1,
-                              offset: Offset(0, 20),
-                            ),
-                          ],
-                        ),
-                        child: Column(
-                          children: [
-                            AnimatedSmoothIndicator(
-                              activeIndex: introViewModel.currentIndex,
-                              count: 3,
-                              effect: ExpandingDotsEffect(
-                                spacing: 8.0,
-                                radius: 40,
-                                dotWidth: 8,
-                                dotHeight: 8,
-                                dotColor: AppColors.grey,
-                                activeDotColor: AppColors.primary400,
+                      return FractionalTranslation(
+                        translation: Offset(0, -0.025),
+                        child: Container(
+                          padding: const EdgeInsets.fromLTRB(24, 16, 24, 8),
+                          decoration: BoxDecoration(
+                            color: AppColors.primary100,
+                            borderRadius: BorderRadius.circular(16),
+                            boxShadow: [
+                              BoxShadow(
+                                color: AppColors.black.withAlpha(130),
+                                spreadRadius: 1,
+                                blurRadius: 22,
                               ),
-                            ),
-                            const SizedBox(height: 16),
-                            Column(
-                              children: [
-                                Text(
-                                  introViewModel.title,
-                                  style: Font.primary(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                  textAlign: TextAlign.center,
+                              BoxShadow(
+                                color: AppColors.primary100,
+                                spreadRadius: 1,
+                                offset: Offset(0, 20),
+                              ),
+                            ],
+                          ),
+                          child: Column(
+                            children: [
+                              AnimatedSmoothIndicator(
+                                activeIndex: introViewModel.currentIndex,
+                                count: 3,
+                                effect: ExpandingDotsEffect(
+                                  spacing: 8.0,
+                                  radius: 40,
+                                  dotWidth: 8,
+                                  dotHeight: 8,
+                                  dotColor: AppColors.grey,
+                                  activeDotColor: AppColors.primary400,
                                 ),
-                                const SizedBox(height: 16),
-                                Text(
-                                  'Escolha uma opção para continuar',
-                                  style: Font.primary(
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.w300,
+                              ),
+                              const SizedBox(height: 16),
+                              Column(
+                                children: [
+                                  Text(
+                                    introViewModel.title,
+                                    style: Font.primary(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                    textAlign: TextAlign.center,
                                   ),
-                                  textAlign: TextAlign.center,
-                                ),
-                                const SizedBox(height: 32),
+                                  const SizedBox(height: 16),
+                                  Text(
+                                    'Escolha uma opção para continuar',
+                                    style: Font.primary(
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.w300,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  const SizedBox(height: 32),
 
-                                Hero(
-                                  tag: 'primary-button',
-                                  child: PrimaryButton(
-                                    rounded: true,
-                                    disabled: authProvider.isGoogleLoading,
-                                    onPressed: () {
-                                      context.push(Routes.cadastro);
-                                    },
-                                    text: 'Criar conta',
+                                  Hero(
+                                    tag: 'primary-button',
+                                    child: PrimaryButton(
+                                      rounded: true,
+                                      disabled: authProvider.isGoogleLoading,
+                                      onPressed: () {
+                                        context.push(Routes.cadastro);
+                                      },
+                                      text: 'Criar conta',
+                                    ),
                                   ),
-                                ),
-                                const SizedBox(height: 16),
-                                Hero(
-                                  tag: 'login-button',
-                                  child: SecondaryButton(
-                                    rounded: true,
-                                    disabled: authProvider.isGoogleLoading,
-                                    onPressed: () {
-                                      context.push(Routes.login);
-                                    },
-                                    text: 'Entrar',
+                                  const SizedBox(height: 16),
+                                  Hero(
+                                    tag: 'login-button',
+                                    child: SecondaryButton(
+                                      rounded: true,
+                                      disabled: authProvider.isGoogleLoading,
+                                      onPressed: () {
+                                        context.push(Routes.login);
+                                      },
+                                      text: 'Entrar',
+                                    ),
                                   ),
-                                ),
-                                const SizedBox(height: 32),
-                                FlatButton(
-                                  loading: authProvider.isGoogleLoading,
-                                  onPressed: onLoginWithGoogle,
-                                  text: 'Entrar com o Google',
-                                  leftIcon: SvgPicture.asset(
-                                    'assets/images/icons/google.svg',
+                                  const SizedBox(height: 32),
+                                  FlatButton(
+                                    loading: authProvider.isGoogleLoading,
+                                    onPressed: onLoginWithGoogle,
+                                    text: 'Entrar com o Google',
+                                    leftIcon: SvgPicture.asset(
+                                      'assets/images/icons/google.svg',
+                                    ),
                                   ),
-                                ),
-                              ],
-                            ),
-                          ],
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                    );
-                  },
-                ),
-              ],
-            );
-          },
+                      );
+                    },
+                  ),
+                ],
+              );
+            },
+          ),
         ),
       ),
     );

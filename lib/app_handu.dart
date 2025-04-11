@@ -5,8 +5,10 @@ import 'package:app/data/services/secure_storage.dart';
 import 'package:app/providers/auth_provider.dart';
 import 'package:app/providers/notifier.dart';
 import 'package:app/routes/router.dart';
+import 'package:app/ui/core/themes/app_colors.dart';
 import 'package:app/ui/core/themes/font.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class AppHandu extends StatefulWidget {
@@ -26,9 +28,15 @@ class _AppHanduState extends State<AppHandu> {
         ChangeNotifierProvider<AuthProvider>.value(value: authProvider),
         ChangeNotifierProvider<Notifier>(create: (_) => Notifier()),
       ],
-      child: MaterialApp.router(
-        theme: ThemeData(textTheme: Font.primaryTheme()),
-        routerConfig: router(authProvider),
+      child: AnnotatedRegion<SystemUiOverlayStyle>(
+        value: SystemUiOverlayStyle(
+          statusBarColor: AppColors.primary400,
+          statusBarIconBrightness: Brightness.light,
+        ),
+        child: MaterialApp.router(
+          theme: ThemeData(textTheme: Font.primaryTheme()),
+          routerConfig: router(authProvider),
+        ),
       ),
     );
   }

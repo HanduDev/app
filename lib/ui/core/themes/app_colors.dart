@@ -14,5 +14,10 @@ abstract final class AppColors {
   static Color transparent = const Color(0x00000000);
   static Color yellow = const Color(0xFFFFAE00);
   static Color disabledIcon = const Color.fromARGB(255, 163, 160, 160);
-  
+  static Color lightPurple = const Color(0xFF9862DF);
+  static List<Color> progressGradient = [
+    const Color(0xFF9862DF),
+    const Color(0xFFE3E3EF),
+  ];
+  static Color error = const Color(0xFFEA3A3A);
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class TranslateTextViewModel extends ChangeNotifier {
+class LanguagesProvider extends ChangeNotifier {
   final List<Map<String, String>> _languages = [
     {'name': 'Português', 'countryCode': 'pt-br'},
     {'name': 'Árabe', 'countryCode': 'ar'},

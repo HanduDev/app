@@ -1,11 +1,12 @@
 import 'package:app/providers/auth_provider.dart';
 import 'package:app/ui/core/shared/dropdown_button.dart';
 import 'package:app/ui/core/shared/gradient_background.dart';
+import 'package:app/ui/core/shared/language_selector.dart';
 import 'package:app/ui/core/shared/segmented_control/segmented_control.dart';
 import 'package:app/ui/core/shared/segmented_control/segmented_control_item.dart';
 import 'package:app/ui/core/themes/app_colors.dart';
 import 'package:app/ui/core/themes/font.dart';
-import 'package:app/ui/traducao_texto/view_model/translate_text_view_model.dart';
+import 'package:app/providers/languages_provider.dart';
 import 'package:country_flags/country_flags.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -18,8 +19,8 @@ class TranslateAudioPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<AuthProvider>(
       builder: (context, authProvider, child) {
-        return Consumer<TranslateTextViewModel>(
-          builder: (context, viewModel, child) {
+        return Consumer<LanguagesProvider>(
+          builder: (context, languagesProvider, child) {
             return GradientBackground(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 24.0),
@@ -109,20 +110,7 @@ class TranslateAudioPage extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Expanded(
-                            child: Dropdown(
-                              data: viewModel.languages,
-                              leading:
-                                  (value) => CountryFlag.fromLanguageCode(
-                                    value['countryCode']!,
-                                    height: 20,
-                                    width: 30,
-                                  ),
-                              render: (value) {
-                                return Text(value['name']!);
-                              },
-                            ),
-                          ),
+                          Expanded(child: LanguageSelector()),
                           Padding(
                             padding: const EdgeInsets.symmetric(
                               horizontal: 8.0,
@@ -152,18 +140,7 @@ class TranslateAudioPage extends StatelessWidget {
                             ),
                           ),
                           Expanded(
-                            child: Dropdown(
-                              data: viewModel.languages,
-                              leading:
-                                  (value) => CountryFlag.fromLanguageCode(
-                                    value['countryCode']!,
-                                    height: 20,
-                                    width: 30,
-                                  ),
-                              render: (value) {
-                                return Text(value['name']!);
-                              },
-                            ), // Segundo dropdown
+                            child: LanguageSelector(), // Segundo dropdown
                           ),
                         ],
                       ),

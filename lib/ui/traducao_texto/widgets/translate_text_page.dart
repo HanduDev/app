@@ -63,7 +63,7 @@ class TranslateTextPage extends StatelessWidget {
                                         color: AppColors.yellow,
                                       ),
                                     ),
-                                    SizedBox(height: 6),
+                                    SizedBox(height: 8),
                                     Text(
                                       authProvider.user?.fullName
                                               .split(' ')
@@ -103,81 +103,87 @@ class TranslateTextPage extends StatelessWidget {
                             ],
                           ),
                           SizedBox(height: 40),
-                          SegmentedControl(
-                            initialIndex: 0,
-                            onChange: (value) {
-                              context.go(value);
-                            },
-                            items: [
-                              SegmentedControlItem(
-                                key: '/home',
-                                text: "Texto",
-                                icon: Icons.text_snippet_outlined,
-                              ),
-                              SegmentedControlItem(
-                                key: '/audio',
-                                text: "Áudio",
-                                icon: Icons.mic_none_outlined,
-                              ),
-                              SegmentedControlItem(
-                                key: '/image',
-                                text: "Imagem",
-                                icon: Icons.image_outlined,
-                              ),
-                            ],
+                          Hero(
+                            tag: 'segmented',
+                            child: SegmentedControl(
+                              initialIndex: 0,
+                              onChange: (value) {
+                                context.go(value);
+                              },
+                              items: [
+                                SegmentedControlItem(
+                                  key: '/home',
+                                  text: "Texto",
+                                  icon: Icons.text_snippet_outlined,
+                                ),
+                                SegmentedControlItem(
+                                  key: '/audio',
+                                  text: "Áudio",
+                                  icon: Icons.mic_none_outlined,
+                                ),
+                                SegmentedControlItem(
+                                  key: '/home',
+                                  text: "Imagem",
+                                  icon: Icons.image_outlined,
+                                ),
+                              ],
+                            ),
                           ),
                           SizedBox(height: 40),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Expanded(
-                                child: Dropdown(
-                                  data: viewModel.languages,
-                                  leading:
-                                      (value) => CountryFlag.fromLanguageCode(
-                                        value['countryCode']!,
-                                        height: 20,
-                                        width: 30,
+                          Hero(
+                            tag: "dropdown-languages",
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Expanded(
+                                  child: Dropdown(
+                                    data: viewModel.languages,
+                                    leading:
+                                        (value) => CountryFlag.fromLanguageCode(
+                                          value['countryCode']!,
+                                          height: 20,
+                                          width: 30,
+                                        ),
+                                    render: (value) {
+                                      return Text(value['name']!);
+                                    },
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 8.0,
+                                  ),
+                                  child: GestureDetector(
+                                    onTap: () {},
+                                    child: Container(
+                                      padding: const EdgeInsets.all(8.0),
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        shape: BoxShape.circle,
                                       ),
-                                  render: (value) {
-                                    return Text(value['name']!);
-                                  },
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 8.0,
-                                ),
-                                child: GestureDetector(
-                                  onTap: () {},
-                                  child: Container(
-                                    padding: const EdgeInsets.all(8.0),
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      shape: BoxShape.circle,
-                                    ),
-                                    child: Icon(
-                                      Icons.swap_horiz,
-                                      color: AppColors.black,
+                                      child: Icon(
+                                        Icons.swap_horiz,
+                                        color: AppColors.black,
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                              Expanded(
-                                child: Dropdown(
-                                  data: viewModel.languages,
-                                  leading:
-                                      (value) => CountryFlag.fromLanguageCode(
-                                        value['countryCode']!,
-                                        height: 20,
-                                        width: 30,
-                                      ),
-                                  render: (value) {
-                                    return Text(value['name']!);
-                                  },
+                                Expanded(
+                                  child: Dropdown(
+                                    data: viewModel.languages,
+                                    leading:
+                                        (value) => CountryFlag.fromLanguageCode(
+                                          value['countryCode']!,
+                                          height: 20,
+                                          width: 30,
+                                        ),
+                                    render: (value) {
+                                      return Text(value['name']!);
+                                    },
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                           SizedBox(height: 40),
                           ChatField(

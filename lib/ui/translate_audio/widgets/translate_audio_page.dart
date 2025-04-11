@@ -77,88 +77,96 @@ class TranslateAudioPage extends StatelessWidget {
                       ],
                     ),
                     SizedBox(height: 64),
-                    SegmentedControl(
-                      initialIndex: 0,
-                      onChange: (value) {
-                        context.go(value);
-                      },
-                      items: [
-                        SegmentedControlItem(
-                          key: '/home',
-                          text: "Texto",
-                          icon: Icons.text_snippet_outlined,
-                        ),
-                        SegmentedControlItem(
-                          key: '/audio',
-                          text: "Audio",
-                          icon: Icons.mic_none_outlined,
-                        ),
-                        SegmentedControlItem(
-                          key: '/intro',
-                          text: "Imagem",
-                          icon: Icons.image_outlined,
-                        ),
-                      ],
+                    Hero(
+                      tag: 'segmented',
+                      child: SegmentedControl(
+                        initialIndex: 1,
+                        onChange: (value) {
+                          context.go(value);
+                        },
+                        items: [
+                          SegmentedControlItem(
+                            key: '/home',
+                            text: "Texto",
+                            icon: Icons.text_snippet_outlined,
+                          ),
+                          SegmentedControlItem(
+                            key: '/audio',
+                            text: "Audio",
+                            icon: Icons.mic_none_outlined,
+                          ),
+                          SegmentedControlItem(
+                            key: '/home',
+                            text: "Imagem",
+                            icon: Icons.image_outlined,
+                          ),
+                        ],
+                      ),
                     ),
                     SizedBox(height: 40),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Expanded(
-                          child: Dropdown(
-                            data: viewModel.languages,
-                            leading:
-                                (value) => CountryFlag.fromLanguageCode(
-                                  value['countryCode']!,
-                                  height: 20,
-                                  width: 30,
-                                ),
-                            render: (value) {
-                              return Text(value['name']!);
-                            },
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                          child: GestureDetector(
-                            onTap: () {
-                              // Lógica para trocar as linguagens
-                            },
-                            child: Container(
-                              padding: const EdgeInsets.all(8.0),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                shape: BoxShape.circle,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black.withOpacity(0.1),
-                                    blurRadius: 4,
-                                    offset: Offset(0, 2),
+                    Hero(
+                      tag: "dropdown-languages",
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Expanded(
+                            child: Dropdown(
+                              data: viewModel.languages,
+                              leading:
+                                  (value) => CountryFlag.fromLanguageCode(
+                                    value['countryCode']!,
+                                    height: 20,
+                                    width: 30,
                                   ),
-                                ],
-                              ),
-                              child: Icon(
-                                Icons.swap_horiz, // Ícone de troca
-                                color: AppColors.primary400,
+                              render: (value) {
+                                return Text(value['name']!);
+                              },
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 8.0,
+                            ),
+                            child: GestureDetector(
+                              onTap: () {
+                                // Lógica para trocar as linguagens
+                              },
+                              child: Container(
+                                padding: const EdgeInsets.all(8.0),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  shape: BoxShape.circle,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withOpacity(0.1),
+                                      blurRadius: 4,
+                                      offset: Offset(0, 2),
+                                    ),
+                                  ],
+                                ),
+                                child: Icon(
+                                  Icons.swap_horiz, // Ícone de troca
+                                  color: AppColors.primary400,
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                        Expanded(
-                          child: Dropdown(
-                            data: viewModel.languages,
-                            leading:
-                                (value) => CountryFlag.fromLanguageCode(
-                                  value['countryCode']!,
-                                  height: 20,
-                                  width: 30,
-                                ),
-                            render: (value) {
-                              return Text(value['name']!);
-                            },
-                          ), // Segundo dropdown
-                        ),
-                      ],
+                          Expanded(
+                            child: Dropdown(
+                              data: viewModel.languages,
+                              leading:
+                                  (value) => CountryFlag.fromLanguageCode(
+                                    value['countryCode']!,
+                                    height: 20,
+                                    width: 30,
+                                  ),
+                              render: (value) {
+                                return Text(value['name']!);
+                              },
+                            ), // Segundo dropdown
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),

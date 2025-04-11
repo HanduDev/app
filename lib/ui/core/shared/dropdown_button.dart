@@ -1,29 +1,30 @@
-import 'package:country_flags/country_flags.dart';
 import 'package:flutter/material.dart';
 import 'package:app/ui/core/themes/app_colors.dart';
 
-class LanguageSelector extends StatefulWidget {
+class Dropdown<T> extends StatefulWidget {
+  final List<T> data;
+  final Widget Function(T)? leading;
+  final Widget Function(T) render;
+  final void Function(T)? onSelect;
+  final Widget? placeholder;
+  final T? value;
+
+  const Dropdown({
+    super.key,
+    this.leading,
+    required this.render,
+    required this.data,
+    this.onSelect,
+    this.value,
+    this.placeholder,
+  });
+
   @override
-  _LanguageSelectorState createState() => _LanguageSelectorState();
+  State<Dropdown<T>> createState() => _DropdownState<T>();
 }
 
-class _LanguageSelectorState extends State<LanguageSelector> {
-  final List<Map<String, String>> languages = [
-    {'name': 'Português', 'countryCode': 'pt-br'},
-    {'name': 'Árabe', 'countryCode': 'ar'},
-    {'name': 'Chinês', 'countryCode': 'zh-cn'},
-    {'name': 'Coreano', 'countryCode': 'ko'},
-    {'name': 'Espanhol', 'countryCode': 'es'},
-    {'name': 'Francês', 'countryCode': 'fr'},
-    {'name': 'Hindi', 'countryCode': 'hi'},
-    {'name': 'Inglês', 'countryCode': 'en'},
-    {'name': 'Italiano', 'countryCode': 'it'},
-    {'name': 'Japonês', 'countryCode': 'ja'},
-    {'name': 'Russo', 'countryCode': 'ru'},
-    {'name': 'Turco', 'countryCode': 'tr'},
-  ];
-
-  String selectedLanguage = 'Linguagem'; // Texto inicial do botão
+class _DropdownState<T> extends State<Dropdown<T>> {
+  T? value;
 
   @override
   Widget build(BuildContext context) {
@@ -50,14 +51,9 @@ class _LanguageSelectorState extends State<LanguageSelector> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                selectedLanguage, // Exibe a linguagem selecionada
-                style: TextStyle(
-                  fontSize: 13,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.black87,
-                ),
-              ),
+              value != null
+                  ? widget.render(value as T)
+                  : widget.placeholder ?? Text("Selecione"),
               Icon(Icons.arrow_drop_down, color: AppColors.grey),
             ],
           ),
@@ -93,19 +89,26 @@ class _LanguageSelectorState extends State<LanguageSelector> {
                   Expanded(
                     child: ListView.builder(
                       controller: scrollController, // Conecta o scroll ao modal
-                      itemCount: languages.length,
+                      itemCount: widget.data.length,
                       itemBuilder: (context, index) {
+                        T currentValue = widget.data[index];
+
                         return ListTile(
-                          leading: CountryFlag.fromLanguageCode(
-                            languages[index]['countryCode']!,
-                            width: 30,
-                            height: 20,
-                          ),
-                          title: Text(languages[index]['name']!),
+                          leading:
+                              widget.leading != null
+                                  ? widget.leading!(currentValue)
+                                  : null,
+                          title: widget.render(currentValue),
                           onTap: () {
-                            setState(() {
-                              selectedLanguage = languages[index]['name']!;
-                            });
+                            if (widget.onSelect != null) {
+                              widget.onSelect!(currentValue);
+                            }
+
+                            if (widget.value == null) {
+                              setState(() {
+                                value = currentValue;
+                              });
+                            }
                             Navigator.pop(context);
                           },
                         );
@@ -119,5 +122,11 @@ class _LanguageSelectorState extends State<LanguageSelector> {
         );
       },
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    value = widget.value;
   }
 }

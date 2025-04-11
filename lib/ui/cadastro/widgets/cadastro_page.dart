@@ -67,12 +67,12 @@ class _CadastroPageState extends State<CadastroPage> {
                       ),
                       const SizedBox(height: 40),
                       FormsValidator(),
-                      const SizedBox(height: 40),
+                      const SizedBox(height: 24),
                       Text(
                         'Ou continue com',
                         style: Font.primary(fontSize: 12),
                       ),
-                      const SizedBox(height: 32),
+                      const SizedBox(height: 16),
                       FlatButton(
                         loading: authProvider.isGoogleLoading,
                         onPressed: onLoginWithGoogle,
@@ -82,7 +82,6 @@ class _CadastroPageState extends State<CadastroPage> {
                           width: 30,
                         ),
                       ),
-                      const SizedBox(height: 10),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -261,7 +260,7 @@ class FormsValidatorState extends State<FormsValidator> {
                   return null;
                 },
               ),
-              const SizedBox(height: 40),
+              const SizedBox(height: 32),
 
               Hero(
                 tag: 'primary-button',

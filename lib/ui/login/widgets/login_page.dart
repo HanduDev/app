@@ -53,7 +53,7 @@ class LoginPage extends StatelessWidget {
                       ),
                       SizedBox(height: 48),
                       FormValidator(),
-                      SizedBox(height: 56),
+                      SizedBox(height: 32),
                       Text('Ou continue com'),
                       SizedBox(height: 24),
                       FlatButton(
@@ -64,6 +64,27 @@ class LoginPage extends StatelessWidget {
                           height: 30,
                           width: 30,
                         ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Não tem uma conta?',
+                            style: Font.primary(fontSize: 12),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              context.pushReplacement(Routes.cadastro);
+                            },
+                            child: Text(
+                              'Cadastrar',
+                              style: Font.primary(
+                                fontSize: 12,
+                                color: AppColors.primary300,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),

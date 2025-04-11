@@ -101,7 +101,7 @@ class FormValidatorState extends State<FormValidator> {
                   return null;
                 },
               ),
-              SizedBox(height: 56),
+              SizedBox(height: 16),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -129,7 +129,7 @@ class FormValidatorState extends State<FormValidator> {
                   ),
                 ],
               ),
-              const SizedBox(height: 88),
+              const SizedBox(height: 40),
               Hero(
                 tag: 'primary-button',
                 child: PrimaryButton(

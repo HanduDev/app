@@ -6,6 +6,7 @@ import 'package:app/ui/core/shared/segmented_control/segmented_control_item.dart
 import 'package:app/ui/core/themes/app_colors.dart';
 import 'package:app/ui/core/themes/font.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class TranslateAudioPage extends StatelessWidget {
@@ -20,7 +21,7 @@ class TranslateAudioPage extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 24.0),
             child: Column(
               children: [
-                SizedBox(height: 80),
+                SizedBox(height: 64),
                 Row(
                   children: [
                     Expanded(
@@ -38,7 +39,7 @@ class TranslateAudioPage extends StatelessWidget {
                           ),
                           SizedBox(height: 8),
                           Text(
-                            authProvider.user?.fullName ?? '',
+                            authProvider.user?.fullName?.split(' ').first ?? '',
                             style: Font.primary(
                               fontSize: 25,
                               fontWeight: FontWeight.w800,
@@ -71,7 +72,9 @@ class TranslateAudioPage extends StatelessWidget {
                 SizedBox(height: 64),
                 SegmentedControl(
                   initialIndex: 0,
-                  onChange: (value) {},
+                  onChange: (value) {
+                    context.go(value);
+                  },
                   items: [
                     SegmentedControlItem(
                       key: '/home',

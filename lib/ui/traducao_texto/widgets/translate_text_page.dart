@@ -43,7 +43,7 @@ class TranslateTextPage extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 24.0),
                   child: Column(
                     children: [
-                      SizedBox(height: 80),
+                      SizedBox(height: 64),
                       Row(
                         children: [
                           Expanded(
@@ -61,7 +61,10 @@ class TranslateTextPage extends StatelessWidget {
                                 ),
                                 SizedBox(height: 6),
                                 Text(
-                                  authProvider.user?.fullName ?? '',
+                                  authProvider.user?.fullName
+                                          ?.split(' ')
+                                          .first ??
+                                      '',
                                   style: Font.primary(
                                     fontSize: 25,
                                     fontWeight: FontWeight.w800,
@@ -86,7 +89,7 @@ class TranslateTextPage extends StatelessWidget {
                               child:
                                   authProvider.user?.photoURL == null
                                       ? Icon(
-                                        Icons.person, // Ícone padrão
+                                        Icons.person,
                                         size: 30,
                                         color: AppColors.white,
                                       )
@@ -95,7 +98,7 @@ class TranslateTextPage extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SizedBox(height: 60),
+                      SizedBox(height: 40),
                       SegmentedControl(
                         initialIndex: 0,
                         onChange: (value) {
@@ -123,48 +126,34 @@ class TranslateTextPage extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Expanded(
-                            child: LanguageSelector(), // Primeiro dropdown
-                          ),
+                          Expanded(child: LanguageSelector()),
                           Padding(
                             padding: const EdgeInsets.symmetric(
                               horizontal: 8.0,
                             ),
                             child: GestureDetector(
-                              onTap: () {
-                                // Lógica para trocar as linguagens
-                              },
+                              onTap: () {},
                               child: Container(
                                 padding: const EdgeInsets.all(8.0),
                                 decoration: BoxDecoration(
                                   color: Colors.white,
                                   shape: BoxShape.circle,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.black.withValues(
-                                        alpha: 300,
-                                      ),
-                                      blurRadius: 4,
-                                      offset: Offset(0, 2),
-                                    ),
-                                  ],
                                 ),
                                 child: Icon(
-                                  Icons.swap_horiz, // Ícone de troca
-                                  color: AppColors.primary400,
+                                  Icons.swap_horiz,
+                                  color: AppColors.black,
                                 ),
                               ),
                             ),
                           ),
-                          Expanded(
-                            child: LanguageSelector(), // Segundo dropdown
-                          ),
+                          Expanded(child: LanguageSelector()),
                         ],
                       ),
-                      SizedBox(height: 48),
+                      SizedBox(height: 40),
                       ChatField(
                         controller: requestController,
                         onSendMessage: (message) {},
+                        minHeight: 150,
                       ),
                       ChatField(
                         controller: responseController,
@@ -172,6 +161,29 @@ class TranslateTextPage extends StatelessWidget {
                         trianglePosition: ChatFieldPosition.left,
                         backgroundColor: AppColors.primary100,
                         textColor: AppColors.primary300,
+                        minHeight: 145,
+                        footer: Row(
+                          children: [
+                            IconButton(
+                              onPressed: () {},
+                              icon: Icon(Icons.volume_up_outlined),
+                              color: AppColors.primary500,
+                              padding: EdgeInsets.fromLTRB(38.0, 42.0, 0, 0),
+                            ),
+                            IconButton(
+                              onPressed: () {},
+                              icon: Icon(Icons.feedback_outlined),
+                              color: AppColors.primary500,
+                              padding: EdgeInsets.fromLTRB(0, 42.0, 0, 0),
+                            ),
+                            IconButton(
+                              onPressed: () {},
+                              icon: Icon(Icons.copy),
+                              color: AppColors.primary500,
+                              padding: EdgeInsets.fromLTRB(0, 42.0, 38.0, 0),
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),

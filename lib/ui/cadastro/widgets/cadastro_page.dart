@@ -46,16 +46,12 @@ class _CadastroPageState extends State<CadastroPage> {
                 }
 
                 return Padding(
-                  padding: const EdgeInsets.fromLTRB(40, 0, 40, 0),
+                  padding: const EdgeInsets.symmetric(horizontal: 24.0),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       const SizedBox(height: 40),
-                      Image.asset(
-                        'assets/images/Logo_1.png',
-                        width: 153,
-                        height: 147,
-                      ),
+                      Image.asset('assets/images/Logo_1.png', height: 100),
                       const SizedBox(height: 10),
                       Text(
                         'Cadastro',

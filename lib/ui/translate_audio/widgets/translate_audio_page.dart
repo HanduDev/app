@@ -1,5 +1,5 @@
 import 'package:app/providers/auth_provider.dart';
-import 'package:app/ui/core/shared/dropdown_button.dart';
+import 'package:app/ui/core/shared/dropdown/dropdown_button_controller.dart';
 import 'package:app/ui/core/shared/gradient_background.dart';
 import 'package:app/ui/core/shared/language_selector.dart';
 import 'package:app/ui/core/shared/segmented_control/segmented_control.dart';
@@ -7,7 +7,6 @@ import 'package:app/ui/core/shared/segmented_control/segmented_control_item.dart
 import 'package:app/ui/core/themes/app_colors.dart';
 import 'package:app/ui/core/themes/font.dart';
 import 'package:app/providers/languages_provider.dart';
-import 'package:country_flags/country_flags.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -110,7 +109,11 @@ class TranslateAudioPage extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Expanded(child: LanguageSelector()),
+                          Expanded(
+                            child: LanguageSelector(
+                              controller: DropdownButtonController(),
+                            ),
+                          ),
                           Padding(
                             padding: const EdgeInsets.symmetric(
                               horizontal: 8.0,
@@ -140,7 +143,9 @@ class TranslateAudioPage extends StatelessWidget {
                             ),
                           ),
                           Expanded(
-                            child: LanguageSelector(), // Segundo dropdown
+                            child: LanguageSelector(
+                              controller: DropdownButtonController(),
+                            ),
                           ),
                         ],
                       ),

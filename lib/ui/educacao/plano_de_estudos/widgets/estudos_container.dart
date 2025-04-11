@@ -22,7 +22,9 @@ class EstudosContainer extends StatelessWidget {
         builder: (BuildContext context) {
           return AlertDialog(
             title: Text("Deseja finalizar?"),
-            content: Text("Você tem certeza que deseja finalizar o plano de aula?"),
+            content: Text(
+              "Você tem certeza que deseja finalizar o plano de aula?",
+            ),
             actions: [
               TextButton(
                 child: Text(
@@ -184,6 +186,12 @@ class EstudosContainer extends StatelessWidget {
                                       ? "Finalizar"
                                       : "Próximo",
                               onPressed: () {
+                                if (viewModel.currentIndex == 1 &&
+                                    !viewModel.firstStepFormController
+                                        .validate()) {
+                                  return;
+                                }
+
                                 if (viewModel.currentIndex ==
                                     viewModel.totalSteps) {
                                   onFinish();

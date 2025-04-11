@@ -1,5 +1,6 @@
 import 'package:app/providers/auth_provider.dart';
 import 'package:app/ui/core/shared/chat_field.dart';
+import 'package:app/ui/core/shared/dropdown/dropdown_button_controller.dart';
 import 'package:app/ui/core/shared/language_selector.dart';
 import 'package:app/ui/core/shared/segmented_control/segmented_control.dart';
 import 'package:app/ui/core/shared/segmented_control/segmented_control_item.dart';
@@ -134,7 +135,11 @@ class TranslateTextPage extends StatelessWidget {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Expanded(child: LanguageSelector()),
+                                Expanded(
+                                  child: LanguageSelector(
+                                    controller: DropdownButtonController(),
+                                  ),
+                                ),
                                 Padding(
                                   padding: const EdgeInsets.symmetric(
                                     horizontal: 8.0,
@@ -154,7 +159,11 @@ class TranslateTextPage extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                                Expanded(child: LanguageSelector()),
+                                Expanded(
+                                  child: LanguageSelector(
+                                    controller: DropdownButtonController(),
+                                  ),
+                                ),
                               ],
                             ),
                           ),

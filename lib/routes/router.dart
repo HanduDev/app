@@ -6,8 +6,6 @@ import 'package:app/ui/confirmacao_cadastro/widgets/confirmacao_cadastro_page.da
 import 'package:app/ui/core/shared/primary_button.dart';
 import 'package:app/ui/core/themes/app_colors.dart';
 import 'package:app/ui/core/themes/font.dart';
-import 'package:app/ui/educacao/plano_de_estudos/controllers/first_step_form_controller.dart';
-import 'package:app/ui/educacao/plano_de_estudos/controllers/second_step_form_controller.dart';
 import 'package:app/ui/educacao/plano_de_estudos/view_model/forms_container_view_model.dart';
 import 'package:app/ui/educacao/plano_de_estudos/widgets/creating_step_page.dart';
 import 'package:app/ui/educacao/plano_de_estudos/widgets/estudos_container.dart';
@@ -90,11 +88,8 @@ GoRouter router(AuthProvider authProvider) => GoRouter(
 
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) {
-        return MultiProvider(
-          providers: [
-            ChangeNotifierProvider(create: (context) => FormsContainerViewModel()),
-            ChangeNotifierProvider(create: (context) => FirstStepFormController()),
-          ],
+        return ChangeNotifierProvider(
+          create: (context) => FormsContainerViewModel(),
           child: navigationShell,
         );
       },

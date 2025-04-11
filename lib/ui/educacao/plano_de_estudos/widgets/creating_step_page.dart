@@ -94,7 +94,7 @@ class _CreatingStepPageState extends State<CreatingStepPage>
                       PrimaryButton(
                         text: 'Ver plano de estudos',
                         onPressed: () {
-                          context.pushReplacement(Routes.educacao);
+                          context.go(Routes.educacao);
                         },
                       ),
                     ],

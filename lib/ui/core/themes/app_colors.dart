@@ -20,4 +20,5 @@ abstract final class AppColors {
     const Color(0xFFE3E3EF),
   ];
   static Color error = const Color(0xFFEA3A3A);
+  static Color green = const Color.fromARGB(255, 127, 212, 130);
 }

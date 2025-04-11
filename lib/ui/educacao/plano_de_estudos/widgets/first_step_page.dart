@@ -1,6 +1,7 @@
-import 'package:app/ui/core/shared/dropdown_multiple.dart';
+import 'package:app/ui/core/shared/dropdown/dropdown_multiple.dart';
+import 'package:app/ui/core/shared/dropdown/dropdown_multiple_model.dart';
 import 'package:app/ui/core/shared/language_selector.dart';
-import 'package:app/ui/educacao/plano_de_estudos/controllers/first_step_form_controller.dart';
+import 'package:app/ui/educacao/plano_de_estudos/view_model/forms_container_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -9,10 +10,10 @@ class FirstStepPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<FirstStepFormController>(
-      builder: (context, controller, child) {
+    return Consumer<FormsContainerViewModel>(
+      builder: (context, viewModel, child) {
         return Form(
-          key: controller.formKey,
+          key: viewModel.firstStepFormController.formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -20,29 +21,50 @@ class FirstStepPage extends StatelessWidget {
               const SizedBox(height: 6),
               LanguageSelector(
                 width: double.infinity,
-                value: controller.language,
-                onChanged: (value) {
-                  controller.language = value;
-                },
+                controller:
+                    viewModel.firstStepFormController.languageController,
               ),
               const SizedBox(height: 12),
               Text("O que você quer desenvolver?"),
               const SizedBox(height: 6),
               DropdownMultiple(
+                controller:
+                    viewModel.firstStepFormController.developmentsController,
                 width: double.infinity,
-                selectedValues: controller.developments,
-                placeholder: Text(
-                  controller.developments.isEmpty
-                      ? 'Selecione'
-                      : controller.developments.join(', '),
-                ),
-                onChange: (value) {
-                  controller.setDevelopments(value);
-                },
                 render: (value) {
-                  return Text(value);
+                  return Text(value.name);
                 },
-                data: ['Fala', 'Leitura', 'Escrita', 'Escuta'],
+                validator: (values) {
+                  if (values.isEmpty) {
+                    return "Selecione pelo menos um desenvolvimento";
+                  }
+                  return null;
+                },
+                data: DropdownMultipleModel.fromArray([
+                  'Fala',
+                  'Leitura',
+                  'Escrita',
+                  'Escuta',
+                ]),
+              ),
+
+              const SizedBox(height: 12),
+              Text(
+                "Existe algum tema em especial que você gostaria de estudar?",
+              ),
+              const SizedBox(height: 6),
+              DropdownMultiple(
+                controller: viewModel.firstStepFormController.themesController,
+                width: double.infinity,
+                render: (value) {
+                  return Text(value.name);
+                },
+                data: DropdownMultipleModel.fromArray([
+                  'Fala',
+                  'Leitura',
+                  'Escrita',
+                  'Escuta',
+                ]),
               ),
             ],
           ),

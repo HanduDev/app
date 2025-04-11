@@ -23,6 +23,7 @@ class FormValidatorState extends State<FormValidator> {
   final _formKey = GlobalKey<FormState>();
 
   bool _obscurePasswordText = true;
+  bool _remember = false;
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -107,7 +108,15 @@ class FormValidatorState extends State<FormValidator> {
                 children: [
                   Row(
                     children: [
-                      Checkbox(value: false, onChanged: (value) {}),
+                      Checkbox(
+                        shape: CircleBorder(),
+                        value: _remember,
+                        onChanged: (value) {
+                          setState(() {
+                            _remember = value!;
+                          });
+                        },
+                      ),
                       Text(
                         'Lembrar-Me',
                         style: Font.primary(

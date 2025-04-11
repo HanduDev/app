@@ -29,27 +29,27 @@ import 'package:provider/provider.dart';
 import 'routes.dart';
 
 GoRouter router(AuthProvider authProvider) => GoRouter(
-  initialLocation: Routes.educacao,
+  initialLocation: Routes.splashLoading,
   debugLogDiagnostics: true,
   refreshListenable: authProvider,
   redirect: (context, state) {
-    // if (authProvider.isLoading) return null;
+    if (authProvider.isLoading) return null;
 
-    // final isOnIntro = state.matchedLocation == Routes.splashLoading;
-    // final isAuthenticated = authProvider.isAuthenticated;
-    // final isEmailConfirmed = authProvider.user?.isEmailConfirmed ?? false;
+    final isOnIntro = state.matchedLocation == Routes.splashLoading;
+    final isAuthenticated = authProvider.isAuthenticated;
+    final isEmailConfirmed = authProvider.user?.isEmailConfirmed ?? false;
 
-    // if (isAuthenticated && !isEmailConfirmed) {
-    //   return Routes.confirmacaoCadastro;
-    // }
+    if (isAuthenticated && !isEmailConfirmed) {
+      return Routes.confirmacaoCadastro;
+    }
 
-    // if (isAuthenticated && isOnIntro) {
-    //   return Routes.home;
-    // }
+    if (isAuthenticated && isOnIntro) {
+      return Routes.home;
+    }
 
-    // if (!isAuthenticated && isOnIntro) {
-    //   return Routes.intro;
-    // }
+    if (!isAuthenticated && isOnIntro) {
+      return Routes.intro;
+    }
 
     return null;
   },

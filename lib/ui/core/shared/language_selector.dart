@@ -63,7 +63,19 @@ class LanguageSelector extends StatelessWidget {
                 shape: const RoundedRectangle(8),
               ),
           render: (value) {
-            return Text(value['name']!);
+            return Flexible(
+              child: Text(
+                value['name']!,
+                maxLines: 1,
+                softWrap: false,
+                style: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
+                  color: Colors.black,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            );
           },
         );
       },

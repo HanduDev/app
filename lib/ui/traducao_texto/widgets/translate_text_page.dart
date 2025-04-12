@@ -135,8 +135,9 @@ class TranslateTextPage extends StatelessWidget {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Expanded(
+                                Flexible(
                                   child: LanguageSelector(
+                                    width: double.infinity,
                                     controller: DropdownButtonController(),
                                   ),
                                 ),
@@ -159,8 +160,9 @@ class TranslateTextPage extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                                Expanded(
+                                Flexible(
                                   child: LanguageSelector(
+                                    width: double.infinity,
                                     controller: DropdownButtonController(),
                                   ),
                                 ),

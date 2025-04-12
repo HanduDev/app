@@ -14,15 +14,17 @@ class DropdownMultipleController extends ChangeNotifier {
 
   List<DropdownMultipleModel> get values => _values;
 
-  toggle(DropdownMultipleModel? newValue) {
-    if (newValue == null) return;
-
-    if (_values.contains(newValue)) {
-      _values.remove(newValue);
+  toggle(DropdownMultipleModel newValue) {
+    if (_values.any((value) => value.id == newValue.id)) {
+      _values.removeWhere((value) => value.id == newValue.id);
     } else {
       _values.add(newValue);
     }
 
     notifyListeners();
+  }
+
+  List<String> get valuesAsString {
+    return _values.map((value) => value.name).toList();
   }
 }

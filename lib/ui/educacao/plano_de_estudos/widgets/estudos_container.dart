@@ -1,3 +1,5 @@
+import 'package:app/helpers/errors.dart';
+import 'package:app/helpers/toast.dart';
 import 'package:app/routes/routes.dart';
 import 'package:app/ui/core/shared/primary_button.dart';
 import 'package:app/ui/core/shared/progress_bar.dart';
@@ -16,40 +18,50 @@ class EstudosContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    void onFinish() {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text("Deseja finalizar?"),
-            content: Text(
-              "Você tem certeza que deseja finalizar o plano de aula?",
-            ),
-            actions: [
-              TextButton(
-                child: Text(
-                  "Cancelar",
-                  style: Font.primary(fontSize: 14, color: AppColors.error),
-                ),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-              TextButton(
-                child: Text("Criar plano", style: Font.primary(fontSize: 14)),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  context.pushReplacement(Routes.criandoPlanoDeEstudos);
-                },
-              ),
-            ],
-          );
-        },
-      );
-    }
-
     return Consumer<FormsContainerViewModel>(
       builder: (context, viewModel, unchild) {
+        void onFinish() {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text("Criar plano?"),
+                content: Text(
+                  "Podemos prosseguir com a criação do seu plano de estudos?",
+                ),
+                actions: [
+                  TextButton(
+                    child: Text(
+                      "Agora não",
+                      style: Font.primary(fontSize: 14, color: AppColors.error),
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                  TextButton(
+                    child: Text(
+                      "Sim, por favor",
+                      style: Font.primary(fontSize: 14),
+                    ),
+                    onPressed: () async {
+                      try {
+                        Navigator.of(context).pop();
+
+                        context.pushReplacement(Routes.criandoPlanoDeEstudos);
+                        await viewModel.onFinish();
+                      } catch (e) {
+                        if (!context.mounted) return;
+                        Toast.error(context, getErrorMessage(e));
+                      }
+                    },
+                  ),
+                ],
+              );
+            },
+          );
+        }
+
         return PopScope(
           onPopInvokedWithResult: (didPop, result) {
             viewModel.previousPage();
@@ -186,26 +198,15 @@ class EstudosContainer extends StatelessWidget {
                                       ? "Finalizar"
                                       : "Próximo",
                               onPressed: () {
-                                if (viewModel.currentIndex == 1 &&
-                                    !viewModel.firstStepFormController
-                                        .validate()) {
-                                  return;
-                                }
-
-                                if (viewModel.currentIndex == 2 &&
-                                    !viewModel.secondStepFormController
-                                        .validate()) {
-                                  return;
-                                }
-
                                 if (viewModel.currentIndex ==
                                     viewModel.totalSteps) {
                                   onFinish();
                                   return;
                                 }
 
-                                viewModel.nextPage();
-                                context.push(Routes.planoDeEstudosSecondStep);
+                                if (viewModel.nextPage()) {
+                                  context.push(Routes.planoDeEstudosSecondStep);
+                                }
                               },
                               leftIcon: Icon(
                                 viewModel.currentIndex == viewModel.totalSteps

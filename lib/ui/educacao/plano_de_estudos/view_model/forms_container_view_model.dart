@@ -1,8 +1,16 @@
+import 'package:app/data/repositories/trail/trail_repository.dart';
+import 'package:app/models/trail/trail_request.dart';
 import 'package:app/ui/educacao/plano_de_estudos/controllers/first_step_form_controller.dart';
 import 'package:app/ui/educacao/plano_de_estudos/controllers/second_step_form_controller.dart';
 import 'package:flutter/material.dart';
 
 class FormsContainerViewModel extends ChangeNotifier {
+  final TrailRepositoryImpl _trailRepository;
+  bool isLoading = false;
+
+  FormsContainerViewModel({required TrailRepositoryImpl trailRepository})
+    : _trailRepository = trailRepository;
+
   SecondStepFormController secondStepFormController =
       SecondStepFormController();
 
@@ -16,6 +24,20 @@ class FormsContainerViewModel extends ChangeNotifier {
     1: 'Dados de Contato',
   };
 
+  final List<String> themes = [
+    "Música",
+    "Entretenimento",
+    "Esportes",
+    "Moda e Beleza",
+    "Tecnologia",
+    "Programação",
+    "Viagem",
+    "Anime",
+    "Profissão",
+    "Família",
+  ];
+  final List<String> developments = ["Fala", "Leitura", "Escrita", "Escuta"];
+
   int get currentIndex =>
       _currentIndex == _totalSteps ? _totalSteps : _currentIndex + 1;
   int get totalSteps => _totalSteps;
@@ -27,16 +49,50 @@ class FormsContainerViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void nextPage() {
-    if (_currentIndex < _totalSteps - 1) {
-      _currentIndex++;
-      notifyListeners();
+  bool nextPage() {
+    if (_currentIndex == 0 && !firstStepFormController.validate()) {
+      return false;
     }
+
+    if (_currentIndex == 1 && !secondStepFormController.validate()) {
+      return false;
+    }
+
+    if (_currentIndex >= _totalSteps - 1) {
+      return false;
+    }
+
+    _currentIndex++;
+    notifyListeners();
+    return true;
   }
 
   void previousPage() {
     if (_currentIndex > 0) {
       _currentIndex--;
+      notifyListeners();
+    }
+  }
+
+  Future<void> onFinish() async {
+    try {
+      isLoading = true;
+      notifyListeners();
+
+      await _trailRepository.create(
+        TrailRequest(
+          language:
+              firstStepFormController.languageController.value['countryCode'],
+          developments:
+              firstStepFormController.developmentsController.valuesAsString,
+          themes: firstStepFormController.themesController.valuesAsString,
+          level: secondStepFormController.level.value,
+          timeToLearn: secondStepFormController.timeToLearn.value,
+          timeToStudy: secondStepFormController.timeToStudy.value,
+        ),
+      );
+    } finally {
+      isLoading = false;
       notifyListeners();
     }
   }

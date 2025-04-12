@@ -1,3 +1,6 @@
+import 'package:app/data/repositories/trail/trail_repository_remote.dart';
+import 'package:app/data/services/http.dart';
+import 'package:app/data/services/secure_storage.dart';
 import 'package:app/helpers/toast.dart';
 import 'package:app/providers/auth_provider.dart';
 import 'package:app/routes/destination.dart';
@@ -89,7 +92,12 @@ GoRouter router(AuthProvider authProvider) => GoRouter(
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) {
         return ChangeNotifierProvider(
-          create: (context) => FormsContainerViewModel(),
+          create:
+              (context) => FormsContainerViewModel(
+                trailRepository: TrailRepositoryRemote(
+                  httpService: HttpService(secureStorage: SecureStorage()),
+                ),
+              ),
           child: navigationShell,
         );
       },

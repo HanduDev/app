@@ -77,7 +77,26 @@ class _DropdownState<T> extends State<Dropdown<T>> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       widget.controller.value != null
-                          ? widget.render(widget.controller.value as T)
+                          ? Flexible(
+                            child: Row(
+                              children: [
+                                if (widget.leading != null)
+                                  Wrap(
+                                    crossAxisAlignment:
+                                        WrapCrossAlignment.center,
+                                    children: [
+                                      widget.leading?.call(
+                                            widget.controller.value,
+                                          ) ??
+                                          const SizedBox(),
+                                      const SizedBox(width: 8),
+                                    ],
+                                  ),
+
+                                widget.render(widget.controller.value),
+                              ],
+                            ),
+                          )
                           : widget.placeholder ?? const Text('Selecione'),
                       Icon(Icons.arrow_drop_down, color: AppColors.grey),
                     ],

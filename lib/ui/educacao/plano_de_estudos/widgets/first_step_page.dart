@@ -40,17 +40,12 @@ class FirstStepPage extends StatelessWidget {
                   }
                   return null;
                 },
-                data: DropdownMultipleModel.fromArray([
-                  'Fala',
-                  'Leitura',
-                  'Escrita',
-                  'Escuta',
-                ]),
+                data: DropdownMultipleModel.fromArray(viewModel.developments),
               ),
 
               const SizedBox(height: 12),
               Text(
-                "Existe algum tema em especial que você gostaria de estudar?",
+                "Existe algum tema em especial que você gostaria de estudar? (opcional)",
               ),
               const SizedBox(height: 6),
               DropdownMultiple(
@@ -59,12 +54,7 @@ class FirstStepPage extends StatelessWidget {
                 render: (value) {
                   return Text(value.name);
                 },
-                data: DropdownMultipleModel.fromArray([
-                  'Fala',
-                  'Leitura',
-                  'Escrita',
-                  'Escuta',
-                ]),
+                data: DropdownMultipleModel.fromArray(viewModel.themes),
               ),
             ],
           ),

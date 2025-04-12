@@ -176,5 +176,78 @@ void main() {
       );
       expect(find.text('A senha deve conter letras e números'), findsNothing);
     });
-  });
+  }); //group
+  group('Testes de confirmação de senha da tela de cadastro', () {
+    late GlobalKey<FormState> formKey;
+    late TextEditingController passwordController;
+    late TextEditingController confirmPasswordController;
+
+    setUp(() {
+      formKey = GlobalKey<FormState>();
+      passwordController = TextEditingController();
+      confirmPasswordController = TextEditingController();
+    });
+
+    Future<void> buildForm(WidgetTester tester) async {
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: Form(
+              key: formKey,
+              child: Column(
+                children: [
+                  TextInput(controller: passwordController, label: 'Senha'),
+                  TextInput(
+                    controller: confirmPasswordController,
+                    label: 'Confirmar Senha',
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Confirme sua senha';
+                      }
+                      if (value != passwordController.text) {
+                        return 'As senhas não são iguais';
+                      }
+                      return null;
+                    },
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      formKey.currentState!.validate();
+                    },
+                    child: const Text('Enviar'),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+
+    testWidgets('Mostra erro quando o campo está vazio', (tester) async {
+      await buildForm(tester);
+      await tester.tap(find.text('Enviar'));
+      await tester.pump();
+      expect(find.text('Confirme sua senha'), findsOneWidget);
+    });
+
+    testWidgets('Mostra erro quando as senhas não são iguais', (tester) async {
+      await buildForm(tester);
+      await tester.enterText(find.byType(TextInput).at(0), 'senha123');
+      await tester.enterText(find.byType(TextInput).at(1), 'outraSenha');
+      await tester.tap(find.text('Enviar'));
+      await tester.pump();
+      expect(find.text('As senhas não são iguais'), findsOneWidget);
+    });
+
+    testWidgets('Não mostra erro quando as senhas são iguais', (tester) async {
+      await buildForm(tester);
+      await tester.enterText(find.byType(TextInput).at(0), 'senha123');
+      await tester.enterText(find.byType(TextInput).at(1), 'senha123');
+      await tester.tap(find.text('Enviar'));
+      await tester.pump();
+      expect(find.text('Confirme sua senha'), findsNothing);
+      expect(find.text('As senhas não são iguais'), findsNothing);
+    });
+  }); //group
 }

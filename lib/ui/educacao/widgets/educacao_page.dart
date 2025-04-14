@@ -10,6 +10,11 @@ import 'package:provider/provider.dart';
 class EducacaoPage extends StatelessWidget {
   const EducacaoPage({super.key});
 
+  String getFirstName(String? fullName) {
+    if (fullName == null || fullName.isEmpty) return 'Usuário';
+    return fullName.split(' ').first;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<AuthProvider>(
@@ -20,8 +25,8 @@ class EducacaoPage extends StatelessWidget {
             child: Column(
               children: [
                 Container(
-                  width: 430,
-                  height: 344,
+                  width: double.infinity,
+                  height: 300,
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       begin: Alignment.bottomLeft,
@@ -58,8 +63,7 @@ class EducacaoPage extends StatelessWidget {
                                   const SizedBox(height: 5),
 
                                   Text(
-                                    authProvider.user?.fullName ??
-                                        'Usuário da Silva Campos',
+                                    getFirstName(authProvider.user?.fullName),
                                     style: TextStyle(
                                       fontSize: 30,
                                       color: AppColors.white,
@@ -74,7 +78,7 @@ class EducacaoPage extends StatelessWidget {
                           ),
                           Image.asset(
                             'assets/images/educacao_avatar.png',
-                            width: 200,
+                            width: 175,
                             height: 200,
                           ),
                         ],
@@ -111,11 +115,51 @@ class EducacaoPage extends StatelessWidget {
 
                 const SizedBox(height: 30),
 
-                CardProgressBar(
-                  title: 'Libras',
-                  progress: 0.5,
-                  progressText: '50%',
+                SizedBox(
+                  height: 100,
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    children: [
+                      CardProgressBar(
+                        title: 'Libras',
+                        progress: 0.5,
+                        progressText: '50%',
+                      ),
+                      const SizedBox(width: 20),
+                      CardProgressBar(
+                        title: 'Inglês',
+                        progress: 0.7,
+                        progressText: '70%',
+                      ),
+                      const SizedBox(width: 20),
+                      CardProgressBar(
+                        title: 'Espanhol',
+                        progress: 1.0,
+                        progressText: '100%',
+                      ),
+                    ],
+                  ),
                 ),
+
+                const SizedBox(height: 30),
+
+                Padding(
+                  padding: const EdgeInsets.only(right: 80),
+                  child: Text(
+                    'Recomendações',
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: AppColors.grey,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+
+                const SizedBox(height: 30),
+
+                
+
               ],
             ),
           ),

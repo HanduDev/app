@@ -39,13 +39,38 @@ class CardProgressBar extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 10),
-                LinearProgressIndicator(
-                  value: progress,
-                  backgroundColor: AppColors.primary400,
-                  color: AppColors.primary200,
-                  minHeight: 8,
-                  borderRadius: BorderRadius.circular(4),
-                ),
+
+                 SizedBox(
+                    height: 8,
+                    child: Stack(
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(4),
+                          child: Container(
+                            width: double.infinity,
+                            color: AppColors.primary400,
+                          ),
+                        ),
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(4),
+                          child: Container(
+                            width: MediaQuery.of(context).size.width * progress * 0.35,
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                begin: Alignment.centerLeft,
+                                end: Alignment.centerRight,
+                                colors: [
+                                  AppColors.progressGradient[0],
+                                  AppColors.progressGradient[1],
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
                 const SizedBox(height: 10),
                 Row(
                   children: [

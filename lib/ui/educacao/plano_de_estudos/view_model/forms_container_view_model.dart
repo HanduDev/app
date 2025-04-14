@@ -20,8 +20,8 @@ class FormsContainerViewModel extends ChangeNotifier {
   final int _totalSteps = 2;
 
   final Map<int, String> _formTitles = {
-    0: 'Dados Pessoais',
-    1: 'Dados de Contato',
+    0: 'Suas preferências',
+    1: 'Sobre o plano',
   };
 
   final List<String> themes = [

@@ -132,7 +132,7 @@ class EstudosContainer extends StatelessWidget {
                                     ),
                                     const Spacer(),
                                     Text(
-                                      "${viewModel.currentIndex + 1}/${viewModel.totalSteps}",
+                                      "${viewModel.currentIndex + 1} de ${viewModel.totalSteps}",
                                       style: Font.primary(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w800,

@@ -31,6 +31,7 @@ class FirstStepPage extends StatelessWidget {
                 controller:
                     viewModel.firstStepFormController.developmentsController,
                 width: double.infinity,
+                title: "O que você quer desenvolver?",
                 render: (value) {
                   return Text(value.name);
                 },
@@ -51,6 +52,7 @@ class FirstStepPage extends StatelessWidget {
               DropdownMultiple(
                 controller: viewModel.firstStepFormController.themesController,
                 width: double.infinity,
+                title: "Selecione um tema",
                 render: (value) {
                   return Text(value.name);
                 },

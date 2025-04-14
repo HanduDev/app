@@ -1,4 +1,5 @@
 import 'package:app/ui/core/shared/dropdown/dropdown_button_controller.dart';
+import 'package:app/ui/core/shared/primary_button.dart';
 import 'package:flutter/material.dart';
 import 'package:app/ui/core/themes/app_colors.dart';
 
@@ -11,14 +12,16 @@ class Dropdown<T> extends StatefulWidget {
   final T? value;
   final double? width;
   final DropdownButtonController controller;
+  final String? title;
   final String? Function(T?)? validator;
 
   const Dropdown({
     super.key,
-    this.leading,
     required this.render,
     required this.data,
     required this.controller,
+    this.title,
+    this.leading,
     this.onSelect,
     this.value,
     this.placeholder,
@@ -136,8 +139,8 @@ class _DropdownState<T> extends State<Dropdown<T>> {
               padding: const EdgeInsets.all(16.0),
               child: Column(
                 children: [
-                  const Text(
-                    'Linguagens',
+                  Text(
+                    widget.title ?? "Menu",
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 16),
@@ -166,6 +169,13 @@ class _DropdownState<T> extends State<Dropdown<T>> {
                         );
                       },
                     ),
+                  ),
+                  const SizedBox(height: 16),
+                  PrimaryButton(
+                    text: "Fechar e Salvar",
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
                   ),
                 ],
               ),

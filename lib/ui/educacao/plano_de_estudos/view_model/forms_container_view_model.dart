@@ -38,10 +38,9 @@ class FormsContainerViewModel extends ChangeNotifier {
   ];
   final List<String> developments = ["Fala", "Leitura", "Escrita", "Escuta"];
 
-  int get currentIndex =>
-      _currentIndex == _totalSteps ? _totalSteps : _currentIndex + 1;
+  bool get isLastStep => _currentIndex + 1 == _totalSteps;
+  int get currentIndex => _currentIndex;
   int get totalSteps => _totalSteps;
-
   String get currentTitle => _formTitles[_currentIndex] ?? '';
 
   void setCurrentIndex(int index) {
@@ -49,22 +48,21 @@ class FormsContainerViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  bool nextPage() {
-    if (_currentIndex == 0 && !firstStepFormController.validate()) {
-      return false;
+  bool validate() {
+    if (_currentIndex == 0) {
+      return firstStepFormController.validate();
     }
 
-    if (_currentIndex == 1 && !secondStepFormController.validate()) {
-      return false;
+    if (_currentIndex == 1) {
+      return secondStepFormController.validate();
     }
 
-    if (_currentIndex >= _totalSteps - 1) {
-      return false;
-    }
+    return false;
+  }
 
+  void nextPage() {
     _currentIndex++;
     notifyListeners();
-    return true;
   }
 
   void previousPage() {

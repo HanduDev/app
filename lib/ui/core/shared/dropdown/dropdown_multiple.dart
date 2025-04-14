@@ -1,5 +1,6 @@
 import 'package:app/ui/core/shared/dropdown/dropdown_multiple_controller.dart';
 import 'package:app/ui/core/shared/dropdown/dropdown_multiple_model.dart';
+import 'package:app/ui/core/shared/primary_button.dart';
 import 'package:flutter/material.dart';
 import 'package:app/ui/core/themes/app_colors.dart';
 
@@ -12,6 +13,7 @@ class DropdownMultiple extends StatefulWidget {
   final double? width;
   final DropdownMultipleController controller;
   final String? Function(List<DropdownMultipleModel>)? validator;
+  final String? title;
 
   const DropdownMultiple({
     super.key,
@@ -19,6 +21,7 @@ class DropdownMultiple extends StatefulWidget {
     required this.render,
     required this.controller,
     required this.data,
+    this.title,
     this.placeholder,
     this.width = 158,
     this.onChange,
@@ -44,6 +47,7 @@ class _DropdownState extends State<DropdownMultiple> {
           leading: widget.leading,
           placeholder: widget.placeholder,
           controller: widget.controller,
+          title: widget.title,
           width: widget.width,
           onChange: (values) {
             if (widget.onChange != null) {
@@ -147,6 +151,7 @@ class BottomBar extends DropdownMultiple {
     required super.data,
     required super.render,
     required super.controller,
+    super.title,
     super.leading,
     super.placeholder,
     super.width,
@@ -170,8 +175,8 @@ class _BottomBarState<T> extends State<BottomBar> {
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
-              const Text(
-                'Linguagens',
+              Text(
+                widget.title ?? "Menu",
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 16),
@@ -212,6 +217,13 @@ class _BottomBarState<T> extends State<BottomBar> {
                     );
                   },
                 ),
+              ),
+              const SizedBox(height: 16),
+              PrimaryButton(
+                text: "Fechar e Salvar",
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
               ),
             ],
           ),

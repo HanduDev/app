@@ -27,6 +27,7 @@ class LanguageSelector extends StatelessWidget {
         onSelect: onChanged,
         width: width,
         value: value,
+        title: "Selecione uma linguagem",
         controller: controller,
         validator: (value) {
           if (value == null) {

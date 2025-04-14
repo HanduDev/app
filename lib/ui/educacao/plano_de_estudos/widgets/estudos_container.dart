@@ -47,7 +47,6 @@ class EstudosContainer extends StatelessWidget {
                     onPressed: () async {
                       try {
                         Navigator.of(context).pop();
-
                         context.pushReplacement(Routes.criandoPlanoDeEstudos);
                         await viewModel.onFinish();
                       } catch (e) {
@@ -133,7 +132,7 @@ class EstudosContainer extends StatelessWidget {
                                     ),
                                     const Spacer(),
                                     Text(
-                                      "${viewModel.currentIndex}/${viewModel.totalSteps}",
+                                      "${viewModel.currentIndex + 1}/${viewModel.totalSteps}",
                                       style: Font.primary(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w800,
@@ -143,7 +142,7 @@ class EstudosContainer extends StatelessWidget {
                                   ],
                                 ),
                                 ProgressBar(
-                                  value: (viewModel.currentIndex - 1) / 2,
+                                  value: (viewModel.currentIndex) / 2,
                                   backgroundColor: AppColors.grey.withAlpha(35),
                                 ),
                               ],
@@ -194,22 +193,26 @@ class EstudosContainer extends StatelessWidget {
                           Flexible(
                             child: PrimaryButton(
                               text:
-                                  viewModel.currentIndex == viewModel.totalSteps
+                                  viewModel.isLastStep
                                       ? "Finalizar"
                                       : "Próximo",
                               onPressed: () {
-                                if (viewModel.currentIndex ==
-                                    viewModel.totalSteps) {
-                                  onFinish();
+                                if (!viewModel.validate()) {
                                   return;
                                 }
 
-                                if (viewModel.nextPage()) {
+                                if (viewModel.isLastStep) {
+                                  return onFinish();
+                                }
+
+                                if (viewModel.currentIndex == 0) {
                                   context.push(Routes.planoDeEstudosSecondStep);
                                 }
+
+                                viewModel.nextPage();
                               },
                               leftIcon: Icon(
-                                viewModel.currentIndex == viewModel.totalSteps
+                                viewModel.isLastStep
                                     ? Icons.check
                                     : Icons.arrow_forward,
                                 size: 25,

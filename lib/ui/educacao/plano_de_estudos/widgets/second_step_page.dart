@@ -42,6 +42,8 @@ class SecondStepPage extends StatelessWidget {
               Dropdown(
                 width: double.infinity,
                 render: (value) => Text(value),
+                title:
+                    "Qual seu nível em ${viewModel.firstStepFormController.languageController.value['name']}?",
                 data: ['Iniciante', 'Intermediário', 'Avançado'],
                 controller: viewModel.secondStepFormController.level,
                 validator: (value) {
@@ -57,6 +59,7 @@ class SecondStepPage extends StatelessWidget {
               Dropdown(
                 width: double.infinity,
                 render: (value) => Text(value),
+                title: "Selecione um tempo de duração",
                 data: ['1 semana', '2 semanas', '3 semanas', '4 semanas'],
                 controller: viewModel.secondStepFormController.timeToLearn,
                 validator: (value) {
@@ -72,6 +75,7 @@ class SecondStepPage extends StatelessWidget {
               Dropdown(
                 width: double.infinity,
                 render: (value) => Text(value),
+                title: "Quantos minutos por dia?",
                 data: [
                   '10 minutos',
                   '20 minutos',

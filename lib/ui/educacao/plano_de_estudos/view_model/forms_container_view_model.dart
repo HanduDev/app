@@ -3,6 +3,7 @@ import 'package:app/models/trail/trail_request.dart';
 import 'package:app/ui/educacao/plano_de_estudos/controllers/first_step_form_controller.dart';
 import 'package:app/ui/educacao/plano_de_estudos/controllers/second_step_form_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class FormsContainerViewModel extends ChangeNotifier {
   final TrailRepositoryImpl _trailRepository;
@@ -72,7 +73,7 @@ class FormsContainerViewModel extends ChangeNotifier {
     }
   }
 
-  Future<void> onFinish() async {
+  Future<void> onFinish(BuildContext context) async {
     try {
       isLoading = true;
       notifyListeners();
@@ -89,6 +90,9 @@ class FormsContainerViewModel extends ChangeNotifier {
           timeToStudy: secondStepFormController.timeToStudy.value,
         ),
       );
+    } catch (e) {
+      if (!context.mounted) return;
+      context.pop();
     } finally {
       isLoading = false;
       notifyListeners();

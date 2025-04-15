@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class LanguagesProvider extends ChangeNotifier {
   final List<Map<String, String>> _languages = [
+    {'name': 'Libras', 'countryCode': 'pt-br'},
     {'name': 'Português', 'countryCode': 'pt-br'},
     {'name': 'Árabe', 'countryCode': 'ar'},
     {'name': 'Chinês', 'countryCode': 'zh-cn'},

@@ -55,9 +55,8 @@ class _CadastroPageState extends State<CadastroPage> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        const SizedBox(height: 40),
-                        Image.asset('assets/images/Logo_1.png', height: 100),
-                        const SizedBox(height: 10),
+                        const SizedBox(height: 32),
+                        Image.asset('assets/images/Logo.png', height: 120, width: 120,),
                         Text(
                           'Cadastro',
                           style: Font.primary(
@@ -66,7 +65,7 @@ class _CadastroPageState extends State<CadastroPage> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        const SizedBox(height: 40),
+                        const SizedBox(height: 32),
                         FormsValidator(),
                         const SizedBox(height: 24),
                         Text(

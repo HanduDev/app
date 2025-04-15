@@ -173,12 +173,17 @@ class TranslateTextPage extends StatelessWidget {
                           ChatField(
                             controller: requestController,
                             onSendMessage: (message) {},
+                            label: 'Digite algo',
                             minHeight: 150,
                           ),
                           ChatField(
                             controller: responseController,
-                            onSendMessage: (message) {},
+                            onSendMessage: (message) {
+                              responseController.text = message;
+                            },
                             trianglePosition: ChatFieldPosition.left,
+                            isWritable: false,
+                            iconButtonEnabled: false,
                             backgroundColor: AppColors.primary100,
                             textColor: AppColors.primary300,
                             minHeight: 145,

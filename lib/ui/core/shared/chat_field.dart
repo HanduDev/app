@@ -18,6 +18,9 @@ class ChatField extends StatelessWidget {
   final Widget footer;
   final Color? backgroundColor;
   final Color? textColor;
+  final String? label;
+  final bool isWritable;
+  final bool iconButtonEnabled;
 
   const ChatField({
     super.key,
@@ -29,6 +32,9 @@ class ChatField extends StatelessWidget {
     this.footer = const SizedBox(),
     this.backgroundColor,
     this.textColor,
+    this.label,
+    this.isWritable = true,
+    this.iconButtonEnabled = true,
   });
 
   @override
@@ -70,25 +76,29 @@ class ChatField extends StatelessWidget {
                     child: TextInput(
                       keyboardType: TextInputType.multiline,
                       controller: controller,
-                      label: "Digite algo",
+                      label: label,
                       textColor: textColor,
                       borderColor: color,
                       color: color,
                       maxLines: 3,
                       minLines: 1,
+                      enabled: isWritable,
                     ),
                   ),
                   const SizedBox(width: 10),
-                  IconButton(
-                    onPressed: () {
-                      FocusScope.of(context).unfocus();
-                      if (onSendMessage != null && controller != null) {
-                        onSendMessage!(controller!.text);
-                      }
-                    },
-                    icon: Icon(Icons.send),
-                    color: textColor,
-                  ),
+                  iconButtonEnabled && isWritable 
+                      ? IconButton(
+                        onPressed: () {
+                          FocusScope.of(context).unfocus();
+                          if (onSendMessage != null && controller != null) {
+                            onSendMessage!(controller!.text);
+                            controller!.clear();
+                          }
+                        },
+                        icon: Icon(Icons.send),
+                        color: textColor,
+                      )
+                      : SizedBox.shrink(),
                 ],
               ),
               const SizedBox(height: 12),

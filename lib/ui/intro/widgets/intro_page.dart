@@ -72,9 +72,16 @@ class _IntroPageState extends State<IntroPage> {
                           items: items,
                         ),
                         Positioned(
-                          top: 14,
-                          left: 14,
-                          child: Image.asset('assets/images/Logo.png'),
+                          top: 0,
+                          left: 0,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Image.asset(
+                              'assets/images/Logo.png',
+                              width: 80,
+                              height: 80,
+                            ),
+                          ),
                         ),
                       ],
                     ),

@@ -21,6 +21,7 @@ class TextInput extends StatelessWidget {
   final int? maxLines;
   final int? minLines;
   final bool fixedBorderColor;
+  final bool enabled;
 
   const TextInput({
     super.key,
@@ -42,6 +43,7 @@ class TextInput extends StatelessWidget {
     this.maxLines,
     this.minLines,
     this.fixedBorderColor = false,
+    this.enabled = true,
   });
 
   @override
@@ -56,6 +58,7 @@ class TextInput extends StatelessWidget {
       readOnly: readOnly,
       minLines: obscureText ? 1 : minLines,
       maxLines: obscureText ? 1 : maxLines,
+      enabled: enabled,
       style: Font.primary(
         fontWeight: FontWeight.w400,
         color: textColor ?? AppColors.black,
@@ -69,6 +72,13 @@ class TextInput extends StatelessWidget {
           borderSide: BorderSide(
             color: borderColor ?? AppColors.lightGrey,
             width: 1.5,
+          ),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        disabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: borderColor ?? Colors.transparent,
+            width: 0,
           ),
           borderRadius: BorderRadius.circular(8),
         ),

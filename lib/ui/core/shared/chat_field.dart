@@ -92,7 +92,6 @@ class ChatField extends StatelessWidget {
                           FocusScope.of(context).unfocus();
                           if (onSendMessage != null && controller != null) {
                             onSendMessage!(controller!.text);
-                            controller!.clear();
                           }
                         },
                         icon: Icon(Icons.send),

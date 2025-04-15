@@ -7,6 +7,7 @@ import 'package:app/ui/core/shared/segmented_control/segmented_control_item.dart
 import 'package:app/ui/core/themes/app_colors.dart';
 import 'package:app/ui/core/themes/font.dart';
 import 'package:app/providers/languages_provider.dart';
+import 'package:app/ui/traducao_texto/view_model/translate_text_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -45,182 +46,191 @@ class TranslateTextPage extends StatelessWidget {
                   SingleChildScrollView(
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                      child: Column(
-                        children: [
-                          SizedBox(height: 64),
-                          Row(
+                      child: Consumer<TranslateTextViewModel>(
+                        builder: (context, viewmodel, child) {
+                          return Column(
                             children: [
-                              Expanded(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                              SizedBox(height: 64),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          'Boas vindas ao Handu,',
+                                          style: Font.primary(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w300,
+                                            color: AppColors.yellow,
+                                          ),
+                                        ),
+                                        SizedBox(height: 8),
+                                        Text(
+                                          authProvider.user?.fullName
+                                                  .split(' ')
+                                                  .first ??
+                                              '',
+                                          style: Font.primary(
+                                            fontSize: 25,
+                                            fontWeight: FontWeight.w800,
+                                            color: AppColors.white,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(width: 30),
+                                  GestureDetector(
+                                    onTap: () {},
+                                    child: CircleAvatar(
+                                      radius: 25,
+                                      backgroundImage:
+                                          authProvider.user?.photoURL != null
+                                              ? NetworkImage(
+                                                authProvider.user!.photoURL!,
+                                              )
+                                              : null,
+                                      backgroundColor: AppColors.primary100,
+                                      child:
+                                          authProvider.user?.photoURL == null
+                                              ? Icon(
+                                                Icons.person,
+                                                size: 30,
+                                                color: AppColors.white,
+                                              )
+                                              : null,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 40),
+                              Hero(
+                                tag: 'segmented',
+                                child: SegmentedControl(
+                                  initialIndex: 0,
+                                  onChange: (value) {
+                                    context.go(value);
+                                  },
+                                  items: [
+                                    SegmentedControlItem(
+                                      key: '/home',
+                                      text: "Texto",
+                                      icon: Icons.text_snippet_outlined,
+                                    ),
+                                    SegmentedControlItem(
+                                      key: '/audio',
+                                      text: "Áudio",
+                                      icon: Icons.mic_none_outlined,
+                                    ),
+                                    SegmentedControlItem(
+                                      key: '/home',
+                                      text: "Imagem",
+                                      icon: Icons.image_outlined,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(height: 40),
+                              Hero(
+                                tag: "dropdown-languages",
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Text(
-                                      'Boas vindas ao Handu,',
-                                      style: Font.primary(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w300,
-                                        color: AppColors.yellow,
+                                    Flexible(
+                                      child: LanguageSelector(
+                                        width: double.infinity,
+                                        controller: viewmodel.fromlanguageController,
                                       ),
                                     ),
-                                    SizedBox(height: 8),
-                                    Text(
-                                      authProvider.user?.fullName
-                                              .split(' ')
-                                              .first ??
-                                          '',
-                                      style: Font.primary(
-                                        fontSize: 25,
-                                        fontWeight: FontWeight.w800,
-                                        color: AppColors.white,
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 8.0,
+                                      ),
+                                      child: GestureDetector(
+                                        onTap: () {},
+                                        child: Container(
+                                          padding: const EdgeInsets.all(8.0),
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            shape: BoxShape.circle,
+                                          ),
+                                          child: Icon(
+                                            Icons.swap_horiz,
+                                            color: AppColors.black,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    Flexible(
+                                      child: LanguageSelector(
+                                        width: double.infinity,
+                                        controller: viewmodel.tolanguageController,
                                       ),
                                     ),
                                   ],
                                 ),
                               ),
-                              SizedBox(width: 30),
-                              GestureDetector(
-                                onTap: () {},
-                                child: CircleAvatar(
-                                  radius: 25,
-                                  backgroundImage:
-                                      authProvider.user?.photoURL != null
-                                          ? NetworkImage(
-                                            authProvider.user!.photoURL!,
-                                          )
-                                          : null,
-                                  backgroundColor: AppColors.primary100,
-                                  child:
-                                      authProvider.user?.photoURL == null
-                                          ? Icon(
-                                            Icons.person,
-                                            size: 30,
-                                            color: AppColors.white,
-                                          )
-                                          : null,
+                              SizedBox(height: 40),
+                              ChatField(
+                                controller: requestController,
+                                onSendMessage: (message) async {
+                                  await viewmodel.translateText(message);
+                                  responseController.text =
+                                      viewmodel.translatedText;                                 
+                                },
+                                label: 'Digite algo',
+                                minHeight: 150,
+                                
+                              ),
+                              ChatField(
+                                controller: responseController,
+                                onSendMessage: (message) {                
+                        
+                                },
+                                trianglePosition: ChatFieldPosition.left,
+                                isWritable: false,
+                                iconButtonEnabled: false,
+                                backgroundColor: AppColors.primary100,
+                                textColor: AppColors.primary300,
+                                minHeight: 145,
+                                footer: Row(
+                                  children: [
+                                    IconButton(
+                                      onPressed: () {},
+                                      icon: Icon(Icons.volume_up_outlined),
+                                      color: AppColors.primary500,
+                                      padding: EdgeInsets.fromLTRB(
+                                        38.0,
+                                        42.0,
+                                        0,
+                                        0,
+                                      ),
+                                    ),
+                                    IconButton(
+                                      onPressed: () {},
+                                      icon: Icon(Icons.feedback_outlined),
+                                      color: AppColors.primary500,
+                                      padding: EdgeInsets.fromLTRB(0, 42.0, 0, 0),
+                                    ),
+                                    IconButton(
+                                      onPressed: () {},
+                                      icon: Icon(Icons.copy),
+                                      color: AppColors.primary500,
+                                      padding: EdgeInsets.fromLTRB(
+                                        0,
+                                        42.0,
+                                        38.0,
+                                        0,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ],
-                          ),
-                          SizedBox(height: 40),
-                          Hero(
-                            tag: 'segmented',
-                            child: SegmentedControl(
-                              initialIndex: 0,
-                              onChange: (value) {
-                                context.go(value);
-                              },
-                              items: [
-                                SegmentedControlItem(
-                                  key: '/home',
-                                  text: "Texto",
-                                  icon: Icons.text_snippet_outlined,
-                                ),
-                                SegmentedControlItem(
-                                  key: '/audio',
-                                  text: "Áudio",
-                                  icon: Icons.mic_none_outlined,
-                                ),
-                                SegmentedControlItem(
-                                  key: '/home',
-                                  text: "Imagem",
-                                  icon: Icons.image_outlined,
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(height: 40),
-                          Hero(
-                            tag: "dropdown-languages",
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Flexible(
-                                  child: LanguageSelector(
-                                    width: double.infinity,
-                                    controller: DropdownButtonController(),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 8.0,
-                                  ),
-                                  child: GestureDetector(
-                                    onTap: () {},
-                                    child: Container(
-                                      padding: const EdgeInsets.all(8.0),
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        shape: BoxShape.circle,
-                                      ),
-                                      child: Icon(
-                                        Icons.swap_horiz,
-                                        color: AppColors.black,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Flexible(
-                                  child: LanguageSelector(
-                                    width: double.infinity,
-                                    controller: DropdownButtonController(),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(height: 40),
-                          ChatField(
-                            controller: requestController,
-                            onSendMessage: (message) {},
-                            label: 'Digite algo',
-                            minHeight: 150,
-                          ),
-                          ChatField(
-                            controller: responseController,
-                            onSendMessage: (message) {
-                              responseController.text = message;
-                            },
-                            trianglePosition: ChatFieldPosition.left,
-                            isWritable: false,
-                            iconButtonEnabled: false,
-                            backgroundColor: AppColors.primary100,
-                            textColor: AppColors.primary300,
-                            minHeight: 145,
-                            footer: Row(
-                              children: [
-                                IconButton(
-                                  onPressed: () {},
-                                  icon: Icon(Icons.volume_up_outlined),
-                                  color: AppColors.primary500,
-                                  padding: EdgeInsets.fromLTRB(
-                                    38.0,
-                                    42.0,
-                                    0,
-                                    0,
-                                  ),
-                                ),
-                                IconButton(
-                                  onPressed: () {},
-                                  icon: Icon(Icons.feedback_outlined),
-                                  color: AppColors.primary500,
-                                  padding: EdgeInsets.fromLTRB(0, 42.0, 0, 0),
-                                ),
-                                IconButton(
-                                  onPressed: () {},
-                                  icon: Icon(Icons.copy),
-                                  color: AppColors.primary500,
-                                  padding: EdgeInsets.fromLTRB(
-                                    0,
-                                    42.0,
-                                    38.0,
-                                    0,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
+                          );
+                        }
                       ),
                     ),
                   ),

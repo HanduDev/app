@@ -1,4 +1,5 @@
 import 'package:app/data/repositories/trail/trail_repository_remote.dart';
+import 'package:app/data/repositories/translate/translate_repository_remote.dart';
 import 'package:app/data/services/http.dart';
 import 'package:app/data/services/secure_storage.dart';
 import 'package:app/helpers/toast.dart';
@@ -20,6 +21,7 @@ import 'package:app/ui/intro/widgets/intro_page.dart';
 import 'package:app/ui/libras/view_model/libras_view_model.dart';
 import 'package:app/ui/libras/widgets/libras_page.dart';
 import 'package:app/providers/languages_provider.dart';
+import 'package:app/ui/traducao_texto/view_model/translate_text_view_model.dart';
 import 'package:app/ui/traducao_texto/widgets/translate_text_page.dart';
 import 'package:app/ui/login/widgets/login_page.dart';
 import 'package:app/ui/translate_audio/widgets/translate_audio_page.dart';
@@ -192,7 +194,12 @@ GoRouter router(AuthProvider authProvider) => GoRouter(
               routes: [
                 GoRoute(
                   path: Routes.home,
-                  builder: (context, state) => TranslateTextPage(),
+                  builder:
+                  (context, state) => ChangeNotifierProvider(
+                    create: (context) => TranslateTextViewModel(
+                      translateRepository: TranslateRepositoryRemote(httpService: HttpService(secureStorage: SecureStorage()))),
+                    child: TranslateTextPage(),
+                  ),
                 ),
                 GoRoute(
                   path: Routes.audio,

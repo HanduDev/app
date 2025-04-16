@@ -11,9 +11,8 @@ class TranslateTextViewModel extends ChangeNotifier {
 
   DropdownButtonController fromlanguageController = DropdownButtonController();
   DropdownButtonController tolanguageController = DropdownButtonController();
-  String translatedText = '';  
 
-  Future<void> translateText(String text) async {
+  Future<String> translateText(String text) async {
     try {
       var translateRequest = TranslateTextRequest(
         text: text,
@@ -21,9 +20,11 @@ class TranslateTextViewModel extends ChangeNotifier {
         toLanguage: tolanguageController.value["countryCode"],
       );
       Translate response = await _translateRepository.create(translateRequest);
-      translatedText = response.message;
+
+      return response.message;
     } catch (e) {
       print('Error: $e');
+      return 'Error: $e';
     }
   }
 

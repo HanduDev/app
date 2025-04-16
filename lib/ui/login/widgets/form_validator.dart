@@ -30,127 +30,122 @@ class FormValidatorState extends State<FormValidator> {
 
   @override
   Widget build(BuildContext context) {
+    Future<void> validatedAndSubmit() async {
+      try {
+        if (!_formKey.currentState!.validate()) return;
+        final authProvider = context.read<AuthProvider>();
+
+        await authProvider.signIn(
+          email: _emailController.text,
+          password: _passwordController.text,
+        );
+
+        if (!context.mounted) return;
+
+        context.pushReplacement(Routes.home);
+      } catch (e) {
+        Toast.error(context, getErrorMessage(e));
+      }
+    }
+
     return Form(
       key: _formKey,
-      child: Consumer<AuthProvider>(
-        builder: (context, authProvider, child) {
-          Future<void> validatedAndSubmit() async {
-            try {
-              if (!_formKey.currentState!.validate()) return;
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          TextInput(
+            controller: _emailController,
+            label: 'Email',
+            keyboardType: TextInputType.emailAddress,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Digite um e-mail';
+              }
+              if (!RegExp(
+                r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
+              ) // Validar .dominio corretamente
+              .hasMatch(value)) {
+                return 'Digite um e-mail válido';
+              }
+              return null;
+            },
+          ),
+          SizedBox(height: 56),
 
-              await authProvider.signIn(
-                email: _emailController.text,
-                password: _passwordController.text,
-              );
-
-              if (!context.mounted) return;
-
-              context.pushReplacement(Routes.home);
-            } catch (e) {
-              Toast.error(context, getErrorMessage(e));
-            }
-          }
-
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          TextInput(
+            controller: _passwordController,
+            label: 'Senha',
+            obscureText: _obscurePasswordText,
+            sufixIcon: IconButton(
+              onPressed: () {
+                setState(() {
+                  _obscurePasswordText = !_obscurePasswordText;
+                });
+              },
+              icon: Icon(
+                _obscurePasswordText ? Icons.visibility : Icons.visibility_off,
+              ),
+            ),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Digite uma senha';
+              }
+              if (value.length < 8) {
+                return 'A senha deve ter pelo menos 8 caracteres';
+              }
+              if (!RegExp(r'^(?=.*[a-zA-Z])(?=.*\d)').hasMatch(value)) {
+                return 'A senha deve conter letras e números';
+              }
+              return null;
+            },
+          ),
+          SizedBox(height: 16),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              TextInput(
-                controller: _emailController,
-                label: 'Email',
-                keyboardType: TextInputType.emailAddress,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Digite um e-mail';
-                  }
-                  if (!RegExp(
-                    r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
-                  ) // Validar .dominio corretamente
-                  .hasMatch(value)) {
-                    return 'Digite um e-mail válido';
-                  }
-                  return null;
-                },
-              ),
-              SizedBox(height: 56),
-
-              TextInput(
-                controller: _passwordController,
-                label: 'Senha',
-                obscureText: _obscurePasswordText,
-                sufixIcon: IconButton(
-                  onPressed: () {
-                    setState(() {
-                      _obscurePasswordText = !_obscurePasswordText;
-                    });
-                  },
-                  icon: Icon(
-                    _obscurePasswordText
-                        ? Icons.visibility
-                        : Icons.visibility_off,
-                  ),
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Digite uma senha';
-                  }
-                  if (value.length < 8) {
-                    return 'A senha deve ter pelo menos 8 caracteres';
-                  }
-                  if (!RegExp(r'^(?=.*[a-zA-Z])(?=.*\d)').hasMatch(value)) {
-                    return 'A senha deve conter letras e números';
-                  }
-                  return null;
-                },
-              ),
-              SizedBox(height: 16),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Row(
-                    children: [
-                      Checkbox(
-                        shape: CircleBorder(),
-                        value: _remember,
-                        onChanged: (value) {
-                          setState(() {
-                            _remember = value!;
-                          });
-                        },
-                      ),
-                      Text(
-                        'Lembrar-Me',
-                        style: Font.primary(
-                          fontSize: 12,
-                          color: AppColors.primary500,
-                        ),
-                      ),
-                    ],
+                  Checkbox(
+                    shape: CircleBorder(),
+                    value: _remember,
+                    onChanged: (value) {
+                      setState(() {
+                        _remember = value!;
+                      });
+                    },
                   ),
-                  TextButton(
-                    onPressed: () {},
-                    child: Text(
-                      'Esqueceu a senha?',
-                      style: Font.primary(
-                        fontSize: 12,
-                        color: AppColors.primary500,
-                      ),
+                  Text(
+                    'Lembrar-Me',
+                    style: Font.primary(
+                      fontSize: 12,
+                      color: AppColors.primary500,
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 40),
-              Hero(
-                tag: 'primary-button',
-                child: PrimaryButton(
-                  text: 'Entrar',
-                  rounded: true,
-                  onPressed: validatedAndSubmit,
-                  loading: authProvider.isAuthenticating,
+              TextButton(
+                onPressed: () {},
+                child: Text(
+                  'Esqueceu a senha?',
+                  style: Font.primary(
+                    fontSize: 12,
+                    color: AppColors.primary500,
+                  ),
                 ),
               ),
             ],
-          );
-        },
+          ),
+          const SizedBox(height: 40),
+          Hero(
+            tag: 'primary-button',
+            child: PrimaryButton(
+              text: 'Entrar',
+              rounded: true,
+              onPressed: validatedAndSubmit,
+              loading: context.watch<AuthProvider>().isAuthenticating,
+            ),
+          ),
+        ],
       ),
     );
   }

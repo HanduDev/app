@@ -78,31 +78,37 @@ class _DropdownState<T> extends State<Dropdown<T>> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      widget.controller.value != null
-                          ? Flexible(
-                            child: Row(
-                              children: [
-                                if (widget.leading != null)
-                                  Wrap(
-                                    crossAxisAlignment:
-                                        WrapCrossAlignment.center,
-                                    children: [
-                                      widget.leading?.call(
-                                            widget.controller.value,
-                                          ) ??
-                                          const SizedBox(),
-                                      const SizedBox(width: 8),
-                                    ],
-                                  ),
+                    children:
+                        widget.controller.value != null
+                            ? [
+                              if (widget.leading != null)
+                                widget.leading!.call(widget.controller.value),
 
-                                widget.render(widget.controller.value),
-                              ],
-                            ),
-                          )
-                          : widget.placeholder ?? const Text('Selecione'),
-                      Icon(Icons.arrow_drop_down, color: AppColors.grey),
-                    ],
+                              SizedBox(width: widget.leading != null ? 8 : 0),
+
+                              Expanded(
+                                child: widget.render(widget.controller.value),
+                              ),
+
+                              Icon(
+                                Icons.arrow_drop_down,
+                                color: AppColors.grey,
+                              ),
+                            ]
+                            : [
+                              Text(
+                                "Selecione",
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w400,
+                                  color: AppColors.grey,
+                                ),
+                              ),
+                              Icon(
+                                Icons.arrow_drop_down,
+                                color: AppColors.grey,
+                              ),
+                            ],
                   ),
                 ),
               ),
@@ -154,6 +160,7 @@ class _DropdownState<T> extends State<Dropdown<T>> {
                             widget.controller.value == currentValue;
 
                         return ListTile(
+                          key: ValueKey<T>(currentValue),
                           leading:
                               isSelected
                                   ? Icon(Icons.check, color: AppColors.green)

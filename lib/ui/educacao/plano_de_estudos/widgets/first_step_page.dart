@@ -10,58 +10,61 @@ class FirstStepPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<FormsContainerViewModel>(
-      builder: (context, viewModel, child) {
-        return Form(
-          key: viewModel.firstStepFormController.formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text("Qual idioma você quer aprender?"),
-              const SizedBox(height: 6),
-              LanguageSelector(
-                width: double.infinity,
-                controller:
-                    viewModel.firstStepFormController.languageController,
-              ),
-              const SizedBox(height: 12),
-              Text("O que você quer desenvolver?"),
-              const SizedBox(height: 6),
-              DropdownMultiple(
-                controller:
-                    viewModel.firstStepFormController.developmentsController,
-                width: double.infinity,
-                title: "O que você quer desenvolver?",
-                render: (value) {
-                  return Text(value.name);
-                },
-                validator: (values) {
-                  if (values.isEmpty) {
-                    return "Selecione pelo menos um desenvolvimento";
-                  }
-                  return null;
-                },
-                data: DropdownMultipleModel.fromArray(viewModel.developments),
-              ),
+    final viewModel = context.read<FormsContainerViewModel>();
 
-              const SizedBox(height: 12),
-              Text(
-                "Existe algum tema em especial que você gostaria de estudar? (opcional)",
-              ),
-              const SizedBox(height: 6),
-              DropdownMultiple(
-                controller: viewModel.firstStepFormController.themesController,
-                width: double.infinity,
-                title: "Selecione um tema",
-                render: (value) {
-                  return Text(value.name);
-                },
-                data: DropdownMultipleModel.fromArray(viewModel.themes),
-              ),
-            ],
+    return Form(
+      key: viewModel.firstStepFormController.formKey,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text("Qual idioma você quer aprender?"),
+          const SizedBox(height: 6),
+          LanguageSelector(
+            width: double.infinity,
+            controller: viewModel.firstStepFormController.languageController,
+            validator: (value) {
+              if (value == null) {
+                return "Selecione um idioma";
+              }
+              return null;
+            },
           ),
-        );
-      },
+          const SizedBox(height: 12),
+          Text("O que você quer desenvolver?"),
+          const SizedBox(height: 6),
+          DropdownMultiple(
+            controller:
+                viewModel.firstStepFormController.developmentsController,
+            width: double.infinity,
+            title: "O que você quer desenvolver?",
+            render: (value) {
+              return Text(value.name);
+            },
+            validator: (values) {
+              if (values.isEmpty) {
+                return "Selecione pelo menos um desenvolvimento";
+              }
+              return null;
+            },
+            data: DropdownMultipleModel.fromArray(viewModel.developments),
+          ),
+
+          const SizedBox(height: 12),
+          Text(
+            "Existe algum tema em especial que você gostaria de estudar? (opcional)",
+          ),
+          const SizedBox(height: 6),
+          DropdownMultiple(
+            controller: viewModel.firstStepFormController.themesController,
+            width: double.infinity,
+            title: "Selecione um tema",
+            render: (value) {
+              return Text(value.name);
+            },
+            data: DropdownMultipleModel.fromArray(viewModel.themes),
+          ),
+        ],
+      ),
     );
   }
 }

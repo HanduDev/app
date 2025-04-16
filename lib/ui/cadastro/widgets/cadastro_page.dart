@@ -22,6 +22,21 @@ class CadastroPage extends StatefulWidget {
 class _CadastroPageState extends State<CadastroPage> {
   @override
   Widget build(BuildContext context) {
+    void onLoginWithGoogle() async {
+      try {
+        final authProvider = context.read<AuthProvider>();
+
+        await authProvider.signInWithGoogle();
+
+        if (context.mounted) {
+          context.pushReplacement(Routes.home);
+        }
+      } catch (e) {
+        if (!context.mounted) return;
+        Toast.error(context, getErrorMessage(e));
+      }
+    }
+
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle(
         statusBarColor: AppColors.white,
@@ -35,78 +50,62 @@ class _CadastroPageState extends State<CadastroPage> {
           backgroundColor: AppColors.white,
           body: Center(
             child: SingleChildScrollView(
-              child: Consumer<AuthProvider>(
-                builder: (context, authProvider, child) {
-                  void onLoginWithGoogle() async {
-                    try {
-                      await authProvider.signInWithGoogle();
-
-                      if (context.mounted) {
-                        context.pushReplacement(Routes.home);
-                      }
-                    } catch (e) {
-                      if (!context.mounted) return;
-                      Toast.error(context, getErrorMessage(e));
-                    }
-                  }
-
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 32),
+                    Image.asset(
+                      'assets/images/Logo.png',
+                      height: 120,
+                      width: 120,
+                    ),
+                    Text(
+                      'Cadastro',
+                      style: Font.primary(
+                        color: AppColors.grey,
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 32),
+                    FormsValidator(),
+                    const SizedBox(height: 24),
+                    Text('Ou continue com', style: Font.primary(fontSize: 12)),
+                    const SizedBox(height: 16),
+                    FlatButton(
+                      loading: context.watch<AuthProvider>().isGoogleLoading,
+                      onPressed: onLoginWithGoogle,
+                      leftIcon: SvgPicture.asset(
+                        'assets/images/icons/google.svg',
+                        height: 30,
+                        width: 30,
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const SizedBox(height: 32),
-                        Image.asset('assets/images/Logo.png', height: 120, width: 120,),
                         Text(
-                          'Cadastro',
-                          style: Font.primary(
-                            color: AppColors.grey,
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 32),
-                        FormsValidator(),
-                        const SizedBox(height: 24),
-                        Text(
-                          'Ou continue com',
+                          'Já tem uma conta?',
                           style: Font.primary(fontSize: 12),
                         ),
-                        const SizedBox(height: 16),
-                        FlatButton(
-                          loading: authProvider.isGoogleLoading,
-                          onPressed: onLoginWithGoogle,
-                          leftIcon: SvgPicture.asset(
-                            'assets/images/icons/google.svg',
-                            height: 30,
-                            width: 30,
+                        TextButton(
+                          onPressed: () {
+                            context.pushReplacement(Routes.login);
+                          },
+                          child: Text(
+                            'Entrar',
+                            style: Font.primary(
+                              fontSize: 12,
+                              color: AppColors.primary300,
+                            ),
                           ),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Já tem uma conta?',
-                              style: Font.primary(fontSize: 12),
-                            ),
-                            TextButton(
-                              onPressed: () {
-                                context.pushReplacement(Routes.login);
-                              },
-                              child: Text(
-                                'Entrar',
-                                style: Font.primary(
-                                  fontSize: 12,
-                                  color: AppColors.primary300,
-                                ),
-                              ),
-                            ),
-                          ],
                         ),
                       ],
                     ),
-                  );
-                },
+                  ],
+                ),
               ),
             ),
           ),

@@ -1,4 +1,5 @@
 import 'package:app/providers/auth_provider.dart';
+import 'package:app/ui/core/shared/chat_field.dart';
 import 'package:app/ui/core/shared/dropdown/dropdown_button_controller.dart';
 import 'package:app/ui/core/shared/gradient_background.dart';
 import 'package:app/ui/core/shared/language_selector.dart';
@@ -7,6 +8,7 @@ import 'package:app/ui/core/shared/segmented_control/segmented_control_item.dart
 import 'package:app/ui/core/themes/app_colors.dart';
 import 'package:app/ui/core/themes/font.dart';
 import 'package:app/providers/languages_provider.dart';
+import 'package:app/ui/traducao_texto/view_model/translate_text_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -16,6 +18,9 @@ class TranslateAudioPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final TextEditingController requestController = TextEditingController();
+    final TextEditingController responseController = TextEditingController();
+
     return Consumer<AuthProvider>(
       builder: (context, authProvider, child) {
         return Consumer<LanguagesProvider>(
@@ -76,7 +81,7 @@ class TranslateAudioPage extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(height: 64),
+                    SizedBox(height: 40),
                     Hero(
                       tag: 'segmented',
                       child: SegmentedControl(
@@ -150,6 +155,19 @@ class TranslateAudioPage extends StatelessWidget {
                         ],
                       ),
                     ),
+                    SizedBox(height: 40),
+                    ChatField(
+                      controller: requestController,
+                      onSendMessage: (message) async {
+                        final viewmodel = 
+                            context.read<TranslateTextViewModel>();
+                        await viewmodel.translateText(message);
+                        responseController.text = viewmodel.translatedText;
+                      },
+                      label: 'Digite algo',
+                      minHeight: 110,
+                    ),
+
                   ],
                 ),
               ),

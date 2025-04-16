@@ -26,4 +26,11 @@ class TranslateTextViewModel extends ChangeNotifier {
       print('Error: $e');
     }
   }
+
+  void swapLanguages() {
+    var temp = fromlanguageController.value;
+    fromlanguageController.value = tolanguageController.value;
+    tolanguageController.value = temp;
+    notifyListeners();
+  }
 }

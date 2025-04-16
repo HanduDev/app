@@ -3,6 +3,7 @@ import 'package:app/routes/routes.dart';
 import 'package:app/ui/core/shared/primary_button.dart';
 import 'package:app/ui/core/themes/app_colors.dart';
 import 'package:app/ui/educacao/widgets/card_progressbar.dart';
+import 'package:app/ui/educacao/widgets/card_recommendation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -141,7 +142,7 @@ class EducacaoPage extends StatelessWidget {
             ),
             const SizedBox(height: 30),
             Padding(
-              padding: const EdgeInsets.only(right: 80),
+              padding: const EdgeInsets.only(right: 185),
               child: Text(
                 'Recomendações',
                 style: TextStyle(
@@ -153,6 +154,21 @@ class EducacaoPage extends StatelessWidget {
             ),
 
             const SizedBox(height: 30),
+
+            SizedBox(
+              height: 100,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                children: [
+                  CardRecommendation(
+                    language: {'name': 'Brasil', 'countryCode': 'pt-br'}, 
+                    level: 'Iniciante', 
+                    persons: 120,
+                  ),
+                ],
+              ),
+            )
           ],
         ),
       ),

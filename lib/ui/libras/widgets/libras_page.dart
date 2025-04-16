@@ -15,78 +15,76 @@ class LibrasPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final viewModel = context.read<LibrasViewModel>();
+
     return Scaffold(
       body: SafeArea(
-        child: Consumer<LibrasViewModel>(
-          builder: (context, viewModel, child) {
-            return Stack(
-              children: [
-                kIsWeb
-                    ? Center(
-                      child: Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: Text(
-                          "Seu dispositivo não tem suporte para esta funcionalidade",
-                          textAlign: TextAlign.center,
-                          style: Font.primary(
-                            color: AppColors.grey,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    )
-                    : VLibrasWebView(),
-                Positioned(
+        child: Stack(
+          children: [
+            kIsWeb
+                ? Center(
                   child: Padding(
-                    padding: const EdgeInsets.all(24.0),
-                    child: SegmentedControl(
-                      initialIndex: 1,
-                      onChange: (value) {},
-                      items: [
-                        SegmentedControlItem(
-                          key: '/intro',
-                          text: "Texto",
-                          icon: Icons.text_snippet_outlined,
-                        ),
-                        SegmentedControlItem(
-                          key: '/intro',
-                          text: "Imagem",
-                          icon: Icons.image_outlined,
-                        ),
-                      ],
+                    padding: const EdgeInsets.all(12.0),
+                    child: Text(
+                      "Seu dispositivo não tem suporte para esta funcionalidade",
+                      textAlign: TextAlign.center,
+                      style: Font.primary(
+                        color: AppColors.grey,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
-                ),
-                Positioned(
-                  bottom: 44,
-                  left: 22,
-                  right: 22,
-                  child: ChatField(
-                    controller: viewModel.textController,
-                    onSendMessage: (message) {
-                      viewModel.sendText();
-                    },
-                    footer: Row(
-                      children: [
-                        SpeechButton(
-                          onRecognize: (value) {
-                            viewModel.textController.text = value;
-                          },
-                        ),
-                        IconButton(
-                          onPressed: () {},
-                          icon: Icon(Icons.feedback_outlined),
-                          color: AppColors.white,
-                          padding: EdgeInsets.all(0),
-                        ),
-                      ],
+                )
+                : VLibrasWebView(),
+            Positioned(
+              child: Padding(
+                padding: const EdgeInsets.all(24.0),
+                child: SegmentedControl(
+                  initialIndex: 1,
+                  onChange: (value) {},
+                  items: [
+                    SegmentedControlItem(
+                      key: '/intro',
+                      text: "Texto",
+                      icon: Icons.text_snippet_outlined,
                     ),
-                  ),
+                    SegmentedControlItem(
+                      key: '/intro',
+                      text: "Imagem",
+                      icon: Icons.image_outlined,
+                    ),
+                  ],
                 ),
-              ],
-            );
-          },
+              ),
+            ),
+            Positioned(
+              bottom: 44,
+              left: 22,
+              right: 22,
+              child: ChatField(
+                controller: viewModel.textController,
+                onSendMessage: (message) {
+                  viewModel.sendText();
+                },
+                footer: Row(
+                  children: [
+                    SpeechButton(
+                      onRecognize: (value) {
+                        viewModel.textController.text = value;
+                      },
+                    ),
+                    IconButton(
+                      onPressed: () {},
+                      icon: Icon(Icons.feedback_outlined),
+                      color: AppColors.white,
+                      padding: EdgeInsets.all(0),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );

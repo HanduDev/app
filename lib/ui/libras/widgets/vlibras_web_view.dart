@@ -13,10 +13,8 @@ class VLibrasWebView extends StatefulWidget {
 class _VLibrasWebViewState extends State<VLibrasWebView> {
   @override
   Widget build(BuildContext context) {
-    return Consumer<LibrasViewModel>(
-      builder: (context, viewModel, child) {
-        return WebViewWidget(controller: viewModel.webViewController);
-      },
+    return WebViewWidget(
+      controller: context.read<LibrasViewModel>().webViewController,
     );
   }
 

@@ -17,154 +17,145 @@ class EducacaoPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<AuthProvider>(
-      builder: (context, authProvider, child) {
-        return Scaffold(
-          backgroundColor: AppColors.primary100,
-          body: SingleChildScrollView(
-            child: Column(
-              children: [
-                Container(
-                  width: double.infinity,
-                  height: 300,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.bottomLeft,
-                      end: Alignment.topRight,
-                      colors: [AppColors.primary200, AppColors.primary400],
-                    ),
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(64),
-                      bottomRight: Radius.circular(64),
-                    ),
-                  ),
-                  child: Column(
+    final authProvider = context.read<AuthProvider>();
+
+    return Scaffold(
+      backgroundColor: AppColors.primary100,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              width: double.infinity,
+              height: 300,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.bottomLeft,
+                  end: Alignment.topRight,
+                  colors: [AppColors.primary200, AppColors.primary400],
+                ),
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(64),
+                  bottomRight: Radius.circular(64),
+                ),
+              ),
+              child: Column(
+                children: [
+                  const SizedBox(height: 90),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const SizedBox(height: 90),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 20,
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'O que deseja aprender hoje,',
+                                style: TextStyle(
+                                  fontSize: 10,
+                                  color: AppColors.yellow,
+                                ),
                               ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'O que deseja aprender hoje,',
-                                    style: TextStyle(
-                                      fontSize: 10,
-                                      color: AppColors.yellow,
-                                    ),
-                                  ),
 
-                                  const SizedBox(height: 5),
+                              const SizedBox(height: 5),
 
-                                  Text(
-                                    getFirstName(authProvider.user?.fullName),
-                                    style: TextStyle(
-                                      fontSize: 30,
-                                      color: AppColors.white,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                    softWrap: true,
-                                    overflow: TextOverflow.visible,
-                                  ),
-                                ],
+                              Text(
+                                getFirstName(authProvider.user?.fullName),
+                                style: TextStyle(
+                                  fontSize: 30,
+                                  color: AppColors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                softWrap: true,
+                                overflow: TextOverflow.visible,
                               ),
-                            ),
+                            ],
                           ),
-                          Image.asset(
-                            'assets/images/educacao_avatar.png',
-                            width: 175,
-                            height: 200,
-                          ),
-                        ],
+                        ),
+                      ),
+                      Image.asset(
+                        'assets/images/educacao_avatar.png',
+                        width: 175,
+                        height: 200,
                       ),
                     ],
                   ),
-                ),
-
-                const SizedBox(height: 30),
-
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: PrimaryButton(
-                    rounded: true,
-                    onPressed: () {
-                      context.push(Routes.planoDeEstudos);
-                    },
-                    leftIcon: Icon(Icons.add_outlined, size: 25),
-                    text: 'Criar Plano de Estudos',
-                  ),
-                ),
-                const SizedBox(height: 40),
-                Padding(
-                  padding: const EdgeInsets.only(right: 80),
-                  child: Text(
-                    'Continuar planos de estudos',
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: AppColors.grey,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-
-                const SizedBox(height: 30),
-
-                SizedBox(
-                  height: 100,
-                  child: ListView(
-                    scrollDirection: Axis.horizontal,
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    children: [
-                      CardProgressBar(
-                        title: 'Libras',
-                        progress: 0.5,
-                        progressText: '50%',
-                      ),
-                      const SizedBox(width: 20),
-                      CardProgressBar(
-                        title: 'Inglês',
-                        progress: 0.7,
-                        progressText: '70%',
-                      ),
-                      const SizedBox(width: 20),
-                      CardProgressBar(
-                        title: 'Espanhol',
-                        progress: 1.0,
-                        progressText: '100%',
-                      ),
-                    ],
-                  ),
-                ),
-
-                const SizedBox(height: 30),
-
-                Padding(
-                  padding: const EdgeInsets.only(right: 80),
-                  child: Text(
-                    'Recomendações',
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: AppColors.grey,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-
-                const SizedBox(height: 30),
-
-                
-
-              ],
+                ],
+              ),
             ),
-          ),
-        );
-      },
+
+            const SizedBox(height: 30),
+
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: PrimaryButton(
+                rounded: true,
+                onPressed: () {
+                  context.push(Routes.planoDeEstudos);
+                },
+                leftIcon: Icon(Icons.add_outlined, size: 25),
+                text: 'Criar Plano de Estudos',
+              ),
+            ),
+            const SizedBox(height: 40),
+            Padding(
+              padding: const EdgeInsets.only(right: 80),
+              child: Text(
+                'Continuar planos de estudos',
+                style: TextStyle(
+                  fontSize: 18,
+                  color: AppColors.grey,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 30),
+
+            SizedBox(
+              height: 100,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                children: [
+                  CardProgressBar(
+                    title: 'Libras',
+                    progress: 0.5,
+                    progressText: '50%',
+                  ),
+                  const SizedBox(width: 20),
+                  CardProgressBar(
+                    title: 'Inglês',
+                    progress: 0.7,
+                    progressText: '70%',
+                  ),
+                  const SizedBox(width: 20),
+                  CardProgressBar(
+                    title: 'Espanhol',
+                    progress: 1.0,
+                    progressText: '100%',
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 30),
+            Padding(
+              padding: const EdgeInsets.only(right: 80),
+              child: Text(
+                'Recomendações',
+                style: TextStyle(
+                  fontSize: 18,
+                  color: AppColors.grey,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 30),
+          ],
+        ),
+      ),
     );
   }
 }

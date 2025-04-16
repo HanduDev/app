@@ -3,7 +3,9 @@ import 'package:app/data/services/google_auth.dart';
 import 'package:app/data/services/http.dart';
 import 'package:app/data/services/secure_storage.dart';
 import 'package:app/providers/auth_provider.dart';
+import 'package:app/providers/languages_provider.dart';
 import 'package:app/providers/notifier.dart';
+import 'package:app/repositories.dart';
 import 'package:app/routes/router.dart';
 import 'package:app/ui/core/themes/app_colors.dart';
 import 'package:app/ui/core/themes/font.dart';
@@ -24,10 +26,23 @@ class _AppHanduState extends State<AppHandu> {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [
-        ChangeNotifierProvider<AuthProvider>.value(value: authProvider),
-        ChangeNotifierProvider<Notifier>(create: (_) => Notifier()),
-      ],
+      providers:
+          [
+            ChangeNotifierProvider<AuthProvider>.value(value: authProvider),
+
+            ChangeNotifierProvider<Notifier>(create: (_) => Notifier()),
+            Provider<SecureStorageImpl>(create: (context) => SecureStorage()),
+            Provider<HttpServiceImpl>(
+              create:
+                  (context) => HttpService(
+                    secureStorage: context.read<SecureStorageImpl>(),
+                  ),
+            ),
+            ChangeNotifierProvider<LanguagesProvider>.value(
+              value: LanguagesProvider(),
+            ),
+          ] +
+          Repositories.providers(),
       child: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle(
           statusBarColor: AppColors.primary400,

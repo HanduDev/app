@@ -53,6 +53,8 @@ class _FinishedState extends State<Finished> with TickerProviderStateMixin {
             repeat: false,
             onLoaded: (composition) {
               Future.delayed(const Duration(milliseconds: 1200), () {
+                if (!context.mounted) return;
+
                 setState(() {
                   _hasFinishedCheckAnimation = true;
                   _checkController.forward();

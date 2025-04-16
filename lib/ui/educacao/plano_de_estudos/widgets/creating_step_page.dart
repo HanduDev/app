@@ -19,8 +19,6 @@ class _CreatingStepPageState extends State<CreatingStepPage>
 
   @override
   Widget build(BuildContext context) {
-    final isLoading = context.watch<FormsContainerViewModel>().isLoading;
-
     return Scaffold(
       backgroundColor: AppColors.primary300,
       body: SafeArea(
@@ -29,7 +27,12 @@ class _CreatingStepPageState extends State<CreatingStepPage>
             padding: const EdgeInsets.all(8),
             child: FadeTransition(
               opacity: _animation,
-              child: isLoading ? Loading() : Finished(),
+              child:
+                  context.select<FormsContainerViewModel, bool>(
+                        (vm) => vm.isLoading,
+                      )
+                      ? Loading()
+                      : Finished(),
             ),
           ),
         ),
@@ -54,7 +57,6 @@ class _CreatingStepPageState extends State<CreatingStepPage>
   @override
   void dispose() {
     _controller.dispose();
-    _animation.removeListener(() {});
     super.dispose();
   }
 }

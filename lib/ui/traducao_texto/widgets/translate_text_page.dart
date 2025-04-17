@@ -21,7 +21,7 @@ class TranslateTextPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = context.watch<AuthProvider>().user;
-    final viewModel = context.read<TranslateTextViewModel>();
+    final viewModel = context.watch<TranslateTextViewModel>();
 
     return Scaffold(
       backgroundColor: AppColors.white,

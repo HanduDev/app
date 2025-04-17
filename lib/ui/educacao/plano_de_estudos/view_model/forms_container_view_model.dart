@@ -1,13 +1,14 @@
 import 'package:app/data/repositories/trail/trail_repository.dart';
+import 'package:app/helpers/errors.dart';
 import 'package:app/models/trail/trail_request.dart';
 import 'package:app/ui/educacao/plano_de_estudos/controllers/first_step_form_controller.dart';
 import 'package:app/ui/educacao/plano_de_estudos/controllers/second_step_form_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 class FormsContainerViewModel extends ChangeNotifier {
   final TrailRepositoryImpl _trailRepository;
   bool isLoading = false;
+  String errorText = "";
 
   FormsContainerViewModel({required TrailRepositoryImpl trailRepository})
     : _trailRepository = trailRepository;
@@ -73,7 +74,7 @@ class FormsContainerViewModel extends ChangeNotifier {
     }
   }
 
-  Future<void> onFinish(BuildContext context) async {
+  Future<void> onFinish() async {
     try {
       isLoading = true;
       notifyListeners();
@@ -91,8 +92,7 @@ class FormsContainerViewModel extends ChangeNotifier {
         ),
       );
     } catch (e) {
-      if (!context.mounted) return;
-      context.pop();
+      errorText = getErrorMessage(e);
     } finally {
       isLoading = false;
       notifyListeners();

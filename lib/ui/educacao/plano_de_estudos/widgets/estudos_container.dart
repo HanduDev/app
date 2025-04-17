@@ -51,7 +51,7 @@ class EstudosContainer extends StatelessWidget {
                   try {
                     Navigator.of(context).pop();
                     context.pushReplacement(Routes.criandoPlanoDeEstudos);
-                    await viewModel.onFinish(context);
+                    await viewModel.onFinish();
                   } catch (e) {
                     if (!context.mounted) return;
                     Toast.error(context, getErrorMessage(e));

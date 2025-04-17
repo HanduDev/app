@@ -2,9 +2,11 @@ import 'package:app/routes/routes.dart';
 import 'package:app/ui/core/shared/primary_button.dart';
 import 'package:app/ui/core/themes/app_colors.dart';
 import 'package:app/ui/core/themes/font.dart';
+import 'package:app/ui/educacao/plano_de_estudos/view_model/forms_container_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lottie/lottie.dart';
+import 'package:provider/provider.dart';
 
 class Finished extends StatefulWidget {
   const Finished({super.key});
@@ -20,7 +22,7 @@ class _FinishedState extends State<Finished> with TickerProviderStateMixin {
   int _afterCreatedSeconds = 5;
   bool _hasFinishedCheckAnimation = false;
 
-  void startSeconds(BuildContext context) {
+  void startSeconds(BuildContext context, bool hasError) {
     Future.delayed(Duration(seconds: 1), () {
       if (context.mounted) {
         setState(() {
@@ -28,10 +30,15 @@ class _FinishedState extends State<Finished> with TickerProviderStateMixin {
         });
 
         if (_afterCreatedSeconds > 0) {
-          startSeconds(context);
+          startSeconds(context, hasError);
         }
 
         if (_afterCreatedSeconds == 0) {
+          if (hasError) {
+            context.pushReplacement(Routes.planoDeEstudosSecondStep);
+            return;
+          }
+
           context.go(Routes.educacao);
         }
       }
@@ -40,6 +47,11 @@ class _FinishedState extends State<Finished> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    final viewModel = context.watch<FormsContainerViewModel>();
+
+    String errorText = viewModel.errorText;
+    bool hasError = errorText != "";
+
     return Container(
       padding: const EdgeInsets.all(16),
       child: Column(
@@ -47,9 +59,9 @@ class _FinishedState extends State<Finished> with TickerProviderStateMixin {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Lottie.asset(
-            'assets/lottie/check.json',
-            width: 200,
-            height: 200,
+            hasError ? 'assets/lottie/error.json' : 'assets/lottie/check.json',
+            width: hasError ? 270 : 200,
+            height: hasError ? 270 : 200,
             repeat: false,
             onLoaded: (composition) {
               Future.delayed(const Duration(milliseconds: 1200), () {
@@ -58,7 +70,7 @@ class _FinishedState extends State<Finished> with TickerProviderStateMixin {
                 setState(() {
                   _hasFinishedCheckAnimation = true;
                   _checkController.forward();
-                  startSeconds(context);
+                  startSeconds(context, hasError);
                 });
               });
             },
@@ -73,7 +85,7 @@ class _FinishedState extends State<Finished> with TickerProviderStateMixin {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    'Criado com sucesso!',
+                    hasError ? errorText : 'Criado com sucesso!',
                     textAlign: TextAlign.center,
                     style: Font.primary(
                       fontSize: 20,
@@ -83,8 +95,16 @@ class _FinishedState extends State<Finished> with TickerProviderStateMixin {
                   ),
                   const SizedBox(height: 16),
                   PrimaryButton(
-                    text: 'Ver plano de estudos',
+                    text:
+                        hasError ? "Tentar novamente" : 'Ver plano de estudos',
                     onPressed: () {
+                      if (hasError) {
+                        context.pushReplacement(
+                          Routes.planoDeEstudosSecondStep,
+                        );
+                        return;
+                      }
+
                       context.go(Routes.educacao);
                     },
                   ),

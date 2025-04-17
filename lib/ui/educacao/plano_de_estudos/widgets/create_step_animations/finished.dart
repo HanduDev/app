@@ -60,8 +60,8 @@ class _FinishedState extends State<Finished> with TickerProviderStateMixin {
         children: [
           Lottie.asset(
             hasError ? 'assets/lottie/error.json' : 'assets/lottie/check.json',
-            width: hasError ? 270 : 200,
-            height: hasError ? 270 : 200,
+            width: hasError ? 200 : 200,
+            height: hasError ? 200 : 200,
             repeat: false,
             onLoaded: (composition) {
               Future.delayed(const Duration(milliseconds: 1200), () {

@@ -77,6 +77,7 @@ class FormsContainerViewModel extends ChangeNotifier {
   Future<void> onFinish() async {
     try {
       isLoading = true;
+      errorText = '';
       notifyListeners();
 
       await _trailRepository.create(

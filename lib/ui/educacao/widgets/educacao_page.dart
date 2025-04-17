@@ -27,7 +27,7 @@ class EducacaoPage extends StatelessWidget {
           children: [
             Container(
               width: double.infinity,
-              height: 300,
+              height: 290,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.bottomLeft,
@@ -140,7 +140,9 @@ class EducacaoPage extends StatelessWidget {
                 ],
               ),
             ),
+
             const SizedBox(height: 30),
+
             Padding(
               padding: const EdgeInsets.only(right: 185),
               child: Text(
@@ -153,22 +155,28 @@ class EducacaoPage extends StatelessWidget {
               ),
             ),
 
-            const SizedBox(height: 30),
+            const SizedBox(height: 20),
 
             SizedBox(
-              height: 100,
+              height: 110,
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 children: [
                   CardRecommendation(
-                    language: {'name': 'Brasil', 'countryCode': 'pt-br'}, 
+                    language: {'name': 'Português', 'countryCode': 'pt-br'}, 
                     level: 'Iniciante', 
                     persons: 120,
                   ),
+                  const SizedBox(width: 20),
+                  CardRecommendation(
+                    language: {'name': 'Inglês', 'countryCode': 'en'}, 
+                    level: 'Básico', 
+                    persons: 2000,
+                  ),
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),

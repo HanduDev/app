@@ -73,6 +73,7 @@ class LibrasPage extends StatelessWidget {
                       onRecognize: (value) {
                         viewModel.textController.text = value;
                       },
+                      size: 45.0,
                     ),
                     IconButton(
                       onPressed: () {},

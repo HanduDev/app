@@ -7,8 +7,15 @@ import 'package:speech_to_text/speech_to_text.dart';
 
 class SpeechButton extends StatefulWidget {
   final void Function(String text) onRecognize;
+  final double size; // Tamanho do botão
+  final Color? backgroundColor; // Cor do fundo do botão (opcional)
 
-  const SpeechButton({super.key, required this.onRecognize});
+  const SpeechButton({
+    super.key,
+    required this.onRecognize,
+    this.size = 25.0, // Define um tamanho padrão
+    this.backgroundColor, // Fundo transparente por padrão
+  });
 
   @override
   State<SpeechButton> createState() => _SpeechButtonState();
@@ -66,8 +73,8 @@ class _SpeechButtonState extends State<SpeechButton> {
   Widget build(BuildContext context) {
     bool isListening = _speechToText.isListening && _speechToText.isAvailable;
 
-    return IconButton(
-      onPressed: () async {
+    return GestureDetector(
+      onTap: () async {
         try {
           if (isListening) {
             await _stopListening(context);
@@ -84,8 +91,19 @@ class _SpeechButtonState extends State<SpeechButton> {
           Toast.error(context, "Ocorreu um erro ao gravar");
         }
       },
-      icon: Icon(isListening ? Icons.mic : Icons.mic_off),
-      color: AppColors.white,
+      child: Container(
+        width: widget.size, // Usa o tamanho definido na propriedade
+        height: widget.size, // Usa o tamanho definido na propriedade
+        decoration: BoxDecoration(
+          color: widget.backgroundColor ?? Colors.transparent, // Cor do fundo ou transparente
+          shape: BoxShape.circle, // Fundo circular
+        ),
+        child: Icon(
+          isListening ? Icons.mic : Icons.mic_off,
+          color: AppColors.white,
+          size: widget.size * 0.5, // Ajusta o tamanho do ícone proporcionalmente
+        ),
+      ),
     );
   }
 }

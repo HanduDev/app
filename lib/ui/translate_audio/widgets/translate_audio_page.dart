@@ -6,6 +6,8 @@ import 'package:app/ui/core/shared/language_selector.dart';
 import 'package:app/ui/core/shared/segmented_control/segmented_control.dart';
 import 'package:app/ui/core/shared/segmented_control/segmented_control_item.dart';
 import 'package:app/ui/core/themes/app_colors.dart';
+import 'package:app/ui/libras/view_model/libras_view_model.dart';
+import 'package:app/ui/libras/widgets/speech_button.dart';
 import 'package:app/ui/core/themes/font.dart';
 import 'package:app/ui/traducao_texto/view_model/translate_text_view_model.dart';
 import 'package:flutter/material.dart';
@@ -148,22 +150,45 @@ class TranslateAudioPage extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(height: 40),
-            ChatField(
-              controller: requestController,
-              onSendMessage: (message) async {
-                final viewmodel = context.read<TranslateTextViewModel?>();
-
-                if (viewmodel == null) {
-                  return;
-                }
-
-                responseController.text = await viewmodel.translateText(
-                  message,
-                );
-              },
-              label: 'Digite algo',
-              minHeight: 110,
+            SizedBox(height: 20),
+            Center(
+              child: Column(
+                children: [       
+                  SizedBox(height: 12),           
+                  ChatField(
+                    controller: requestController,
+                    onSendMessage: (message) async {
+                      final viewmodel = context.read<TranslateTextViewModel?>();
+                      if (viewmodel == null) {
+                        return;
+                      }
+                      responseController.text = await viewmodel.translateText(
+                        message,
+                      );
+                    },
+                    label: 'Fale algo...',
+                    minHeight: 100,
+                  ),
+                  SpeechButton(
+                    onRecognize: (value) {
+                      requestController.text = value; // Atualiza o texto no campo de entrada
+                    },
+                    size: 85.0,
+                    backgroundColor: AppColors.primary500, // Define o tamanho do botão (80x80)
+                  ),
+                  SizedBox(height: 32),
+                  ChatField(
+                    controller: responseController,
+                    onSendMessage: (message) {},
+                    trianglePosition: ChatFieldPosition.left,
+                    isWritable: false,
+                    iconButtonEnabled: false,
+                    backgroundColor: AppColors.primary100,
+                    textColor: AppColors.primary300,
+                    minHeight: 100,
+                  ),
+                ],
+              ),
             ),
           ],
         ),

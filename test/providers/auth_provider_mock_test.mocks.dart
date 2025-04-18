@@ -3,10 +3,10 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i3;
-import 'dart:ui' as _i4;
+import 'dart:async' as _i4;
 
-import 'package:app/providers/auth_provider.dart' as _i2;
+import 'package:app/data/repositories/auth/auth_repository.dart' as _i3;
+import 'package:app/models/user.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -23,39 +23,41 @@ import 'package:mockito/mockito.dart' as _i1;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-/// A class which mocks [AuthProviderImpl].
+class _FakeUser_0 extends _i1.SmartFake implements _i2.User {
+  _FakeUser_0(Object parent, Invocation parentInvocation)
+    : super(parent, parentInvocation);
+}
+
+/// A class which mocks [AuthRepositoryImpl].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockAuthProviderImpl extends _i1.Mock implements _i2.AuthProviderImpl {
-  MockAuthProviderImpl() {
+class MockAuthRepositoryImpl extends _i1.Mock
+    implements _i3.AuthRepositoryImpl {
+  MockAuthRepositoryImpl() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  bool get hasListeners =>
-      (super.noSuchMethod(Invocation.getter(#hasListeners), returnValue: false)
-          as bool);
-
-  @override
-  _i3.Future<void> signInWithGoogle() =>
+  _i4.Future<_i2.User> signInWithGoogle() =>
       (super.noSuchMethod(
             Invocation.method(#signInWithGoogle, []),
-            returnValue: _i3.Future<void>.value(),
-            returnValueForMissingStub: _i3.Future<void>.value(),
+            returnValue: _i4.Future<_i2.User>.value(
+              _FakeUser_0(this, Invocation.method(#signInWithGoogle, [])),
+            ),
           )
-          as _i3.Future<void>);
+          as _i4.Future<_i2.User>);
 
   @override
-  _i3.Future<void> signOut() =>
+  _i4.Future<void> signOut() =>
       (super.noSuchMethod(
             Invocation.method(#signOut, []),
-            returnValue: _i3.Future<void>.value(),
-            returnValueForMissingStub: _i3.Future<void>.value(),
+            returnValue: _i4.Future<void>.value(),
+            returnValueForMissingStub: _i4.Future<void>.value(),
           )
-          as _i3.Future<void>);
+          as _i4.Future<void>);
 
   @override
-  _i3.Future<void> signIn({
+  _i4.Future<_i2.User> signIn({
     required String? email,
     required String? password,
   }) =>
@@ -64,13 +66,20 @@ class MockAuthProviderImpl extends _i1.Mock implements _i2.AuthProviderImpl {
               #email: email,
               #password: password,
             }),
-            returnValue: _i3.Future<void>.value(),
-            returnValueForMissingStub: _i3.Future<void>.value(),
+            returnValue: _i4.Future<_i2.User>.value(
+              _FakeUser_0(
+                this,
+                Invocation.method(#signIn, [], {
+                  #email: email,
+                  #password: password,
+                }),
+              ),
+            ),
           )
-          as _i3.Future<void>);
+          as _i4.Future<_i2.User>);
 
   @override
-  _i3.Future<void> signUp({
+  _i4.Future<_i2.User> signUp({
     required String? name,
     required String? email,
     required String? password,
@@ -81,50 +90,46 @@ class MockAuthProviderImpl extends _i1.Mock implements _i2.AuthProviderImpl {
               #email: email,
               #password: password,
             }),
-            returnValue: _i3.Future<void>.value(),
-            returnValueForMissingStub: _i3.Future<void>.value(),
+            returnValue: _i4.Future<_i2.User>.value(
+              _FakeUser_0(
+                this,
+                Invocation.method(#signUp, [], {
+                  #name: name,
+                  #email: email,
+                  #password: password,
+                }),
+              ),
+            ),
           )
-          as _i3.Future<void>);
+          as _i4.Future<_i2.User>);
 
   @override
-  _i3.Future<void> verifyCode({required String? code}) =>
+  _i4.Future<_i2.User?> me() =>
+      (super.noSuchMethod(
+            Invocation.method(#me, []),
+            returnValue: _i4.Future<_i2.User?>.value(),
+          )
+          as _i4.Future<_i2.User?>);
+
+  @override
+  _i4.Future<_i2.User> verifyCode({required String? code}) =>
       (super.noSuchMethod(
             Invocation.method(#verifyCode, [], {#code: code}),
-            returnValue: _i3.Future<void>.value(),
-            returnValueForMissingStub: _i3.Future<void>.value(),
+            returnValue: _i4.Future<_i2.User>.value(
+              _FakeUser_0(
+                this,
+                Invocation.method(#verifyCode, [], {#code: code}),
+              ),
+            ),
           )
-          as _i3.Future<void>);
+          as _i4.Future<_i2.User>);
 
   @override
-  _i3.Future<void> resendCode({required String? code}) =>
+  _i4.Future<void> resendCode({required String? code}) =>
       (super.noSuchMethod(
             Invocation.method(#resendCode, [], {#code: code}),
-            returnValue: _i3.Future<void>.value(),
-            returnValueForMissingStub: _i3.Future<void>.value(),
+            returnValue: _i4.Future<void>.value(),
+            returnValueForMissingStub: _i4.Future<void>.value(),
           )
-          as _i3.Future<void>);
-
-  @override
-  void addListener(_i4.VoidCallback? listener) => super.noSuchMethod(
-    Invocation.method(#addListener, [listener]),
-    returnValueForMissingStub: null,
-  );
-
-  @override
-  void removeListener(_i4.VoidCallback? listener) => super.noSuchMethod(
-    Invocation.method(#removeListener, [listener]),
-    returnValueForMissingStub: null,
-  );
-
-  @override
-  void dispose() => super.noSuchMethod(
-    Invocation.method(#dispose, []),
-    returnValueForMissingStub: null,
-  );
-
-  @override
-  void notifyListeners() => super.noSuchMethod(
-    Invocation.method(#notifyListeners, []),
-    returnValueForMissingStub: null,
-  );
+          as _i4.Future<void>);
 }

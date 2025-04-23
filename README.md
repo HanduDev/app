@@ -46,9 +46,13 @@ flutter run
 
 👨‍💻 Integrantes do Projeto
 Everton Henrique Lopes
+
 Fábio Koiti Konda
+
 Lucas Pizol Ferreira
+
 Mariana Franceschi Tessarini
+
 Yan Gomes Aguiar de Almeida
 
 📚 Créditos

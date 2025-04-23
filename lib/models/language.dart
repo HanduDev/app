@@ -5,7 +5,7 @@ class Language {
   Language({required this.name, required this.code});
 
   factory Language.fromJson(Map<String, dynamic> json) {
-    return Language(name: json['name'], code: json['code']);
+    return Language(name: json['name'], code: json['acronym']);
   }
 
   Map<String, dynamic> toJson() {

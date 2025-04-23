@@ -16,8 +16,8 @@ class TranslateTextViewModel extends ChangeNotifier {
     try {
       var translateRequest = TranslateTextRequest(
         text: text,
-        fromLanguage: fromlanguageController.value["countryCode"],
-        toLanguage: tolanguageController.value["countryCode"],
+        fromLanguage: fromlanguageController.value.code,
+        toLanguage: tolanguageController.value.code,
       );
       Translate response = await _translateRepository.create(translateRequest);
 

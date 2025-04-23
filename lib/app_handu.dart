@@ -1,4 +1,5 @@
 import 'package:app/data/repositories/auth/auth_repository_remote.dart';
+import 'package:app/data/repositories/language/language_repository_remote.dart';
 import 'package:app/data/services/google_auth.dart';
 import 'package:app/data/services/http.dart';
 import 'package:app/data/services/secure_storage.dart';
@@ -39,7 +40,11 @@ class _AppHanduState extends State<AppHandu> {
                   ),
             ),
             ChangeNotifierProvider<LanguagesProvider>.value(
-              value: LanguagesProvider(),
+              value: LanguagesProvider(languageRepository: LanguageRepositoryRemote(
+                httpService: HttpService(
+                    secureStorage: SecureStorage(),
+                  ),
+              )),
             ),
           ] +
           Repositories.providers(),

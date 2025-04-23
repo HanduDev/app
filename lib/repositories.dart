@@ -40,6 +40,7 @@ class Repositories {
               httpService: context.read<HttpServiceImpl>(),
             ),
       ),
+  
     ];
   }
 }

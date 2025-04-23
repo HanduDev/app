@@ -1,3 +1,4 @@
+import 'package:app/models/language.dart';
 import 'package:app/providers/languages_provider.dart';
 import 'package:app/ui/core/shared/dropdown/dropdown_button.dart';
 import 'package:app/ui/core/shared/dropdown/dropdown_button_controller.dart';
@@ -7,10 +8,10 @@ import 'package:provider/provider.dart';
 
 class LanguageSelector extends StatelessWidget {
   final double width;
-  final void Function(Map<String, String>)? onChanged;
-  final Map<String, String>? value;
+  final void Function(Language)? onChanged;
+  final Language? value;
   final DropdownButtonController controller;
-  final String? Function(Map<String, String>?)? validator;
+  final String? Function(Language?)? validator;
 
   const LanguageSelector({
     super.key,
@@ -24,9 +25,8 @@ class LanguageSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final languagesProvider =
-        context.read<LanguagesProvider?>() ?? LanguagesProvider();
-
-    return Dropdown<Map<String, String>>(
+        context.read<LanguagesProvider>();
+    return Dropdown<Language>(
       data: languagesProvider.languages,
       onSelect: onChanged,
       width: width,
@@ -35,14 +35,14 @@ class LanguageSelector extends StatelessWidget {
       validator: validator,
       leading:
           (value) => CountryFlag.fromLanguageCode(
-            value['countryCode']!,
+            value.code,
             height: 20,
             width: 30,
             shape: const RoundedRectangle(8),
           ),
       render: (value) {
         return Text(
-          value['name']!,
+          value.name,
           maxLines: 1,
           softWrap: false,
           style: const TextStyle(

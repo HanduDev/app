@@ -1,5 +1,6 @@
 import 'package:app/providers/auth_provider.dart';
 import 'package:app/ui/core/shared/chat_field.dart';
+import 'package:app/ui/traducao_texto/widgets/popUp_feedback.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:app/ui/core/shared/language_selector.dart';
@@ -197,7 +198,22 @@ class TranslateTextPage extends StatelessWidget {
                           color: AppColors.primary500,
                         ),
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            if (responseController.text.isNotEmpty) {
+                              showFeedbackDialog(
+                                context,
+                              ); 
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    "A tradução precisa estar preenchida para enviar feedback.",
+                                  ),
+                                  backgroundColor: Colors.red,
+                                ),
+                              );
+                            }
+                          },
                           icon: Icon(Icons.feedback_outlined),
                           color: AppColors.primary500,
                         ),

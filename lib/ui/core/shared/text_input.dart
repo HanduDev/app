@@ -22,6 +22,7 @@ class TextInput extends StatelessWidget {
   final int? minLines;
   final bool fixedBorderColor;
   final bool enabled;
+  final Key? keyField;
 
   const TextInput({
     super.key,
@@ -44,11 +45,13 @@ class TextInput extends StatelessWidget {
     this.minLines,
     this.fixedBorderColor = false,
     this.enabled = true,
+    this.keyField,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      key: keyField,
       validator: validator,
       onChanged: onChange,
       initialValue: initialValue,

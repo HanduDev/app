@@ -62,6 +62,7 @@ class FormsValidatorState extends State<FormsValidator> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           TextInput(
+            keyField: const Key('nameField'),
             controller: _nameController,
             label: 'Nome Completo',
             validator: (value) {
@@ -74,6 +75,7 @@ class FormsValidatorState extends State<FormsValidator> {
           const SizedBox(height: 30),
 
           TextInput(
+            keyField: const Key('emailField'),
             controller: _emailController,
             label: 'Email',
             keyboardType: TextInputType.emailAddress,
@@ -92,6 +94,7 @@ class FormsValidatorState extends State<FormsValidator> {
           const SizedBox(height: 30),
 
           TextInput(
+            keyField: const Key('passwordField'),
             controller: _passwordController,
             label: 'Senha',
             obscureText: _obscurePasswordText,
@@ -133,6 +136,7 @@ class FormsValidatorState extends State<FormsValidator> {
           const SizedBox(height: 20),
 
           TextInput(
+            keyField: const Key('confirmPasswordField'),
             controller: _password2Controller,
             label: 'Confirmar Senha',
             obscureText: _obscureConfirmPasswordText,

@@ -7,6 +7,16 @@ abstract class Toast {
       SnackBar(
         content: Text(message, style: Font.primary()),
         backgroundColor: Colors.red,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8.0),
+        ),
+        iconButton: IconButton(
+          icon: Icon(Icons.close, color: Colors.white),
+          onPressed: () {
+            ScaffoldMessenger.of(context).hideCurrentSnackBar();
+          },
+        ),
+        
       ),
     );
   }

@@ -1,16 +1,60 @@
-# app
+📱 Tradutor LIBRAS
+Este é um aplicativo desenvolvido em Flutter para a disciplina de desenvolvimento mobile na faculdade (UNIFEOB). O objetivo principal é facilitar a comunicação entre ouvintes e surdos, oferecendo uma interface simples e intuitiva para tradução de palavras e frases para LIBRAS (Língua Brasileira de Sinais).
 
-A new Flutter project.
+🧠 Motivação
+A acessibilidade é um direito de todos, e a tecnologia pode ser uma grande aliada para inclusão. Este projeto busca contribuir com ferramentas que promovam a comunicação inclusiva, auxiliando pessoas ouvintes a se comunicarem com usuários de LIBRAS.
 
-## Getting Started
+🛠️ Tecnologias Utilizadas
+✅ Flutter — SDK para desenvolvimento mobile multiplataforma
 
-This project is a starting point for a Flutter application.
+✅ Dart — Linguagem de programação utilizada pelo Flutter
 
-A few resources to get you started if this is your first Flutter project:
+✅ Pacotes Flutter — http, provider, flutter_tts, entre outros
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+✅ API de Tradução LIBRAS — VLibras
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+✨ Funcionalidades
+Tradução de texto para LIBRAS
+
+Recurso de voz para auxiliar na leitura do texto
+
+Interface adaptável e acessível
+
+Histórico de traduções
+
+Animações em LIBRAS com avatar virtual
+
+📲 Como Executar o Projeto
+Clone o repositório:
+
+```sh
+git clone https://github.com/HanduDev/app
+cd app
+```
+
+Instale as dependências:
+
+```sh
+flutter pub get
+```
+
+Execute no emulador ou dispositivo físico:
+
+```sh
+flutter run
+```
+
+👨‍💻 Integrantes do Projeto
+
+Everton Henrique Lopes
+
+Fábio Koiti Konda
+
+Lucas Pizol Ferreira
+
+Mariana Franceschi Tessarini
+
+Yan Gomes Aguiar de Almeida
+
+📚 Créditos
+Este projeto foi desenvolvido como parte da disciplina de Desenvolvimento Mobile do curso de Análise e Desenvolvimento de Sistemas.

@@ -1,5 +1,13 @@
 String getErrorMessage(dynamic error) {
   try {
+    if (error is String) {
+      return error;
+    }
+
+    if (error is Exception) {
+      return error.toString();
+    }
+
     if (error.message != null) {
       if (error.message is String) {
         return error.message;

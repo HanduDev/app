@@ -6,7 +6,6 @@ import 'package:app/ui/core/shared/language_selector.dart';
 import 'package:app/ui/core/shared/segmented_control/segmented_control.dart';
 import 'package:app/ui/core/shared/segmented_control/segmented_control_item.dart';
 import 'package:app/ui/core/themes/app_colors.dart';
-import 'package:app/ui/libras/view_model/libras_view_model.dart';
 import 'package:app/ui/libras/widgets/speech_button.dart';
 import 'package:app/ui/core/themes/font.dart';
 import 'package:app/ui/traducao_texto/view_model/translate_text_view_model.dart';

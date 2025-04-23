@@ -5,7 +5,7 @@ class Trail {
   final String name;
   final String description;
   final Language language;
-  final int progress;
+  final double progress;
 
   Trail({
     required this.id,

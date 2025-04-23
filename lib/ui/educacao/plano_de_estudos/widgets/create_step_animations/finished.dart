@@ -35,7 +35,7 @@ class _FinishedState extends State<Finished> with TickerProviderStateMixin {
 
         if (_afterCreatedSeconds == 0) {
           if (hasError) {
-            context.pushReplacement(Routes.planoDeEstudosSecondStep);
+            context.pushReplacement(Routes.planoDeEstudos);
             return;
           }
 
@@ -99,9 +99,7 @@ class _FinishedState extends State<Finished> with TickerProviderStateMixin {
                         hasError ? "Tentar novamente" : 'Ver plano de estudos',
                     onPressed: () {
                       if (hasError) {
-                        context.pushReplacement(
-                          Routes.planoDeEstudosSecondStep,
-                        );
+                        context.pushReplacement(Routes.planoDeEstudos);
                         return;
                       }
 

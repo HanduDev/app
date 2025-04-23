@@ -7,14 +7,62 @@ import 'package:app/ui/core/shared/secondary_button.dart';
 import 'package:app/ui/core/themes/app_colors.dart';
 import 'package:app/ui/core/themes/font.dart';
 import 'package:app/ui/educacao/plano_de_estudos/view_model/forms_container_view_model.dart';
+import 'package:app/ui/educacao/plano_de_estudos/widgets/form_label.dart';
+import 'package:app/ui/educacao/plano_de_estudos/widgets/steps/development_step.dart';
+import 'package:app/ui/educacao/plano_de_estudos/widgets/steps/language_step.dart';
+import 'package:app/ui/educacao/plano_de_estudos/widgets/steps/level_step.dart';
+import 'package:app/ui/educacao/plano_de_estudos/widgets/steps/theme_step.dart';
+import 'package:app/ui/educacao/plano_de_estudos/widgets/steps/time_to_learn_step.dart';
+import 'package:app/ui/educacao/plano_de_estudos/widgets/steps/time_to_study_step.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class EstudosContainer extends StatelessWidget {
-  final Widget child;
+  const EstudosContainer({super.key});
 
-  const EstudosContainer({super.key, required this.child});
+  widgetBuilder(BuildContext context) {
+    final viewModel = context.read<FormsContainerViewModel>();
+
+    switch (viewModel.currentIndex) {
+      case 0:
+        return {
+          "title": "Qual idioma você quer aprender?",
+          "child": LanguageStep(),
+        };
+      case 1:
+        return {
+          "title": "O que você quer aprender?",
+          "child": DevelopmentStep(),
+        };
+      case 2:
+        return {
+          "title":
+              "Qual o seu nível em ${viewModel.languageController.value['name']}?",
+          "child": LevelStep(),
+        };
+      case 3:
+        return {
+          "title": "Em quanto tempo você quer aprender?",
+          "child": TimeToLearnStep(),
+        };
+      case 4:
+        return {
+          "title": "Quanto tempo você tem disponível por dia?",
+          "child": TimeToStudyStep(),
+        };
+      case 5:
+        return {
+          "title": "Gostaria de falar sobre algum tema específico? (opcional)",
+          "child": ThemeStep(),
+        };
+      default:
+        return {
+          "title": "Em quanto tempo você quer aprender?",
+          "child": const SizedBox.shrink(),
+        };
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +70,9 @@ class EstudosContainer extends StatelessWidget {
     final title = context.watch<FormsContainerViewModel>().currentTitle;
     final isLastStep = context.watch<FormsContainerViewModel>().isLastStep;
     final currentIndex = context.watch<FormsContainerViewModel>().currentIndex;
+    final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+    Widget child = widgetBuilder(context)['child'];
+    String label = widgetBuilder(context)['title'];
 
     void onFinish() {
       showDialog(
@@ -71,6 +122,8 @@ class EstudosContainer extends StatelessWidget {
       child: Scaffold(
         body: SafeArea(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Hero(
                 tag: 'plano-hero-tag',
@@ -145,7 +198,7 @@ class EstudosContainer extends StatelessWidget {
                               ],
                             ),
                             ProgressBar(
-                              value: (currentIndex) / 2,
+                              value: (currentIndex) / viewModel.totalSteps,
                               backgroundColor: AppColors.grey.withAlpha(35),
                             ),
                           ],
@@ -155,16 +208,10 @@ class EstudosContainer extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 4),
-              Expanded(
-                flex: 1,
-                child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: child,
-                ),
-              ),
-              const SizedBox(height: 4),
 
+              FormLabel(label),
+              Flexible(child: Form(key: formKey, child: child)),
+              const SizedBox(height: 20),
               Hero(
                 tag: 'actions',
                 child: Padding(
@@ -183,7 +230,11 @@ class EstudosContainer extends StatelessWidget {
                               text: "Voltar",
                               width: 150,
                               onPressed: () {
-                                context.pop();
+                                if (currentIndex > 0) {
+                                  viewModel.previousPage();
+                                } else {
+                                  context.pop();
+                                }
                               },
                               leftIcon: Icon(Icons.arrow_back, size: 25),
                             ),
@@ -197,19 +248,13 @@ class EstudosContainer extends StatelessWidget {
                         child: PrimaryButton(
                           text: isLastStep ? "Finalizar" : "Próximo",
                           onPressed: () {
-                            if (!viewModel.validate()) {
-                              return;
-                            }
-
                             if (viewModel.isLastStep) {
                               return onFinish();
                             }
 
-                            if (currentIndex == 0) {
-                              context.push(Routes.planoDeEstudosSecondStep);
+                            if (formKey.currentState!.validate()) {
+                              viewModel.nextPage();
                             }
-
-                            viewModel.nextPage();
                           },
                           leftIcon: Icon(
                             isLastStep ? Icons.check : Icons.arrow_forward,

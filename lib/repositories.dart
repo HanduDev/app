@@ -2,6 +2,8 @@ import 'package:app/data/repositories/auth/auth_repository.dart';
 import 'package:app/data/repositories/auth/auth_repository_remote.dart';
 import 'package:app/data/repositories/language/language_repository.dart';
 import 'package:app/data/repositories/language/language_repository_remote.dart';
+import 'package:app/data/repositories/lesson/lesson_repository.dart';
+import 'package:app/data/repositories/lesson/lesson_repository_remote.dart';
 import 'package:app/data/repositories/trail/trail_repository.dart';
 import 'package:app/data/repositories/trail/trail_repository_remote.dart';
 import 'package:app/data/repositories/translate/translate_repository.dart';
@@ -40,7 +42,12 @@ class Repositories {
               httpService: context.read<HttpServiceImpl>(),
             ),
       ),
-  
+      Provider<LessonRepositoryImpl>(
+        create:
+            (context) => LessonRepositoryRemote(
+              httpService: context.read<HttpServiceImpl>(),
+            ),
+      ),
     ];
   }
 }

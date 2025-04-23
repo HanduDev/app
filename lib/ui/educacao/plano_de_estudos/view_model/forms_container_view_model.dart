@@ -1,8 +1,8 @@
 import 'package:app/data/repositories/trail/trail_repository.dart';
 import 'package:app/helpers/errors.dart';
 import 'package:app/models/trail/trail_request.dart';
-import 'package:app/ui/educacao/plano_de_estudos/controllers/first_step_form_controller.dart';
-import 'package:app/ui/educacao/plano_de_estudos/controllers/second_step_form_controller.dart';
+import 'package:app/ui/core/shared/dropdown/dropdown_button_controller.dart';
+import 'package:app/ui/core/shared/dropdown/dropdown_multiple_controller.dart';
 import 'package:flutter/material.dart';
 
 class FormsContainerViewModel extends ChangeNotifier {
@@ -13,17 +13,25 @@ class FormsContainerViewModel extends ChangeNotifier {
   FormsContainerViewModel({required TrailRepositoryImpl trailRepository})
     : _trailRepository = trailRepository;
 
-  SecondStepFormController secondStepFormController =
-      SecondStepFormController();
-
-  FirstStepFormController firstStepFormController = FirstStepFormController();
+  TextEditingController theme = TextEditingController();
+  DropdownButtonController languageController = DropdownButtonController();
+  DropdownMultipleController developController = DropdownMultipleController();
+  DropdownMultipleController themesController = DropdownMultipleController();
+  DropdownButtonController levelController = DropdownButtonController();
+  DropdownButtonController timeToLearnController = DropdownButtonController();
+  DropdownButtonController timeToStudyController = DropdownButtonController();
 
   int _currentIndex = 0;
-  final int _totalSteps = 2;
+  final int _totalSteps = 6;
 
   final Map<int, String> _formTitles = {
     0: 'Suas preferências',
     1: 'Sobre o plano',
+    2: 'Idioma',
+    3: 'Desenvolvimento',
+    4: 'Temas',
+    5: 'Nível',
+    6: 'Tempo de estudo',
   };
 
   final List<String> themes = [
@@ -40,6 +48,32 @@ class FormsContainerViewModel extends ChangeNotifier {
   ];
   final List<String> developments = ["Fala", "Leitura", "Escrita", "Escuta"];
 
+  final List<String> levels = ["Iniciante", "Intermediário", "Avançado"];
+
+  final List<String> timeToLearn = [
+    "1 mês",
+    "2 meses",
+    "3 meses",
+    "4 meses",
+    "5 meses",
+    "6 meses",
+    "7 meses",
+    "8 meses",
+    "9 meses",
+    "10 meses",
+    "11 meses",
+    "12 meses",
+  ];
+
+  final List<String> timeToStudy = [
+    "10 minutos",
+    "20 minutos",
+    "30 minutos",
+    "40 minutos",
+    "50 minutos",
+    "1 hora ou mais",
+  ];
+
   bool get isLastStep => _currentIndex + 1 == _totalSteps;
   int get currentIndex => _currentIndex;
   int get totalSteps => _totalSteps;
@@ -48,18 +82,6 @@ class FormsContainerViewModel extends ChangeNotifier {
   void setCurrentIndex(int index) {
     _currentIndex = index;
     notifyListeners();
-  }
-
-  bool validate() {
-    if (_currentIndex == 0) {
-      return firstStepFormController.validate();
-    }
-
-    if (_currentIndex == 1) {
-      return secondStepFormController.validate();
-    }
-
-    return false;
   }
 
   void nextPage() {
@@ -82,14 +104,12 @@ class FormsContainerViewModel extends ChangeNotifier {
 
       await _trailRepository.create(
         TrailRequest(
-          language:
-              firstStepFormController.languageController.value['countryCode'],
-          developments:
-              firstStepFormController.developmentsController.valuesAsString,
-          themes: firstStepFormController.themesController.valuesAsString,
-          level: secondStepFormController.level.value,
-          timeToLearn: secondStepFormController.timeToLearn.value,
-          timeToStudy: secondStepFormController.timeToStudy.value,
+          language: languageController.value['countryCode'],
+          developments: developController.valuesAsString,
+          themes: themesController.valuesAsString,
+          level: levelController.value,
+          timeToLearn: timeToLearnController.value,
+          timeToStudy: timeToStudyController.value,
         ),
       );
     } catch (e) {

@@ -45,6 +45,7 @@ flutter run
 ```
 
 👨‍💻 Integrantes do Projeto
+
 Everton Henrique Lopes
 
 Fábio Koiti Konda

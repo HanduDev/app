@@ -1,10 +1,12 @@
 import 'package:app/data/repositories/auth/auth_repository_remote.dart';
 import 'package:app/data/repositories/language/language_repository_remote.dart';
+import 'package:app/data/repositories/lesson/lesson_repository_remote.dart';
 import 'package:app/data/services/google_auth.dart';
 import 'package:app/data/services/http.dart';
 import 'package:app/data/services/secure_storage.dart';
 import 'package:app/providers/auth_provider.dart';
 import 'package:app/providers/languages_provider.dart';
+import 'package:app/providers/lesson_provider.dart';
 import 'package:app/providers/notifier.dart';
 import 'package:app/repositories.dart';
 import 'package:app/routes/router.dart';
@@ -30,7 +32,6 @@ class _AppHanduState extends State<AppHandu> {
       providers:
           [
             ChangeNotifierProvider<AuthProvider>.value(value: authProvider),
-
             ChangeNotifierProvider<Notifier>(create: (_) => Notifier()),
             Provider<SecureStorageImpl>(create: (context) => SecureStorage()),
             Provider<HttpServiceImpl>(
@@ -46,6 +47,15 @@ class _AppHanduState extends State<AppHandu> {
                   ),
               )),
             ),
+            ChangeNotifierProvider<LessonProvider>.value(
+              value: LessonProvider(lessonRepository: LessonRepositoryRemote(
+                  httpService: HttpService(
+                    secureStorage: SecureStorage(),
+                  ),
+                ),
+              ),
+            ),
+            
           ] +
           Repositories.providers(),
       child: AnnotatedRegion<SystemUiOverlayStyle>(

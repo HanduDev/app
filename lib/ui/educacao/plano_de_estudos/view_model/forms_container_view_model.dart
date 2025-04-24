@@ -24,16 +24,6 @@ class FormsContainerViewModel extends ChangeNotifier {
   int _currentIndex = 0;
   final int _totalSteps = 6;
 
-  final Map<int, String> _formTitles = {
-    0: 'Suas preferências',
-    1: 'Sobre o plano',
-    2: 'Idioma',
-    3: 'Desenvolvimento',
-    4: 'Temas',
-    5: 'Nível',
-    6: 'Tempo de estudo',
-  };
-
   final List<String> themes = [
     "Música",
     "Entretenimento",
@@ -46,7 +36,6 @@ class FormsContainerViewModel extends ChangeNotifier {
     "Profissão",
     "Família",
   ];
-  final List<String> developments = ["Fala", "Leitura", "Escrita", "Escuta"];
 
   final List<String> levels = ["Iniciante", "Intermediário", "Avançado"];
 
@@ -77,7 +66,6 @@ class FormsContainerViewModel extends ChangeNotifier {
   bool get isLastStep => _currentIndex + 1 == _totalSteps;
   int get currentIndex => _currentIndex;
   int get totalSteps => _totalSteps;
-  String get currentTitle => _formTitles[_currentIndex] ?? '';
 
   void setCurrentIndex(int index) {
     _currentIndex = index;

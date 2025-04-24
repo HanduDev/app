@@ -15,7 +15,7 @@ class SecondaryButton extends BaseButton {
     super.disabled = false,
     super.rounded = false,
     super.elevation,
-    super.fontSize = 16,
+    super.fontSize = 14,
   }) : super(
          backgroundColor: AppColors.white,
          textColor: AppColors.primary400,

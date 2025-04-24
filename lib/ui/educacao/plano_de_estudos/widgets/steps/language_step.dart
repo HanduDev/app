@@ -79,8 +79,8 @@ class _LanguageStepState extends State<LanguageStep> {
                 Text(
                   languagesProvider[index].name,
                   style: Font.primary(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w700,
+                    fontSize: 13,
+                    fontWeight: FontWeight.w500,
                     color: isSelected ? AppColors.primary500 : AppColors.black,
                   ),
                 ),

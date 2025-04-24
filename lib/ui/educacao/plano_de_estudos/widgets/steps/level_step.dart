@@ -13,7 +13,7 @@ class LevelStep extends StatelessWidget {
     return Dropdown(
       width: double.infinity,
       render: (value) => Text(value),
-      title: "Qual seu nível em ${viewModel.languageController.value['name']}?",
+      title: "Qual seu nível em ${viewModel.languageController.value.name}?",
       data: viewModel.levels,
       controller: viewModel.levelController,
       validator: (value) {

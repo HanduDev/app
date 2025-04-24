@@ -33,12 +33,13 @@ class EstudosContainer extends StatelessWidget {
       case 1:
         return {
           "title": "O que você quer aprender?",
+          "subtitle": "Selecione um ou mais itens abaixo",
           "child": DevelopmentStep(),
         };
       case 2:
         return {
           "title":
-              "Qual o seu nível em ${viewModel.languageController.value['name']}?",
+              "Qual o seu nível em ${viewModel.languageController.value.name}?",
           "child": LevelStep(),
         };
       case 3:
@@ -54,6 +55,7 @@ class EstudosContainer extends StatelessWidget {
       case 5:
         return {
           "title": "Gostaria de falar sobre algum tema específico? (opcional)",
+          "subtitle": "Selecione um ou mais itens abaixo",
           "child": ThemeStep(),
         };
       default:
@@ -67,12 +69,12 @@ class EstudosContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final viewModel = context.read<FormsContainerViewModel>();
-    final title = context.watch<FormsContainerViewModel>().currentTitle;
     final isLastStep = context.watch<FormsContainerViewModel>().isLastStep;
     final currentIndex = context.watch<FormsContainerViewModel>().currentIndex;
     final GlobalKey<FormState> formKey = GlobalKey<FormState>();
     Widget child = widgetBuilder(context)['child'];
     String label = widgetBuilder(context)['title'];
+    String? subtitle = widgetBuilder(context)['subtitle'];
 
     void onFinish() {
       showDialog(
@@ -174,34 +176,9 @@ class EstudosContainer extends StatelessWidget {
                       ),
                       Padding(
                         padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
-                        child: Column(
-                          children: [
-                            Row(
-                              children: [
-                                Text(
-                                  title,
-                                  style: Font.primary(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w800,
-                                    color: AppColors.primary400,
-                                  ),
-                                ),
-                                const Spacer(),
-                                Text(
-                                  "${currentIndex + 1} de ${viewModel.totalSteps}",
-                                  style: Font.primary(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w800,
-                                    color: AppColors.primary400,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            ProgressBar(
-                              value: (currentIndex) / viewModel.totalSteps,
-                              backgroundColor: AppColors.grey.withAlpha(35),
-                            ),
-                          ],
+                        child: ProgressBar(
+                          value: currentIndex / (viewModel.totalSteps - 1),
+                          backgroundColor: AppColors.grey.withAlpha(35),
                         ),
                       ),
                     ],
@@ -209,9 +186,30 @@ class EstudosContainer extends StatelessWidget {
                 ),
               ),
 
-              FormLabel(label),
-              Flexible(child: Form(key: formKey, child: child)),
-              const SizedBox(height: 20),
+              Flexible(
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Column(
+                    children: [
+                      FormLabel(label),
+
+                      subtitle != null
+                          ? Text(
+                            subtitle,
+                            style: Font.primary(
+                              fontSize: 13,
+                              fontWeight: FontWeight.w400,
+                              color: AppColors.grey,
+                            ),
+                          )
+                          : const SizedBox.shrink(),
+                      const SizedBox(height: 20),
+                      Flexible(child: Form(key: formKey, child: child)),
+                    ],
+                  ),
+                ),
+              ),
+
               Hero(
                 tag: 'actions',
                 child: Padding(

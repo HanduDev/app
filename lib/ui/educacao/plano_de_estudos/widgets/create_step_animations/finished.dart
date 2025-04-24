@@ -60,8 +60,8 @@ class _FinishedState extends State<Finished> with TickerProviderStateMixin {
         children: [
           Lottie.asset(
             hasError ? 'assets/lottie/error.json' : 'assets/lottie/check.json',
-            width: hasError ? 200 : 200,
-            height: hasError ? 200 : 200,
+            width: 150,
+            height: 200,
             repeat: false,
             onLoaded: (composition) {
               Future.delayed(const Duration(milliseconds: 1200), () {
@@ -88,7 +88,7 @@ class _FinishedState extends State<Finished> with TickerProviderStateMixin {
                     hasError ? errorText : 'Criado com sucesso!',
                     textAlign: TextAlign.center,
                     style: Font.primary(
-                      fontSize: 20,
+                      fontSize: 16,
                       fontWeight: FontWeight.bold,
                       color: AppColors.white,
                     ),
@@ -109,7 +109,7 @@ class _FinishedState extends State<Finished> with TickerProviderStateMixin {
                   const SizedBox(height: 8),
                   Text(
                     "Ou aguarde $_afterCreatedSeconds segundos",
-                    style: Font.primary(fontSize: 14, color: AppColors.white),
+                    style: Font.primary(fontSize: 13, color: AppColors.white),
                   ),
                 ],
               ),

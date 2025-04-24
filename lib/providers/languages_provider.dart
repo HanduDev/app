@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 class LanguagesProvider extends ChangeNotifier {
   final LanguageRepositoryImpl _languageRepository;
   LanguagesProvider({required LanguageRepositoryImpl languageRepository})
-    : _languageRepository = languageRepository{getAllLanguages();}
+    : _languageRepository = languageRepository {
+    getAllLanguages();
+  }
 
   List<Language> _languages = [];
 
@@ -15,6 +17,7 @@ class LanguagesProvider extends ChangeNotifier {
     try {
       _languages = await _languageRepository.getAllLanguages();
       notifyListeners();
+    } catch (_) {
     } finally {
       notifyListeners();
     }

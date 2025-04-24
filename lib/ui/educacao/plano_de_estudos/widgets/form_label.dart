@@ -11,11 +11,11 @@ class FormLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       _label,
-      textAlign: TextAlign.left,
+      textAlign: TextAlign.center,
       style: Font.primary(
         fontSize: 16,
-        fontWeight: FontWeight.w600,
-        color: AppColors.black,
+        fontWeight: FontWeight.w700,
+        color: AppColors.primary500,
       ),
     );
   }

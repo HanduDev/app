@@ -23,7 +23,6 @@ class TranslateTextViewModel extends ChangeNotifier {
 
       return response.message;
     } catch (e) {
-      print('Error: $e');
       return 'Error: $e';
     }
   }

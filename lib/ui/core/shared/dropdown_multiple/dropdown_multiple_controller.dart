@@ -1,4 +1,4 @@
-import 'package:app/ui/core/shared/dropdown/dropdown_multiple_model.dart';
+import 'package:app/ui/core/shared/dropdown_multiple/dropdown_multiple_model.dart';
 import 'package:flutter/material.dart';
 
 class DropdownMultipleController extends ChangeNotifier {
@@ -26,5 +26,9 @@ class DropdownMultipleController extends ChangeNotifier {
 
   List<String> get valuesAsString {
     return _values.map((value) => value.name).toList();
+  }
+
+  bool isSelected(DropdownMultipleModel value) {
+    return _values.any((item) => item.id == value.id);
   }
 }

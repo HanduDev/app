@@ -1,5 +1,5 @@
-import 'package:app/ui/core/shared/dropdown/dropdown_multiple_controller.dart';
-import 'package:app/ui/core/shared/dropdown/dropdown_multiple_model.dart';
+import 'package:app/ui/core/shared/dropdown_multiple/dropdown_multiple_controller.dart';
+import 'package:app/ui/core/shared/dropdown_multiple/dropdown_multiple_model.dart';
 import 'package:app/ui/core/shared/primary_button.dart';
 import 'package:flutter/material.dart';
 import 'package:app/ui/core/themes/app_colors.dart';

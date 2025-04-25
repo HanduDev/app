@@ -1,5 +1,5 @@
 import 'package:app/ui/core/shared/dropdown/dropdown_button_controller.dart';
-import 'package:app/ui/core/shared/dropdown/dropdown_multiple_controller.dart';
+import 'package:app/ui/core/shared/dropdown_multiple/dropdown_multiple_controller.dart';
 import 'package:flutter/material.dart';
 
 class FirstStepFormController extends ChangeNotifier {

@@ -20,7 +20,10 @@ class Trail {
       id: json['id'],
       name: json['name'],
       description: json['description'],
-      language: Language.fromJson(json['language']),
+      language: Language.fromJson({
+        "name": json['language']['name'],
+        "acronym": json['language']['code'] ?? json['language']['acronym'],
+      }),
       progress: json['progress'],
     );
   }

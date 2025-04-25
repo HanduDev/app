@@ -8,7 +8,7 @@ class Language {
     return Language(name: json['name'], code: json['acronym']);
   }
 
-  Map<String, dynamic> toJson() {
+  Map<String, String> toJson() {
     return {'name': name, 'code': code};
   }
 }

@@ -1,13 +1,9 @@
-class Lesson{
+class Lesson {
   final int id;
   final String name;
   final bool hasFinished;
 
-  Lesson({
-    required this.id,
-    required this.name,
-    required this.hasFinished,
-  });
+  Lesson({required this.id, required this.name, required this.hasFinished});
 
   factory Lesson.fromJson(Map<String, dynamic> json) {
     return Lesson(
@@ -18,10 +14,6 @@ class Lesson{
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'name': name,
-      'hasFinished': hasFinished,
-    };
+    return {'id': id, 'name': name, 'hasFinished': hasFinished};
   }
 }

@@ -12,7 +12,6 @@ import 'package:app/ui/educacao/plano_de_estudos/widgets/steps/development_step.
 import 'package:app/ui/educacao/plano_de_estudos/widgets/steps/language_step.dart';
 import 'package:app/ui/educacao/plano_de_estudos/widgets/steps/level_step.dart';
 import 'package:app/ui/educacao/plano_de_estudos/widgets/steps/theme_step.dart';
-import 'package:app/ui/educacao/plano_de_estudos/widgets/steps/time_to_learn_step.dart';
 import 'package:app/ui/educacao/plano_de_estudos/widgets/steps/time_to_study_step.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -39,20 +38,15 @@ class EstudosContainer extends StatelessWidget {
       case 2:
         return {
           "title":
-              "Qual o seu nível em ${viewModel.languageController.value.name}?",
+              "Qual o seu nível em ${viewModel.languageController.value?.label}?",
           "child": LevelStep(),
         };
       case 3:
         return {
-          "title": "Em quanto tempo você quer aprender?",
-          "child": TimeToLearnStep(),
-        };
-      case 4:
-        return {
           "title": "Quanto tempo você tem disponível por dia?",
           "child": TimeToStudyStep(),
         };
-      case 5:
+      case 4:
         return {
           "title": "Gostaria de falar sobre algum tema específico? (opcional)",
           "subtitle": "Selecione um ou mais itens abaixo",
@@ -252,6 +246,11 @@ class EstudosContainer extends StatelessWidget {
 
                             if (formKey.currentState!.validate()) {
                               viewModel.nextPage();
+                            } else {
+                              Toast.error(
+                                context,
+                                "Selecione ao menos um item",
+                              );
                             }
                           },
                           leftIcon: Icon(

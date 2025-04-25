@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
 
 abstract final class AppColors {
-  static Color primary100 = const Color(0xFFC8C7DC);
-  static Color primary200 = const Color(0xFF8989C2);
-  static Color primary300 = const Color(0xFF7170B0);
-  static Color primary400 = const Color(0xFF6665A7);
-  static Color primary500 = const Color(0xFF5E5C9E);
-  static Color black = const Color(0xFF4E4747);
-  static Color grey = const Color(0xFF625D5D);
-  static Color lightGrey = const Color(0xFFD5D5D5);
-  static Color white = const Color(0xFFFFFFFF);
-  static Color overlayColor = const Color(0xFFC7C7C7);
-  static Color transparent = const Color(0x00000000);
-  static Color yellow = const Color(0xFFFFAE00);
-  static Color disabledIcon = const Color.fromARGB(255, 163, 160, 160);
-  static Color lightPurple = const Color(0xFF9862DF);
-  static List<Color> progressGradient = [
-    const Color(0xFF9862DF),
-    const Color(0xFFE3E3EF),
+  static const Color primary100 = Color(0xFFC8C7DC);
+  static const Color primary200 = Color(0xFF8989C2);
+  static const Color primary300 = Color(0xFF7170B0);
+  static const Color primary400 = Color(0xFF6665A7);
+  static const Color primary500 = Color(0xFF5E5C9E);
+  static const Color black = Color(0xFF4E4747);
+  static const Color grey = Color(0xFF625D5D);
+  static const Color lightGrey = Color(0xFFD5D5D5);
+  static const Color white = Color(0xFFFFFFFF);
+  static const Color overlayColor = Color(0xFFC7C7C7);
+  static const Color transparent = Color(0x00000000);
+  static const Color yellow = Color(0xFFFFAE00);
+  static const Color disabledIcon = Color.fromARGB(255, 163, 160, 160);
+  static const Color lightPurple = Color(0xFF9862DF);
+  static const List<Color> progressGradient = [
+    Color(0xFF9862DF),
+    Color(0xFFE3E3EF),
   ];
-  static Color error = const Color(0xFFEA3A3A);
-  static Color green = const Color.fromARGB(255, 127, 212, 130);
+  static const Color error = Color(0xFFEA3A3A);
+  static const Color green = Color.fromARGB(255, 127, 212, 130);
 }

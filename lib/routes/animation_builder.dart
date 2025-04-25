@@ -1,18 +1,34 @@
-import 'package:flutter/cupertino.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter/material.dart';
 
-class AnimationBuilder {
+class AnimationBuilder extends StatefulWidget {
   final Widget widget;
+  const AnimationBuilder({super.key, required this.widget});
 
-  AnimationBuilder({required this.widget});
+  @override
+  State<AnimationBuilder> createState() => _AnimationBuilderState();
+}
 
-  Page<dynamic> build(BuildContext context, GoRouterState state) {
-    return CustomTransitionPage(
-      key: state.pageKey,
-      child: widget,
-      transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        return FadeTransition(opacity: animation, child: child);
-      },
-    );
+class _AnimationBuilderState extends State<AnimationBuilder>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 300),
+      vsync: this,
+    )..forward();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FadeTransition(opacity: _controller, child: widget.widget);
   }
 }

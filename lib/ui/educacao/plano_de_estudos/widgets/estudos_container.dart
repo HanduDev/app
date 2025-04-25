@@ -1,5 +1,6 @@
 import 'package:app/helpers/errors.dart';
 import 'package:app/helpers/toast.dart';
+import 'package:app/routes/animation_builder.dart';
 import 'package:app/routes/routes.dart';
 import 'package:app/ui/core/shared/primary_button.dart';
 import 'package:app/ui/core/shared/progress_bar.dart';
@@ -198,7 +199,12 @@ class EstudosContainer extends StatelessWidget {
                           )
                           : const SizedBox.shrink(),
                       const SizedBox(height: 20),
-                      Flexible(child: Form(key: formKey, child: child)),
+                      Flexible(
+                        child: Form(
+                          key: formKey,
+                          child: AnimationBuilder(widget: child),
+                        ),
+                      ),
                     ],
                   ),
                 ),

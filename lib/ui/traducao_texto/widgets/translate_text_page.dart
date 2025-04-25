@@ -120,7 +120,7 @@ class TranslateTextPage extends StatelessWidget {
                           icon: Icons.mic_none_outlined,
                         ),
                         SegmentedControlItem(
-                          key: '/home',
+                          key: '/image',
                           text: "Imagem",
                           icon: Icons.image_outlined,
                         ),

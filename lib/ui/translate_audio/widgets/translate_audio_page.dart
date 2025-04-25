@@ -68,7 +68,7 @@ class TranslateAudioPage extends StatelessWidget {
                     child:
                         user?.photoURL == null
                             ? Icon(
-                              Icons.person, // Ícone padrão
+                              Icons.person,
                               size: 30,
                               color: AppColors.white,
                             )
@@ -97,7 +97,7 @@ class TranslateAudioPage extends StatelessWidget {
                     icon: Icons.mic_none_outlined,
                   ),
                   SegmentedControlItem(
-                    key: '/home',
+                    key: '/image',
                     text: "Imagem",
                     icon: Icons.image_outlined,
                   ),
@@ -118,9 +118,7 @@ class TranslateAudioPage extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
                     child: GestureDetector(
-                      onTap: () {
-                        // Lógica para trocar as linguagens
-                      },
+                      onTap: () {},
                       child: Container(
                         padding: const EdgeInsets.all(8.0),
                         decoration: BoxDecoration(
@@ -135,7 +133,7 @@ class TranslateAudioPage extends StatelessWidget {
                           ],
                         ),
                         child: Icon(
-                          Icons.swap_horiz, // Ícone de troca
+                          Icons.swap_horiz,
                           color: AppColors.primary400,
                         ),
                       ),
@@ -152,8 +150,8 @@ class TranslateAudioPage extends StatelessWidget {
             SizedBox(height: 20),
             Center(
               child: Column(
-                children: [       
-                  SizedBox(height: 12),           
+                children: [
+                  SizedBox(height: 12),
                   ChatField(
                     controller: requestController,
                     onSendMessage: (message) async {
@@ -170,10 +168,10 @@ class TranslateAudioPage extends StatelessWidget {
                   ),
                   SpeechButton(
                     onRecognize: (value) {
-                      requestController.text = value; // Atualiza o texto no campo de entrada
+                      requestController.text = value;
                     },
                     size: 85.0,
-                    backgroundColor: AppColors.primary500, // Define o tamanho do botão (80x80)
+                    backgroundColor: AppColors.primary500,
                   ),
                   SizedBox(height: 32),
                   ChatField(

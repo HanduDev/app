@@ -4,6 +4,7 @@ abstract final class Routes {
   static const cadastro = '/cadastro';
   static const home = '/home';
   static const audio = '/audio';
+  static const image = '/image';
   static const libras = '/libras';
   static const educacao = '/educacao';
   static const conta = '/conta';

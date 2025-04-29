@@ -14,10 +14,12 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class TranslateTextPage extends StatelessWidget {
-  TranslateTextPage({super.key});
+  TranslateTextPage({super.key, FlutterTts? tts})
+    : flutterTts = tts ?? FlutterTts();
 
   final TextEditingController requestController = TextEditingController();
   final TextEditingController responseController = TextEditingController();
+  final FlutterTts flutterTts;
 
   @override
   Widget build(BuildContext context) {
@@ -190,7 +192,6 @@ class TranslateTextPage extends StatelessWidget {
                         IconButton(
                           onPressed: () async {
                             if (responseController.text.isNotEmpty) {
-                              final flutterTts = FlutterTts();
                               await flutterTts.speak(responseController.text);
                             }
                           },
@@ -200,9 +201,7 @@ class TranslateTextPage extends StatelessWidget {
                         IconButton(
                           onPressed: () {
                             if (responseController.text.isNotEmpty) {
-                              showFeedbackDialog(
-                                context,
-                              ); 
+                              showFeedbackDialog(context);
                             } else {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(

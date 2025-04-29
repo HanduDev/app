@@ -48,6 +48,8 @@ void main() {
       Language(code: 'pt', name: 'Português'),
       Language(code: 'en', name: 'Inglês'),
     ]);
+
+    when(mockFlutterTts.speak(any)).thenAnswer((_) async => null);
   });
 
   group('TranslateTextPage', () {
@@ -179,7 +181,7 @@ void main() {
                 create: (_) => mockLanguagesProvider,
               ),
             ],
-            child: TranslateTextPage(),
+            child: TranslateTextPage(tts: mockFlutterTts),
           ),
         ),
       );
@@ -188,6 +190,8 @@ void main() {
       await tester.tap(find.byIcon(Icons.send));
       await tester.pump();
 
+      final volumeButton = find.byIcon(Icons.volume_up_outlined);
+      await tester.ensureVisible(volumeButton);
       await tester.tap(find.byIcon(Icons.volume_up_outlined));
       await tester.pump();
 
@@ -238,10 +242,16 @@ void main() {
 
       await tester.enterText(find.byType(ChatField).first, 'Olá');
       await tester.tap(find.byIcon(Icons.send));
-      await tester.pump();
+      await tester.pumpAndSettle();
 
-      await tester.tap(find.byIcon(Icons.feedback_outlined));
-      await tester.pump();
+      final feedbackIcon = find.descendant(
+        of: find.byType(ChatField).last,
+        matching: find.byIcon(Icons.feedback_outlined),
+      );
+
+      await tester.ensureVisible(feedbackIcon);
+      await tester.tap(feedbackIcon);
+      await tester.pumpAndSettle();
 
       expect(find.text('O que achou da tradução?'), findsOneWidget);
     });

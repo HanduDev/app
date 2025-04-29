@@ -11,18 +11,7 @@ class TrailViewModel extends ChangeNotifier {
   TrailInfo? _trail;
   TrailInfo? get trail => _trail;
 
-  bool _isLoading = false;
-  bool get isLoading => _isLoading;
-
-  Future<void> initialize(int id) async {
-    try {
-      _isLoading = true;
-      notifyListeners();
-
-      _trail = await _trailRepository.getById(id);
-    } finally {
-      _isLoading = false;
-      notifyListeners();
-    }
+  Future<TrailInfo> initialize(int id) async {
+    return await _trailRepository.getById(id);
   }
 }

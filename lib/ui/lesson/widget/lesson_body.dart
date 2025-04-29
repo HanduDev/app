@@ -32,18 +32,20 @@ class LessonBody extends StatelessWidget {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
-        } else if (snapshot.hasError) {
-          return Center(child: Text('Error: ${snapshot.error}'));
-        } else {
-          return Expanded(
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(12, 16, 12, 16),
-                child: MarkdownBody(data: snapshot.data?.content ?? ""),
-              ),
-            ),
-          );
         }
+
+        if (snapshot.hasError) {
+          return Center(child: Text('${snapshot.error}'));
+        }
+
+        return Expanded(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(12, 16, 12, 16),
+              child: MarkdownBody(data: snapshot.data?.content ?? ""),
+            ),
+          ),
+        );
       },
     );
   }

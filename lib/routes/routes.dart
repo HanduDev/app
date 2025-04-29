@@ -11,4 +11,6 @@ abstract final class Routes {
   static const splashLoading = '/loading';
   static const planoDeEstudos = '/plano_de_estudos';
   static const criandoPlanoDeEstudos = '/criando_plano_de_estudos';
+  static const trilha = '/trilha';
+  static const aula = '/aula';
 }

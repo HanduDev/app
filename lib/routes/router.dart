@@ -4,6 +4,7 @@ import 'package:app/routes/branches/auth_branches.dart';
 import 'package:app/routes/branches/create_trail_branches.dart';
 import 'package:app/routes/branches/education_branches.dart';
 import 'package:app/routes/branches/libras_branches.dart';
+import 'package:app/routes/branches/trail_branches.dart';
 import 'package:app/routes/branches/translate_branches.dart';
 import 'package:app/ui/core/shared/common_layout.dart';
 import 'package:flutter/material.dart';
@@ -49,6 +50,10 @@ GoRouter router(AuthProvider authProvider) => GoRouter(
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) => navigationShell,
       branches: createTrailBranches,
+    ),
+    StatefulShellRoute.indexedStack(
+      builder: (context, state, navigationShell) => navigationShell,
+      branches: trailBranches,
     ),
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) {

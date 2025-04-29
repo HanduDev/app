@@ -9,7 +9,7 @@ class Lesson {
     return Lesson(
       id: json['id'],
       name: json['name'],
-      hasFinished: json['hasFinished'],
+      hasFinished: json['hasFinished'] ?? false,
     );
   }
 

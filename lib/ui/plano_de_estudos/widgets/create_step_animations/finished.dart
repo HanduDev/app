@@ -2,7 +2,7 @@ import 'package:app/routes/routes.dart';
 import 'package:app/ui/core/shared/primary_button.dart';
 import 'package:app/ui/core/themes/app_colors.dart';
 import 'package:app/ui/core/themes/font.dart';
-import 'package:app/ui/educacao/plano_de_estudos/view_model/forms_container_view_model.dart';
+import 'package:app/ui/plano_de_estudos/view_model/forms_container_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lottie/lottie.dart';
@@ -39,7 +39,8 @@ class _FinishedState extends State<Finished> with TickerProviderStateMixin {
             return;
           }
 
-          context.go(Routes.educacao);
+          final viewModel = context.read<FormsContainerViewModel>();
+          context.go(Routes.aula, extra: {"trail": viewModel.trail});
         }
       }
     });
@@ -103,7 +104,10 @@ class _FinishedState extends State<Finished> with TickerProviderStateMixin {
                         return;
                       }
 
-                      context.go(Routes.educacao);
+                      context.go(
+                        Routes.aula,
+                        extra: {"trail": viewModel.trail},
+                      );
                     },
                   ),
                   const SizedBox(height: 8),

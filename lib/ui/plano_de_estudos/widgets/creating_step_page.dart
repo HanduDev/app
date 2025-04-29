@@ -1,7 +1,7 @@
 import 'package:app/ui/core/themes/app_colors.dart';
-import 'package:app/ui/educacao/plano_de_estudos/view_model/forms_container_view_model.dart';
-import 'package:app/ui/educacao/plano_de_estudos/widgets/create_step_animations/finished.dart';
-import 'package:app/ui/educacao/plano_de_estudos/widgets/create_step_animations/loading.dart';
+import 'package:app/ui/plano_de_estudos/view_model/forms_container_view_model.dart';
+import 'package:app/ui/plano_de_estudos/widgets/create_step_animations/finished.dart';
+import 'package:app/ui/plano_de_estudos/widgets/create_step_animations/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

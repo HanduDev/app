@@ -1,24 +1,55 @@
+import 'package:app/helpers/errors.dart';
+import 'package:app/helpers/toast.dart';
+import 'package:app/models/trail/trail.dart';
 import 'package:app/providers/auth_provider.dart';
 import 'package:app/routes/routes.dart';
 import 'package:app/ui/core/shared/primary_button.dart';
 import 'package:app/ui/core/themes/app_colors.dart';
+import 'package:app/ui/educacao/view_model/educacao_view_model.dart';
 import 'package:app/ui/educacao/widgets/card_progressbar.dart';
 import 'package:app/ui/educacao/widgets/card_recommendation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
-class EducacaoPage extends StatelessWidget {
+class EducacaoPage extends StatefulWidget {
   const EducacaoPage({super.key});
 
+  @override
+  State<EducacaoPage> createState() => _EducacaoPageState();
+}
+
+class _EducacaoPageState extends State<EducacaoPage> {
   String getFirstName(String? fullName) {
     if (fullName == null || fullName.isEmpty) return 'Usuário';
     return fullName.split(' ').first;
   }
 
+  Future<void> fetchData() async {
+    try {
+      final educacaoViewModel = context.read<EducacaoViewModel>();
+      await educacaoViewModel.initialize();
+    } catch (e) {
+      if (mounted) {
+        Toast.error(context, getErrorMessage(e));
+      }
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      fetchData();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final authProvider = context.read<AuthProvider>();
+    final trails = context.select<EducacaoViewModel, List<Trail>>(
+      (value) => value.trails,
+    );
 
     return Scaffold(
       backgroundColor: AppColors.primary100,
@@ -116,28 +147,24 @@ class EducacaoPage extends StatelessWidget {
 
             SizedBox(
               height: 100,
-              child: ListView(
+              child: ListView.separated(
                 scrollDirection: Axis.horizontal,
                 padding: const EdgeInsets.symmetric(horizontal: 20),
-                children: [
-                  CardProgressBar(
-                    title: 'Libras',
-                    progress: 0.5,
-                    progressText: '50%',
-                  ),
-                  const SizedBox(width: 20),
-                  CardProgressBar(
-                    title: 'Inglês',
-                    progress: 0.7,
-                    progressText: '70%',
-                  ),
-                  const SizedBox(width: 20),
-                  CardProgressBar(
-                    title: 'Espanhol',
-                    progress: 1.0,
-                    progressText: '100%',
-                  ),
-                ],
+                itemCount: trails.length,
+                separatorBuilder: (context, index) => const SizedBox(width: 20),
+                itemBuilder: (context, index) {
+                  final trail = trails[index];
+                  return CardProgressBar(
+                    id: trail.id,
+                    title: trail.language.name,
+                    progress: trail.progress,
+                    progressText:
+                        '${(trail.progress * 100).toStringAsFixed(0)}%',
+                    onTap: () {
+                      context.push(Routes.trilha, extra: {'trail': trail});
+                    },
+                  );
+                },
               ),
             ),
 
@@ -164,14 +191,14 @@ class EducacaoPage extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 children: [
                   CardRecommendation(
-                    language: {'name': 'Português', 'countryCode': 'pt-br'}, 
-                    level: 'Iniciante', 
+                    language: {'name': 'Português', 'countryCode': 'pt-br'},
+                    level: 'Iniciante',
                     persons: 120,
                   ),
                   const SizedBox(width: 20),
                   CardRecommendation(
-                    language: {'name': 'Inglês', 'countryCode': 'en'}, 
-                    level: 'Básico', 
+                    language: {'name': 'Inglês', 'countryCode': 'en'},
+                    level: 'Básico',
                     persons: 2000,
                   ),
                 ],

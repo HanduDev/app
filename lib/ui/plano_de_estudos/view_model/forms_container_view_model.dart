@@ -1,5 +1,6 @@
 import 'package:app/data/repositories/trail/trail_repository.dart';
 import 'package:app/helpers/errors.dart';
+import 'package:app/models/trail/trail.dart';
 import 'package:app/models/trail/trail_request.dart';
 import 'package:app/ui/core/shared/selectable_grid/selectable_grid_controller.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,7 @@ class FormsContainerViewModel extends ChangeNotifier {
   final TrailRepositoryImpl _trailRepository;
   bool isLoading = false;
   String errorText = "";
+  Trail? _trail;
 
   FormsContainerViewModel({required TrailRepositoryImpl trailRepository})
     : _trailRepository = trailRepository;
@@ -31,6 +33,7 @@ class FormsContainerViewModel extends ChangeNotifier {
   bool get isLastStep => _currentIndex + 1 == _totalSteps;
   int get currentIndex => _currentIndex;
   int get totalSteps => _totalSteps;
+  Trail? get trail => _trail;
 
   void setCurrentIndex(int index) {
     _currentIndex = index;
@@ -55,7 +58,7 @@ class FormsContainerViewModel extends ChangeNotifier {
       errorText = '';
       notifyListeners();
 
-      await _trailRepository.create(
+      _trail = await _trailRepository.create(
         TrailRequest(
           language: languageController.value!.value,
           developments: developController.values.map((e) => e.value).toList(),

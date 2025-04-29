@@ -1,7 +1,7 @@
 import 'package:app/ui/core/shared/selectable_grid/selectable_grid.dart';
 import 'package:app/ui/core/shared/selectable_grid/selectable_grid_controller.dart';
 import 'package:app/ui/core/shared/selectable_grid/selectable_grid_model.dart';
-import 'package:app/ui/educacao/plano_de_estudos/view_model/forms_container_view_model.dart';
+import 'package:app/ui/plano_de_estudos/view_model/forms_container_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

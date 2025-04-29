@@ -1,57 +1,44 @@
-import 'package:app/models/language.dart';
-import 'package:app/providers/languages_provider.dart';
 import 'package:app/ui/core/shared/selectable_grid/selectable_grid.dart';
 import 'package:app/ui/core/shared/selectable_grid/selectable_grid_controller.dart';
 import 'package:app/ui/core/shared/selectable_grid/selectable_grid_model.dart';
 import 'package:app/ui/core/themes/app_colors.dart';
 import 'package:app/ui/core/themes/font.dart';
-import 'package:app/ui/educacao/plano_de_estudos/view_model/forms_container_view_model.dart';
-import 'package:country_flags/country_flags.dart';
+import 'package:app/ui/plano_de_estudos/view_model/forms_container_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class LanguageStep extends StatefulWidget {
-  const LanguageStep({super.key});
+class ThemeStep extends StatelessWidget {
+  ThemeStep({super.key});
 
-  @override
-  State<LanguageStep> createState() => _LanguageStepState();
-}
+  final List<String> _themes = [
+    "Música",
+    "Entretenimento",
+    "Esportes",
+    "Moda e Beleza",
+    "Tecnologia",
+    "Programação",
+    "Viagem",
+    "Anime",
+    "Profissão",
+    "Família",
+  ];
 
-class _LanguageStepState extends State<LanguageStep> {
   @override
   Widget build(BuildContext context) {
-    final languages = context.select<LanguagesProvider, List<Language>>(
-      (value) => value.languages,
-    );
-    final languageController = context
+    final controller = context
         .select<FormsContainerViewModel, SelectableGridController>(
-          (value) => value.languageController,
+          (value) => value.themesController,
         );
 
     return SelectableGrid(
       items:
-          languages
+          _themes
               .map(
-                (element) => SelectableGridModel(
-                  value: element.code,
-                  label: element.name,
-                  icon: CountryFlag.fromLanguageCode(
-                    element.code,
-                    shape: const RoundedRectangle(8),
-                    width: 45,
-                    height: 30,
-                  ),
-                ),
+                (element) =>
+                    SelectableGridModel(value: element, label: element),
               )
               .toList(),
       crossAxisCount: 3,
-      validator: (value) {
-        if (value.isEmpty) {
-          return "Selecione pelo menos um idioma";
-        }
-        
-        return null;
-      },
       render: (item, isSelected) {
         return Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -70,7 +57,7 @@ class _LanguageStepState extends State<LanguageStep> {
           ],
         );
       },
-      controller: languageController,
+      controller: controller,
     );
   }
 }

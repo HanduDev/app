@@ -7,63 +7,58 @@ import 'package:app/routes/branches/libras_branches.dart';
 import 'package:app/routes/branches/trail_branches.dart';
 import 'package:app/routes/branches/translate_branches.dart';
 import 'package:app/ui/core/shared/common_layout.dart';
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 import 'routes.dart';
 
-GoRouter router(AuthProvider authProvider) => GoRouter(
-  initialLocation: Routes.splashLoading,
-  debugLogDiagnostics: true,
-  refreshListenable: authProvider,
-  redirect: (context, state) {
-    if (authProvider.isLoading) return null;
+GoRouter router() {
+  return GoRouter(
+    initialLocation: Routes.intro,
+    debugLogDiagnostics: true,
+    redirect: (context, state) {
+      final authProvider = context.read<AuthProvider>();
 
-    final isOnIntro = state.matchedLocation == Routes.splashLoading;
-    final isAuthenticated = authProvider.isAuthenticated;
-    final isEmailConfirmed = authProvider.user?.isEmailConfirmed ?? false;
+      final isOnIntro = state.matchedLocation == Routes.intro;
+      final isAuthenticated = authProvider.isAuthenticated;
+      final isEmailConfirmed = authProvider.user?.isEmailConfirmed ?? false;
 
-    if (isAuthenticated && !isEmailConfirmed) {
-      return Routes.confirmacaoCadastro;
-    }
+      if (isAuthenticated && !isEmailConfirmed) {
+        return Routes.confirmacaoCadastro;
+      }
 
-    if (isAuthenticated && isOnIntro) {
-      return Routes.home;
-    }
+      if (isAuthenticated && isOnIntro) {
+        return Routes.home;
+      }
 
-    if (!isAuthenticated && isOnIntro) {
-      return Routes.intro;
-    }
+      if (!isAuthenticated && isOnIntro) {
+        return Routes.intro;
+      }
 
-    return null;
-  },
-  routes: [
-    GoRoute(
-      path: Routes.splashLoading,
-      builder: (context, state) {
-        return Scaffold(body: Center(child: CircularProgressIndicator()));
-      },
-    ),
-    StatefulShellRoute.indexedStack(
-      builder: (context, state, navigationShell) => navigationShell,
-      branches: authBranches,
-    ),
-    StatefulShellRoute.indexedStack(
-      builder: (context, state, navigationShell) => navigationShell,
-      branches: createTrailBranches,
-    ),
-    StatefulShellRoute.indexedStack(
-      builder: (context, state, navigationShell) => navigationShell,
-      branches: trailBranches,
-    ),
-    StatefulShellRoute.indexedStack(
-      builder: (context, state, navigationShell) {
-        return CommonLayout(navigationShell: navigationShell);
-      },
-      branches:
-          translateBranches +
-          librasBranches +
-          educationBranches +
-          accountBranches,
-    ),
-  ],
-);
+      return null;
+    },
+    routes: [
+      StatefulShellRoute.indexedStack(
+        builder: (context, state, navigationShell) => navigationShell,
+        branches: authBranches,
+      ),
+      StatefulShellRoute.indexedStack(
+        builder: (context, state, navigationShell) => navigationShell,
+        branches: createTrailBranches,
+      ),
+      StatefulShellRoute.indexedStack(
+        builder: (context, state, navigationShell) => navigationShell,
+        branches: trailBranches,
+      ),
+      StatefulShellRoute.indexedStack(
+        builder: (context, state, navigationShell) {
+          return CommonLayout(navigationShell: navigationShell);
+        },
+        branches:
+            translateBranches +
+            librasBranches +
+            educationBranches +
+            accountBranches,
+      ),
+    ],
+  );
+}

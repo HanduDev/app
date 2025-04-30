@@ -8,7 +8,6 @@ abstract final class Routes {
   static const educacao = '/educacao';
   static const conta = '/conta';
   static const login = '/login';
-  static const splashLoading = '/loading';
   static const planoDeEstudos = '/plano_de_estudos';
   static const criandoPlanoDeEstudos = '/criando_plano_de_estudos';
   static const trilha = '/trilha';

@@ -16,24 +16,31 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
-class AppHandu extends StatefulWidget {
+class AppHandu extends StatelessWidget {
   const AppHandu({super.key});
 
   @override
-  State<AppHandu> createState() => _AppHanduState();
-}
-
-class _AppHanduState extends State<AppHandu> {
-  late final AuthProvider authProvider;
-
-  @override
   Widget build(BuildContext context) {
+    final secureStorage = SecureStorage();
+    final authProvider = AuthProvider(
+      authRepository: AuthRepositoryRemote(
+        googleAuth: GoogleAuth(),
+        secureStorage: secureStorage,
+        httpService: HttpService(secureStorage: secureStorage),
+      ),
+    );
+    final languageProvider = LanguagesProvider(
+      languageRepository: LanguageRepositoryRemote(
+        httpService: HttpService(secureStorage: secureStorage),
+      ),
+    );
+
     return MultiProvider(
       providers:
           [
+            Provider<SecureStorageImpl>(create: (context) => secureStorage),
             ChangeNotifierProvider<AuthProvider>.value(value: authProvider),
             ChangeNotifierProvider<Notifier>(create: (_) => Notifier()),
-            Provider<SecureStorageImpl>(create: (context) => SecureStorage()),
             Provider<HttpServiceImpl>(
               create:
                   (context) => HttpService(
@@ -41,21 +48,15 @@ class _AppHanduState extends State<AppHandu> {
                   ),
             ),
             ChangeNotifierProvider<LanguagesProvider>.value(
-              value: LanguagesProvider(languageRepository: LanguageRepositoryRemote(
-                httpService: HttpService(
-                    secureStorage: SecureStorage(),
-                  ),
-              )),
+              value: languageProvider,
             ),
             ChangeNotifierProvider<LessonProvider>.value(
-              value: LessonProvider(lessonRepository: LessonRepositoryRemote(
-                  httpService: HttpService(
-                    secureStorage: SecureStorage(),
-                  ),
+              value: LessonProvider(
+                lessonRepository: LessonRepositoryRemote(
+                  httpService: HttpService(secureStorage: SecureStorage()),
                 ),
               ),
             ),
-            
           ] +
           Repositories.providers(),
       child: AnnotatedRegion<SystemUiOverlayStyle>(
@@ -63,27 +64,36 @@ class _AppHanduState extends State<AppHandu> {
           statusBarColor: AppColors.primary400,
           statusBarIconBrightness: Brightness.light,
         ),
-        child: MaterialApp.router(
-          theme: ThemeData(textTheme: Font.primaryTheme()),
-          routerConfig: router(authProvider),
+        child: FutureBuilder(
+          future: authProvider.init(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return MaterialApp(
+                builder: (_, child) {
+                  return const Center(
+                    child: CircularProgressIndicator(
+                      color: AppColors.primary400,
+                    ),
+                  );
+                },
+              );
+            }
+
+            if (snapshot.hasError) {
+              return MaterialApp(
+                builder: (_, child) {
+                  return Center(child: Text('Error: ${snapshot.error}'));
+                },
+              );
+            }
+
+            return MaterialApp.router(
+              theme: ThemeData(textTheme: Font.primaryTheme()),
+              routerConfig: router(),
+            );
+          },
         ),
       ),
     );
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    SecureStorageImpl secureStorage = SecureStorage();
-
-    authProvider = AuthProvider(
-      authRepository: AuthRepositoryRemote(
-        googleAuth: GoogleAuth(),
-        secureStorage: secureStorage,
-        httpService: HttpService(secureStorage: secureStorage),
-      ),
-    );
-
-    Future.microtask(() => authProvider.init());
   }
 }

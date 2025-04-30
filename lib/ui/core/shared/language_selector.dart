@@ -24,10 +24,12 @@ class LanguageSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final languagesProvider =
-        context.read<LanguagesProvider>();
+    final languages = context.select<LanguagesProvider, List<Language>>(
+      (provider) => provider.languages,
+    );
+
     return Dropdown<Language>(
-      data: languagesProvider.languages,
+      data: languages,
       onSelect: onChanged,
       width: width,
       value: value,

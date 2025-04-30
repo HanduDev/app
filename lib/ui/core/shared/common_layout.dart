@@ -1,8 +1,10 @@
+import 'package:app/providers/languages_provider.dart';
 import 'package:app/routes/destination.dart';
 import 'package:app/ui/core/themes/app_colors.dart';
 import 'package:app/ui/core/themes/font.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 class CommonLayout extends StatelessWidget {
   final StatefulNavigationShell navigationShell;
@@ -40,29 +42,34 @@ class CommonLayout extends StatelessWidget {
             );
           }),
         ),
-        child: NavigationBar(
-          selectedIndex: navigationShell.currentIndex,
-          onDestinationSelected: navigationShell.goBranch,
-          backgroundColor: AppColors.primary400,
-          indicatorColor: AppColors.primary400,
-          destinations:
-              destinations
-                  .map(
-                    (destination) => NavigationDestination(
-                      icon: Icon(
-                        destination.icon,
-                        color: AppColors.disabledIcon,
-                        size: 30,
-                      ),
-                      label: destination.label,
-                      selectedIcon: Icon(
-                        destination.icon,
-                        color: AppColors.white,
-                        size: 30,
-                      ),
-                    ),
-                  )
-                  .toList(),
+        child: FutureBuilder(
+          future: context.read<LanguagesProvider>().getAllLanguages(),
+          builder: (context, _) {
+            return NavigationBar(
+              selectedIndex: navigationShell.currentIndex,
+              onDestinationSelected: navigationShell.goBranch,
+              backgroundColor: AppColors.primary400,
+              indicatorColor: AppColors.primary400,
+              destinations:
+                  destinations
+                      .map(
+                        (destination) => NavigationDestination(
+                          icon: Icon(
+                            destination.icon,
+                            color: AppColors.disabledIcon,
+                            size: 30,
+                          ),
+                          label: destination.label,
+                          selectedIcon: Icon(
+                            destination.icon,
+                            color: AppColors.white,
+                            size: 30,
+                          ),
+                        ),
+                      )
+                      .toList(),
+            );
+          },
         ),
       ),
     );

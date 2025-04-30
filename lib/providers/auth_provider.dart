@@ -23,35 +23,24 @@ class AuthProvider extends ChangeNotifier implements AuthProviderImpl {
 
   User? _user;
   bool _isGoogleLoading = false;
-  bool _isLoading = true;
   bool _isAuthenticating = false;
 
   bool get isAuthenticated => _user != null;
   User? get user => _user;
   bool get isGoogleLoading => _isGoogleLoading;
-  bool get isLoading => _isLoading;
   bool get isAuthenticating => _isAuthenticating;
 
   Future<void> init() async {
     try {
-      _isLoading = true;
-      notifyListeners();
-
       User? user = await _authRepository.me();
 
       if (user == null) {
-        _isLoading = false;
-        notifyListeners();
         return;
       }
 
       _user = user;
       notifyListeners();
-    } catch (_) {
-    } finally {
-      _isLoading = false;
-      notifyListeners();
-    }
+    } catch (_) {}
   }
 
   @override

@@ -12,14 +12,9 @@ import 'package:go_router/go_router.dart';
 import 'package:app/ui/core/shared/flat_button.dart';
 import 'package:provider/provider.dart';
 
-class CadastroPage extends StatefulWidget {
+class CadastroPage extends StatelessWidget {
   const CadastroPage({super.key});
 
-  @override
-  State<CadastroPage> createState() => _CadastroPageState();
-}
-
-class _CadastroPageState extends State<CadastroPage> {
   @override
   Widget build(BuildContext context) {
     void onLoginWithGoogle() async {
@@ -44,6 +39,8 @@ class _CadastroPageState extends State<CadastroPage> {
       ),
       child: PopScope(
         onPopInvokedWithResult: (value, result) {
+          if (result == null) return;
+
           context.pop();
         },
         child: Scaffold(

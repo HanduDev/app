@@ -70,9 +70,11 @@ class AppHandu extends StatelessWidget {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return MaterialApp(
                 builder: (_, child) {
-                  return const Center(
-                    child: CircularProgressIndicator(
-                      color: AppColors.primary400,
+                  return Scaffold(
+                    body: const Center(
+                      child: CircularProgressIndicator(
+                        color: AppColors.primary400,
+                      ),
                     ),
                   );
                 },
@@ -82,7 +84,9 @@ class AppHandu extends StatelessWidget {
             if (snapshot.hasError) {
               return MaterialApp(
                 builder: (_, child) {
-                  return Center(child: Text('Error: ${snapshot.error}'));
+                  return Scaffold(
+                    body: Center(child: Text('Error: ${snapshot.error}')),
+                  );
                 },
               );
             }

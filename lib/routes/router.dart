@@ -6,6 +6,7 @@ import 'package:app/routes/branches/education_branches.dart';
 import 'package:app/routes/branches/libras_branches.dart';
 import 'package:app/routes/branches/trail_branches.dart';
 import 'package:app/routes/branches/translate_branches.dart';
+import 'package:app/ui/confirmacao_cadastro/widgets/confirmacao_cadastro_page.dart';
 import 'package:app/ui/core/shared/common_layout.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -37,6 +38,10 @@ GoRouter router() {
       return null;
     },
     routes: [
+      GoRoute(
+        path: Routes.confirmacaoCadastro,
+        builder: (context, state) => ConfirmacaoCadastroPage(),
+      ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) => navigationShell,
         branches: authBranches,

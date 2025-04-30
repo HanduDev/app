@@ -26,6 +26,8 @@ class _ConfirmacaoCadastroPageState extends State<ConfirmacaoCadastroPage> {
 
   void startResendTimer() {
     Future.delayed(const Duration(seconds: 1), () {
+      if (!mounted) return;
+
       if (resendTime > 0) {
         setState(() {
           resendTime--;
@@ -33,6 +35,19 @@ class _ConfirmacaoCadastroPageState extends State<ConfirmacaoCadastroPage> {
         startResendTimer();
       }
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      startResendTimer();
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
@@ -212,11 +227,5 @@ class _ConfirmacaoCadastroPageState extends State<ConfirmacaoCadastroPage> {
         ),
       ),
     );
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    startResendTimer();
   }
 }

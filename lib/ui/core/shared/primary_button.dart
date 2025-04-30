@@ -15,9 +15,10 @@ class PrimaryButton extends BaseButton {
     super.loading = false,
     super.disabled = false,
     super.rounded = false,
+    super.danger,
     super.elevation,
   }) : super(
-         backgroundColor: AppColors.primary400,
+         backgroundColor: danger ? AppColors.error : AppColors.primary400,
          textColor: AppColors.white,
          disabledBackgroundColor: AppColors.primary400.withAlpha(160),
          disabledTextColor: AppColors.white.withAlpha(160),

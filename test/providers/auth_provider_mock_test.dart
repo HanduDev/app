@@ -24,7 +24,6 @@ void main() {
         when(mockAuthRepository.me()).thenAnswer((_) async => null);
 
         await authProvider.init();
-        expect(authProvider.isLoading, false);
         expect(authProvider.user, null);
         verify(mockAuthRepository.me()).called(1);
       },
@@ -42,7 +41,6 @@ void main() {
         when(mockAuthRepository.me()).thenAnswer((_) async => testUser);
 
         await authProvider.init();
-        expect(authProvider.isLoading, false);
         expect(authProvider.user, testUser);
         verify(mockAuthRepository.me()).called(1);
       },

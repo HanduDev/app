@@ -21,29 +21,30 @@ abstract class BaseButton extends StatelessWidget {
   final Widget? leftIcon;
   final double fontSize;
   final EdgeInsets? padding;
+  final bool danger;
 
-  const BaseButton(
-      {super.key,
-      required this.onPressed,
-      required this.text,
-      this.fontSize = 16,
-      required this.onLongPress,
-      required this.rounded,
-      required this.disabled,
-      required this.width,
-      required this.height,
-      required this.loading,
-      required this.backgroundColor,
-      required this.textColor,
-      required this.disabledBackgroundColor,
-      required this.disabledTextColor,
-      this.padding = const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      this.hasBorder = false,
-      this.rightIcon,
-      this.leftIcon,
-      this.elevation = 2});
-      
-
+  const BaseButton({
+    super.key,
+    required this.onPressed,
+    required this.text,
+    this.fontSize = 16,
+    required this.onLongPress,
+    required this.rounded,
+    required this.disabled,
+    required this.width,
+    required this.height,
+    required this.loading,
+    required this.backgroundColor,
+    required this.textColor,
+    required this.disabledBackgroundColor,
+    required this.disabledTextColor,
+    this.padding = const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+    this.hasBorder = false,
+    this.rightIcon,
+    this.leftIcon,
+    this.danger = false,
+    this.elevation = 2,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -62,12 +63,13 @@ abstract class BaseButton extends StatelessWidget {
         elevation: elevation,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(rounded ? 50 : 8),
-          side: hasBorder
-              ? BorderSide(
-                  color: disabled || loading ? disabledTextColor : textColor,
-                  width: 2,
-                )
-              : BorderSide.none,
+          side:
+              hasBorder
+                  ? BorderSide(
+                    color: disabled || loading ? disabledTextColor : textColor,
+                    width: 2,
+                  )
+                  : BorderSide.none,
         ),
         minimumSize: Size(width ?? double.infinity, height ?? 44),
       ),
@@ -83,12 +85,17 @@ abstract class BaseButton extends StatelessWidget {
               width: 16,
               height: 16,
               child: CircularProgressIndicator(
-                  strokeWidth: 3, color: disabledTextColor),
+                strokeWidth: 3,
+                color: disabledTextColor,
+              ),
             ),
           if (loading) const SizedBox(width: 8),
           Text(
             text ?? '',
-            style: Font.primary(fontSize: fontSize, fontWeight: FontWeight.bold),
+            style: Font.primary(
+              fontSize: fontSize,
+              fontWeight: FontWeight.bold,
+            ),
           ),
           if (rightIcon != null) const SizedBox(width: 8),
           if (rightIcon != null) rightIcon!,

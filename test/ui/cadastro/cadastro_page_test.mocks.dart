@@ -48,11 +48,6 @@ class MockAuthProvider extends _i1.Mock implements _i2.AuthProvider {
           as bool);
 
   @override
-  bool get isLoading =>
-      (super.noSuchMethod(Invocation.getter(#isLoading), returnValue: false)
-          as bool);
-
-  @override
   bool get isAuthenticating =>
       (super.noSuchMethod(
             Invocation.getter(#isAuthenticating),

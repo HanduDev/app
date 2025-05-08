@@ -53,25 +53,7 @@ class OptionsLesson extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final userAnswer = lesson.userAnswer;
-
-    final controller = SelectableGridController(
-      initialValues:
-          userAnswer != null
-              ? [
-                SelectableGridModel(
-                  value: userAnswer,
-                  label:
-                      lesson.options
-                          ?.firstWhere(
-                            (option) => option.id == int.parse(userAnswer),
-                          )
-                          .content ??
-                      "",
-                ),
-              ]
-              : null,
-    );
+    final controller = SelectableGridController();
 
     List<SelectableGridModel> list =
         lesson.options!
@@ -112,13 +94,15 @@ class OptionsLesson extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   const SizedBox(width: 12),
-                  Text(
-                    item.label,
-                    style: Font.primary(
-                      color:
-                          isSelected ? AppColors.primary500 : AppColors.black,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
+                  Flexible(
+                    child: Text(
+                      item.label,
+                      style: Font.primary(
+                        color:
+                            isSelected ? AppColors.primary500 : AppColors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                   ),
                 ],

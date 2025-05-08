@@ -11,11 +11,8 @@ class TrailRepositoryRemote extends TrailRepositoryImpl {
     : _httpService = httpService;
 
   @override
-  Future<Trail> create(TrailRequest trailRequest) async {
-    var response = await _httpService.post('/trails', {
-      'trail': trailRequest.toJson(),
-    });
-    return Trail.fromJson(response['trail']);
+  Future<void> create(TrailRequest trailRequest) async {
+    await _httpService.post('/trails', {'trail': trailRequest.toJson()});
   }
 
   @override

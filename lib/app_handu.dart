@@ -4,6 +4,7 @@ import 'package:app/data/repositories/lesson/lesson_repository_remote.dart';
 import 'package:app/data/services/google_auth.dart';
 import 'package:app/data/services/http.dart';
 import 'package:app/data/services/secure_storage.dart';
+import 'package:app/data/services/web_socket.dart';
 import 'package:app/providers/auth_provider.dart';
 import 'package:app/providers/languages_provider.dart';
 import 'package:app/providers/lesson_provider.dart';
@@ -46,6 +47,9 @@ class AppHandu extends StatelessWidget {
                   (context) => HttpService(
                     secureStorage: context.read<SecureStorageImpl>(),
                   ),
+            ),
+            Provider<WebSocketServiceImpl>(
+              create: (context) => WebSocketService(),
             ),
             ChangeNotifierProvider<LanguagesProvider>.value(
               value: languageProvider,

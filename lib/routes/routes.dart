@@ -13,4 +13,5 @@ abstract final class Routes {
   static const criandoPlanoDeEstudos = '/criando_plano_de_estudos';
   static const trilha = '/trilha';
   static const aula = '/aula';
+  static const finalizarPlanoDeEstudos = '/finalizar_plano_de_estudos';
 }

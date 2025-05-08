@@ -1,15 +1,17 @@
+import 'package:app/models/trail/trail.dart';
 import 'package:app/routes/routes.dart';
 import 'package:app/ui/core/shared/primary_button.dart';
 import 'package:app/ui/core/themes/app_colors.dart';
 import 'package:app/ui/core/themes/font.dart';
-import 'package:app/ui/plano_de_estudos/view_model/forms_container_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lottie/lottie.dart';
-import 'package:provider/provider.dart';
 
 class Finished extends StatefulWidget {
-  const Finished({super.key});
+  final String errorMessage;
+  final Trail? trail;
+
+  const Finished({super.key, required this.errorMessage, this.trail});
 
   @override
   State<Finished> createState() => _FinishedState();
@@ -39,8 +41,7 @@ class _FinishedState extends State<Finished> with TickerProviderStateMixin {
             return;
           }
 
-          final viewModel = context.read<FormsContainerViewModel>();
-          context.go(Routes.aula, extra: {"trail": viewModel.trail});
+          context.go(Routes.trilha, extra: {"trail": widget.trail});
         }
       }
     });
@@ -48,10 +49,7 @@ class _FinishedState extends State<Finished> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = context.watch<FormsContainerViewModel>();
-
-    String errorText = viewModel.errorText;
-    bool hasError = errorText != "";
+    bool hasError = widget.errorMessage != "";
 
     return Container(
       padding: const EdgeInsets.all(16),
@@ -86,7 +84,7 @@ class _FinishedState extends State<Finished> with TickerProviderStateMixin {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    hasError ? errorText : 'Criado com sucesso!',
+                    hasError ? widget.errorMessage : 'Criado com sucesso!',
                     textAlign: TextAlign.center,
                     style: Font.primary(
                       fontSize: 16,
@@ -104,10 +102,7 @@ class _FinishedState extends State<Finished> with TickerProviderStateMixin {
                         return;
                       }
 
-                      context.go(
-                        Routes.trilha,
-                        extra: {"trail": viewModel.trail},
-                      );
+                      context.go(Routes.trilha, extra: {"trail": widget.trail});
                     },
                   ),
                   const SizedBox(height: 8),

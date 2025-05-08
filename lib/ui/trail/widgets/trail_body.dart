@@ -43,9 +43,6 @@ class TrailBody extends StatelessWidget {
                   tag: "${lesson.id}-title",
                   child: Text(lesson.name),
                 ),
-                subtitle: Text(
-                  lesson.hasFinished ? 'Finished' : 'Not finished',
-                ),
                 trailing: Icon(
                   lesson.hasFinished ? Icons.check_circle : Icons.circle,
                   color: lesson.hasFinished ? Colors.green : Colors.grey,

@@ -1,4 +1,5 @@
 import 'package:app/data/repositories/lesson/lesson_repository.dart';
+import 'package:app/data/repositories/lesson/check_answer/check_answer_repository.dart';
 import 'package:app/data/repositories/trail/trail_repository.dart';
 import 'package:app/models/lesson/lesson.dart';
 import 'package:app/models/trail/trail.dart';
@@ -38,6 +39,7 @@ List<StatefulShellBranch> trailBranches = [
             create:
                 (context) => LessonViewModel(
                   lessonRepository: context.read<LessonRepositoryImpl>(),
+                  checkAnswerRepository: context.read<CheckAnswerRepositoryImpl>(),
                 ),
             child: LessonPage(lesson: lessonData),
           );

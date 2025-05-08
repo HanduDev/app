@@ -105,7 +105,7 @@ class _FinishedState extends State<Finished> with TickerProviderStateMixin {
                       }
 
                       context.go(
-                        Routes.aula,
+                        Routes.trilha,
                         extra: {"trail": viewModel.trail},
                       );
                     },

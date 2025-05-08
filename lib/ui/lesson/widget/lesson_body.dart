@@ -3,8 +3,10 @@ import 'package:app/helpers/toast.dart';
 import 'package:app/models/lesson/lesson.dart';
 import 'package:app/models/lesson/lesson_info.dart';
 import 'package:app/ui/lesson/view_model/lesson_view_model.dart';
+import 'package:app/ui/lesson/widget/common_lesson.dart';
+import 'package:app/ui/lesson/widget/options_lesson.dart';
+import 'package:app/ui/lesson/widget/translate_lesson.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:provider/provider.dart';
 
 class LessonBody extends StatelessWidget {
@@ -26,6 +28,19 @@ class LessonBody extends StatelessWidget {
       }
     }
 
+    Widget buildBody(LessonInfo lesson) {
+      switch (lesson.activityType) {
+        case null:
+          return CommonLesson(lesson: lesson);
+        case "translation":
+          return TranslateLesson(lesson: lesson);
+        case "multiple_choice":
+          return OptionsLesson(lesson: lesson);
+        default:
+          return CommonLesson(lesson: lesson);
+      }
+    }
+
     return FutureBuilder(
       future: fetchData(),
       initialData: null,
@@ -39,11 +54,9 @@ class LessonBody extends StatelessWidget {
         }
 
         return Expanded(
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(12, 16, 12, 16),
-              child: MarkdownBody(data: snapshot.data?.content ?? ""),
-            ),
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(12, 16, 12, 16),
+            child: buildBody(snapshot.data!),
           ),
         );
       },

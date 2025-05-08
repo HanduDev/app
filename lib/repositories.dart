@@ -4,6 +4,8 @@ import 'package:app/data/repositories/language/language_repository.dart';
 import 'package:app/data/repositories/language/language_repository_remote.dart';
 import 'package:app/data/repositories/lesson/lesson_repository.dart';
 import 'package:app/data/repositories/lesson/lesson_repository_remote.dart';
+import 'package:app/data/repositories/lesson/check_answer/check_answer_repository.dart';
+import 'package:app/data/repositories/lesson/check_answer/check_answer_repository_remote.dart';
 import 'package:app/data/repositories/trail/trail_repository.dart';
 import 'package:app/data/repositories/trail/trail_repository_remote.dart';
 import 'package:app/data/repositories/translate/translate_repository.dart';
@@ -45,6 +47,12 @@ class Repositories {
       Provider<LessonRepositoryImpl>(
         create:
             (context) => LessonRepositoryRemote(
+              httpService: context.read<HttpServiceImpl>(),
+            ),
+      ),
+      Provider<CheckAnswerRepositoryImpl>(
+        create:
+            (context) => CheckAnswerRepositoryRemote(
               httpService: context.read<HttpServiceImpl>(),
             ),
       ),

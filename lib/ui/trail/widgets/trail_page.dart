@@ -70,7 +70,7 @@ class TrailPage extends StatelessWidget {
                     Hero(
                       tag: '${trail.id}-progress-text',
                       child: Text(
-                        '${trail.progress} %',
+                        '${trail.progress * 100} %',
                         style: Font.primary(
                           fontSize: 16,
                           fontWeight: FontWeight.w500,

@@ -72,6 +72,10 @@ class HttpService extends HttpServiceImpl {
       headers: await _getHeader(),
     );
 
+    if (httpRequest.bodyBytes.isEmpty) {
+      return {} as T;
+    }
+
     var jsonBody = json.decode(utf8.decode(httpRequest.bodyBytes));
 
     if (httpRequest.statusCode >= 400) {

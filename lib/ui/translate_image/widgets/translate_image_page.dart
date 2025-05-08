@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:app/ui/traducao_texto/view_model/translate_text_view_model.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:app/ui/core/shared/language_selector.dart';
@@ -8,7 +7,6 @@ import 'package:app/ui/core/shared/segmented_control/segmented_control_item.dart
 import 'package:app/ui/core/themes/app_colors.dart';
 import 'package:app/ui/core/shared/dropdown/dropdown_button_controller.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
 
 class TranslateImagePage extends StatefulWidget {
   const TranslateImagePage({super.key});
@@ -22,7 +20,7 @@ class _TranslateImagePageState extends State<TranslateImagePage>
   List<CameraDescription> cameras = [];
   CameraController? cameraController;
   bool isCameraInitialized = false;
-  XFile? capturedImage; 
+  XFile? capturedImage;
 
   final DropdownButtonController fromLanguageController =
       DropdownButtonController();
@@ -108,7 +106,7 @@ class _TranslateImagePageState extends State<TranslateImagePage>
             Positioned.fill(
               child: Image.file(
                 File(capturedImage!.path),
-                fit: BoxFit.cover, 
+                fit: BoxFit.cover,
               ),
             )
           else if (isCameraInitialized && cameraController != null)
@@ -206,7 +204,7 @@ class _TranslateImagePageState extends State<TranslateImagePage>
                       child: ElevatedButton(
                         onPressed: () {
                           setState(() {
-                            capturedImage = null; 
+                            capturedImage = null;
                           });
                         },
                         style: ElevatedButton.styleFrom(

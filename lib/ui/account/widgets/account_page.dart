@@ -25,24 +25,18 @@ class AccountPage extends StatelessWidget {
           children: [
             Container(
               width: double.infinity,
-              height: 170,
-              padding: const EdgeInsets.only(left: 12, right: 12, top: 20, bottom: 20),
+              height: 130,
               decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [AppColors.primary400, AppColors.primary200],
-                ),
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(32),
-                  bottomRight: Radius.circular(32),
+                image: DecorationImage(
+                  image: AssetImage('assets/images/appbar.png'),
+                  fit: BoxFit.fill,
                 ),
               ),
             ),
             Center(
               child:             
               Padding(
-                padding: const EdgeInsets.only(top: 30,),
+                padding: const EdgeInsets.only(top: 100,),
                 child: CircleAvatar(
                   radius: 60,
                   backgroundImage:
@@ -108,7 +102,7 @@ class AccountPage extends StatelessWidget {
                       } catch (e) {
                       if (!context.mounted) return;
                       Toast.error(context, 'Erro ao sair');
-                      }
+                    }
                     },
                 ),
               ],
@@ -127,7 +121,7 @@ class AccountPage extends StatelessWidget {
         Text(
           user.fullName,
           style: Font.primary(
-            fontSize: 24,
+            fontSize: 22,
             fontWeight: FontWeight.bold,
             color: AppColors.primary500,
           )

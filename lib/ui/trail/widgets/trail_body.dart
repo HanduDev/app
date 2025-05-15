@@ -1,6 +1,7 @@
 import 'package:app/models/trail/trail.dart';
 import 'package:app/routes/routes.dart';
 import 'package:app/ui/trail/view_model/trail_view_model.dart';
+import 'package:app/ui/trail/widgets/lesson_card.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -30,23 +31,24 @@ class TrailBody extends StatelessWidget {
         }
 
         return Expanded(
-          child: ListView.builder(
+          child: ListView.separated(
             itemCount: trailInfo.lessons.length,
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            shrinkWrap: true,
+            separatorBuilder: (context, index) {
+              return const SizedBox(height: 16);
+            },
             itemBuilder: (context, index) {
               final lesson = trailInfo.lessons[index];
-
-              return ListTile(
-                onTap: () {
-                  context.push(Routes.aula, extra: {"lesson": lesson});
-                },
-                title: Hero(
-                  tag: "${lesson.id}-title",
-                  child: Text(lesson.name),
-                ),
-                trailing: Icon(
-                  lesson.hasFinished ? Icons.check_circle : Icons.circle,
-                  color: lesson.hasFinished ? Colors.green : Colors.grey,
-                ),
+              bool isPreviousFinished =
+                  index > 0 && trailInfo.lessons[index - 1].hasFinished;
+              bool isNextFinished =
+                  index < trailInfo.lessons.length - 1 &&
+                  trailInfo.lessons[index + 1].hasFinished;
+              bool isCurrentLesson = isPreviousFinished && !isNextFinished;
+              return LessonCard(
+                lesson: lesson,
+                isCurrentLesson: isCurrentLesson,
               );
             },
           ),

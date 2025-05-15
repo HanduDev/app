@@ -4,6 +4,7 @@ import 'package:app/ui/traducao_texto/view_model/translate_text_view_model.dart'
 import 'package:app/ui/traducao_texto/widgets/translate_text_page.dart';
 import 'package:app/ui/translate_audio/widgets/translate_audio_page.dart';
 import 'package:app/ui/translate_image/widgets/translate_image_page.dart';
+import 'package:app/ui/translate_image/view_model/translate_image_view_model.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
@@ -22,8 +23,30 @@ List<StatefulShellBranch> translateBranches = [
               child: TranslateTextPage(),
             ),
       ),
-      GoRoute(path: Routes.audio, builder: (_, __) => TranslateAudioPage()),
-      GoRoute(path: Routes.image, builder: (_, __) => TranslateImagePage()),
+      GoRoute(
+        path: Routes.audio,
+        builder:
+            (context, state) => ChangeNotifierProvider(
+              create:
+                  (_) => TranslateTextViewModel(
+                    translateRepository:
+                        context.read<TranslateRepositoryImpl>(),
+                  ),
+              child: const TranslateAudioPage(),
+            ),
+      ),
+      GoRoute(
+        path: Routes.image,
+        builder:
+            (context, state) => ChangeNotifierProvider(
+              create:
+                  (_) => TranslateImageViewModel(
+                    translateRepository:
+                        context.read<TranslateRepositoryImageImpl>(),
+                  ),
+              child: const TranslateImagePage(),
+            ),
+      ),
     ],
   ),
 ];

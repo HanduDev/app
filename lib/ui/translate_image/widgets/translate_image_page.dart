@@ -7,6 +7,8 @@ import 'package:app/ui/core/shared/segmented_control/segmented_control_item.dart
 import 'package:app/ui/core/themes/app_colors.dart';
 import 'package:app/ui/core/shared/dropdown/dropdown_button_controller.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
+import 'package:app/ui/translate_image/view_model/translate_image_view_model.dart';
 
 class TranslateImagePage extends StatefulWidget {
   const TranslateImagePage({super.key});
@@ -21,6 +23,8 @@ class _TranslateImagePageState extends State<TranslateImagePage>
   CameraController? cameraController;
   bool isCameraInitialized = false;
   XFile? capturedImage;
+  String? translatedText;
+  bool isTranslating = false;
 
   final DropdownButtonController fromLanguageController =
       DropdownButtonController();
@@ -89,7 +93,7 @@ class _TranslateImagePageState extends State<TranslateImagePage>
       try {
         final image = await cameraController!.takePicture();
         setState(() {
-          capturedImage = image; // Armazena a imagem capturada
+          capturedImage = image;
         });
       } catch (e) {
         print('Erro ao capturar a foto: $e');
@@ -97,17 +101,38 @@ class _TranslateImagePageState extends State<TranslateImagePage>
     }
   }
 
+  Future<void> _handleTranslation() async {
+    if (capturedImage != null) {
+      setState(() {
+        isTranslating = true;
+      });
+
+      try {
+        final viewModel = context.read<TranslateImageViewModel>();
+        final result = await viewModel.translateImage(capturedImage!);
+        setState(() {
+          translatedText = result;
+          isTranslating = false;
+        });
+      } catch (e) {
+        setState(() {
+          translatedText = 'Erro ao traduzir: $e';
+          isTranslating = false;
+        });
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final viewModel = context.watch<TranslateImageViewModel>();
+
     return Scaffold(
       body: Stack(
         children: [
           if (capturedImage != null)
             Positioned.fill(
-              child: Image.file(
-                File(capturedImage!.path),
-                fit: BoxFit.cover,
-              ),
+              child: Image.file(File(capturedImage!.path), fit: BoxFit.cover),
             )
           else if (isCameraInitialized && cameraController != null)
             Positioned.fill(child: CameraPreview(cameraController!))
@@ -159,7 +184,7 @@ class _TranslateImagePageState extends State<TranslateImagePage>
                           children: [
                             Expanded(
                               child: LanguageSelector(
-                                controller: fromLanguageController,
+                                controller: viewModel.fromlanguageController,
                               ),
                             ),
                             Padding(
@@ -190,10 +215,43 @@ class _TranslateImagePageState extends State<TranslateImagePage>
                             ),
                             Expanded(
                               child: LanguageSelector(
-                                controller: toLanguageController,
+                                controller: viewModel.tolanguageController,
+                                onChanged: (_) => _handleTranslation(),
                               ),
                             ),
                           ],
+                        ),
+                      ),
+                    ),
+                  if (isTranslating)
+                    const Padding(
+                      padding: EdgeInsets.all(16.0),
+                      child: CircularProgressIndicator(),
+                    )
+                  else if (translatedText != null)
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Container(
+                          padding: const EdgeInsets.all(16.0),
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(12),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.1),
+                                blurRadius: 4,
+                                offset: Offset(0, 2),
+                              ),
+                            ],
+                          ),
+                          child: SingleChildScrollView(
+                            child: Text(
+                              translatedText!,
+                              style: TextStyle(fontSize: 16),
+                            ),
+                          ),
                         ),
                       ),
                     ),
@@ -205,6 +263,7 @@ class _TranslateImagePageState extends State<TranslateImagePage>
                         onPressed: () {
                           setState(() {
                             capturedImage = null;
+                            translatedText = null;
                           });
                         },
                         style: ElevatedButton.styleFrom(

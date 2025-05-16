@@ -7,24 +7,33 @@ import 'package:flutter/material.dart';
 
 class TranslateImageViewModel extends ChangeNotifier {
   final TranslateRepositoryImageImpl _translateRepository;
-  TranslateImageViewModel({required TranslateRepositoryImageImpl translateRepository})
-    : _translateRepository = translateRepository;
+  TranslateImageViewModel({
+    required TranslateRepositoryImageImpl translateRepository,
+  }) : _translateRepository = translateRepository;
 
   DropdownButtonController fromlanguageController = DropdownButtonController();
   DropdownButtonController tolanguageController = DropdownButtonController();
 
-  Future<String> translateImage(XFile image,) async {
+  Future<String> translateImage(XFile image) async {
     try {
       var translateRequestImage = TranslateImageRequest(
         fromLanguage: fromlanguageController.value.code,
         toLanguage: tolanguageController.value.code,
         image: image,
       );
-      Translate response = await _translateRepository.createImage(translateRequestImage);
+      Translate response = await _translateRepository.createImage(
+        translateRequestImage,
+      );
 
       return response.message;
     } catch (e) {
-      return 'Error: $e';
+      if (e.toString().contains('SocketException') ||
+          e.toString().contains('Connection refused')) {
+        throw Exception(
+          'Erro de conexão. Verifique sua internet e tente novamente.',
+        );
+      }
+      throw Exception('Erro ao traduzir a imagem. Tente novamente.');
     }
   }
 }

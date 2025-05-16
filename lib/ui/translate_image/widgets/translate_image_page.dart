@@ -5,10 +5,12 @@ import 'package:app/ui/core/shared/language_selector.dart';
 import 'package:app/ui/core/shared/segmented_control/segmented_control.dart';
 import 'package:app/ui/core/shared/segmented_control/segmented_control_item.dart';
 import 'package:app/ui/core/themes/app_colors.dart';
-import 'package:app/ui/core/shared/dropdown/dropdown_button_controller.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:app/ui/translate_image/view_model/translate_image_view_model.dart';
+import 'package:app/ui/core/shared/chat_field.dart';
 
 class TranslateImagePage extends StatefulWidget {
   const TranslateImagePage({super.key});
@@ -25,15 +27,15 @@ class _TranslateImagePageState extends State<TranslateImagePage>
   XFile? capturedImage;
   String? translatedText;
   bool isTranslating = false;
-
-  final DropdownButtonController fromLanguageController =
-      DropdownButtonController();
-  final DropdownButtonController toLanguageController =
-      DropdownButtonController();
+  late TextEditingController responseController;
+  late FlutterTts flutterTts;
 
   @override
   void initState() {
     super.initState();
+    responseController = TextEditingController();
+    flutterTts = FlutterTts();
+    _initTts();
     WidgetsBinding.instance.addObserver(this);
     _setupCameraController();
   }
@@ -42,6 +44,8 @@ class _TranslateImagePageState extends State<TranslateImagePage>
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
     cameraController?.dispose();
+    responseController.dispose();
+    flutterTts.stop();
     super.dispose();
   }
 
@@ -81,7 +85,7 @@ class _TranslateImagePageState extends State<TranslateImagePage>
         }
       }
     } catch (e) {
-      print('Erro ao inicializar a câmera: $e');
+      debugPrint('Erro ao inicializar a câmera: $e');
       setState(() {
         isCameraInitialized = false;
       });
@@ -96,7 +100,7 @@ class _TranslateImagePageState extends State<TranslateImagePage>
           capturedImage = image;
         });
       } catch (e) {
-        print('Erro ao capturar a foto: $e');
+        debugPrint('Erro ao capturar a foto: $e');
       }
     }
   }
@@ -116,9 +120,28 @@ class _TranslateImagePageState extends State<TranslateImagePage>
         });
       } catch (e) {
         setState(() {
-          translatedText = 'Erro ao traduzir: $e';
+          translatedText =
+              'Erro de conexão. Verifique sua internet e tente novamente.';
           isTranslating = false;
         });
+        debugPrint('Erro na tradução: $e');
+      }
+    }
+  }
+
+  Future<void> _initTts() async {
+    await flutterTts.setLanguage("pt-BR");
+    await flutterTts.setSpeechRate(0.5);
+    await flutterTts.setVolume(1.0);
+    await flutterTts.setPitch(1.0);
+  }
+
+  Future<void> _speakText(String text) async {
+    if (text.isNotEmpty) {
+      try {
+        await flutterTts.speak(text);
+      } catch (e) {
+        debugPrint('Erro ao reproduzir áudio: $e');
       }
     }
   }
@@ -200,7 +223,7 @@ class _TranslateImagePageState extends State<TranslateImagePage>
                                     shape: BoxShape.circle,
                                     boxShadow: [
                                       BoxShadow(
-                                        color: Colors.black.withOpacity(0.1),
+                                        color: Colors.black.withAlpha(26),
                                         blurRadius: 4,
                                         offset: Offset(0, 2),
                                       ),
@@ -232,25 +255,46 @@ class _TranslateImagePageState extends State<TranslateImagePage>
                     Expanded(
                       child: Padding(
                         padding: const EdgeInsets.all(16.0),
-                        child: Container(
-                          padding: const EdgeInsets.all(16.0),
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(12),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.1),
-                                blurRadius: 4,
-                                offset: Offset(0, 2),
+                        child: ChatField(
+                          controller:
+                              responseController..text = translatedText!,
+                          onSendMessage: (message) {},
+                          isWritable: false,
+                          iconButtonEnabled: false,
+                          backgroundColor: AppColors.white,
+                          textColor: AppColors.black,
+                          minHeight: 100,
+                          footer: Row(
+                            children: [
+                              IconButton(
+                                onPressed: () async {
+                                  if (translatedText != null &&
+                                      translatedText!.isNotEmpty) {
+                                    try {
+                                      await flutterTts.speak(translatedText!);
+                                    } catch (e) {
+                                      debugPrint(
+                                        'Erro ao reproduzir áudio: $e',
+                                      );
+                                    }
+                                  }
+                                },
+                                icon: Icon(Icons.volume_up_outlined),
+                                color: AppColors.primary500,
+                              ),
+
+                              IconButton(
+                                onPressed: () {
+                                  if (translatedText != null) {
+                                    Clipboard.setData(
+                                      ClipboardData(text: translatedText!),
+                                    );
+                                  }
+                                },
+                                icon: Icon(Icons.copy),
+                                color: AppColors.primary500,
                               ),
                             ],
-                          ),
-                          child: SingleChildScrollView(
-                            child: Text(
-                              translatedText!,
-                              style: TextStyle(fontSize: 16),
-                            ),
                           ),
                         ),
                       ),

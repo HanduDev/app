@@ -70,7 +70,6 @@ class HttpService extends HttpServiceImpl {
     var streamedResponse = await request.send();
     var response = await http.Response.fromStream(streamedResponse);
 
-    print(response.body);
     if (response.statusCode >= 400) {
       throw Exception(response.body);
     }

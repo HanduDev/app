@@ -1,6 +1,6 @@
 import 'package:app/providers/auth_provider.dart';
 import 'package:app/ui/core/shared/chat_field.dart';
-import 'package:app/ui/traducao_texto/widgets/popUp_feedback.dart';
+import 'package:app/ui/traducao_texto/widgets/popup_feedback.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:app/ui/core/shared/language_selector.dart';
@@ -192,6 +192,9 @@ class TranslateTextPage extends StatelessWidget {
                         IconButton(
                           onPressed: () async {
                             if (responseController.text.isNotEmpty) {
+                              await flutterTts.setLanguage(
+                                viewModel.tolanguageController.value.code,
+                              );
                               await flutterTts.speak(responseController.text);
                             }
                           },

@@ -1,9 +1,7 @@
 import 'package:app/models/trail/trail.dart';
-import 'package:app/routes/routes.dart';
 import 'package:app/ui/trail/view_model/trail_view_model.dart';
 import 'package:app/ui/trail/widgets/lesson_card.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class TrailBody extends StatelessWidget {

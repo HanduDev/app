@@ -12,6 +12,7 @@ import 'package:app/ui/traducao_texto/view_model/translate_text_view_model.dart'
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 
 class TranslateAudioPage extends StatefulWidget {
   const TranslateAudioPage({super.key});
@@ -27,11 +28,12 @@ class _TranslateAudioPageState extends State<TranslateAudioPage> {
       DropdownButtonController();
   final DropdownButtonController toLanguageController =
       DropdownButtonController();
-  bool _isTranslating = false;
+  late FlutterTts flutterTts;
 
   @override
   void initState() {
     super.initState();
+    flutterTts = FlutterTts();
     // Sincronizar os controladores com o ViewModel
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final viewModel = context.read<TranslateTextViewModel>();
@@ -44,7 +46,15 @@ class _TranslateAudioPageState extends State<TranslateAudioPage> {
   void dispose() {
     requestController.dispose();
     responseController.dispose();
+    flutterTts.stop();
     super.dispose();
+  }
+
+  Future<void> _speakText(String text) async {
+    if (text.isNotEmpty) {
+      await flutterTts.setLanguage(toLanguageController.value.code);
+      await flutterTts.speak(text);
+    }
   }
 
   Future<void> _translateText(String text) async {
@@ -70,7 +80,6 @@ class _TranslateAudioPageState extends State<TranslateAudioPage> {
 
     if (mounted) {
       setState(() {
-        _isTranslating = true;
         responseController.text = 'Traduzindo...';
       });
     }
@@ -84,15 +93,15 @@ class _TranslateAudioPageState extends State<TranslateAudioPage> {
       if (mounted) {
         setState(() {
           responseController.text = translatedText;
-          _isTranslating = false;
         });
+        // Reproduzir áudio automaticamente após a tradução
+        await _speakText(translatedText);
       }
     } catch (e) {
       if (mounted) {
         setState(() {
           responseController.text =
               'Erro ao traduzir. Por favor, tente novamente.';
-          _isTranslating = false;
         });
       }
     }
@@ -214,7 +223,7 @@ class _TranslateAudioPageState extends State<TranslateAudioPage> {
                             shape: BoxShape.circle,
                             boxShadow: [
                               BoxShadow(
-                                color: Colors.black.withOpacity(0.1),
+                                color: Colors.black.withAlpha(26),
                                 blurRadius: 4,
                                 offset: Offset(0, 2),
                               ),
@@ -250,13 +259,29 @@ class _TranslateAudioPageState extends State<TranslateAudioPage> {
                     ),
                     SpeechButton(
                       onRecognize: (value) async {
+                        if (fromLanguageController.value == null ||
+                            toLanguageController.value == null) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                'Por favor, selecione os idiomas de origem e destino',
+                              ),
+                              backgroundColor: AppColors.error,
+                            ),
+                          );
+                          return;
+                        }
                         setState(() {
                           requestController.text = value;
                         });
                         await _translateText(value);
                       },
                       size: 85.0,
-                      backgroundColor: AppColors.primary500,
+                      backgroundColor:
+                          fromLanguageController.value == null ||
+                                  toLanguageController.value == null
+                              ? AppColors.primary300
+                              : AppColors.primary500,
                     ),
                     SizedBox(height: 32),
                     ChatField(
@@ -268,6 +293,17 @@ class _TranslateAudioPageState extends State<TranslateAudioPage> {
                       backgroundColor: AppColors.primary100,
                       textColor: AppColors.primary300,
                       minHeight: 100,
+                      footer: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          IconButton(
+                            onPressed:
+                                () => _speakText(responseController.text),
+                            icon: Icon(Icons.volume_up_outlined),
+                            color: AppColors.primary500,
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),

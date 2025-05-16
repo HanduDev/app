@@ -86,7 +86,7 @@ class ChatField extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: 10),
-                  iconButtonEnabled && isWritable 
+                  iconButtonEnabled && isWritable
                       ? IconButton(
                         onPressed: () {
                           FocusScope.of(context).unfocus();

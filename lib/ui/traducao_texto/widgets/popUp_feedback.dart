@@ -5,7 +5,7 @@ void showFeedbackDialog(BuildContext context) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
-      int selectedRating = 0; 
+      int selectedRating = 0;
 
       return StatefulBuilder(
         builder: (BuildContext context, StateSetter setState) {
@@ -28,7 +28,7 @@ void showFeedbackDialog(BuildContext context) {
                     return IconButton(
                       onPressed: () {
                         setState(() {
-                          selectedRating = index + 1; 
+                          selectedRating = index + 1;
                         });
                       },
                       icon: Icon(
@@ -47,7 +47,7 @@ void showFeedbackDialog(BuildContext context) {
                   children: [
                     TextButton(
                       onPressed: () {
-                        Navigator.of(context).pop(); 
+                        Navigator.of(context).pop();
                       },
                       child: Text("Cancelar"),
                     ),
@@ -68,8 +68,8 @@ void showFeedbackDialog(BuildContext context) {
                         }
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.primary500, 
-                        foregroundColor: Colors.white, 
+                        backgroundColor: AppColors.primary500,
+                        foregroundColor: Colors.white,
                       ),
                       child: Text("Enviar"),
                     ),
@@ -87,10 +87,12 @@ void showFeedbackDialog(BuildContext context) {
 void showFeedbackCompletedDialog(BuildContext context) {
   showDialog(
     context: context,
-    barrierDismissible: false, 
+    barrierDismissible: false,
     builder: (BuildContext context) {
       Future.delayed(Duration(seconds: 3), () {
-        Navigator.of(context).pop(); 
+        if (context.mounted) {
+          Navigator.of(context).pop();
+        }
       });
 
       return AlertDialog(

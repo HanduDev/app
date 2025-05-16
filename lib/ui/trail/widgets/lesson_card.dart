@@ -27,12 +27,6 @@ class LessonCard extends StatelessWidget {
             : lesson.hasFinished
             ? AppColors.green
             : AppColors.grey;
-    final Color textColor =
-        isCurrentLesson
-            ? AppColors.white
-            : lesson.hasFinished
-            ? AppColors.white
-            : AppColors.black;
     return GestureDetector(
       onTap: () {
         context.push(Routes.aula, extra: {"lesson": lesson});
@@ -43,7 +37,6 @@ class LessonCard extends StatelessWidget {
           color: backgroundColor,
           border: Border.all(color: borderColor),
           borderRadius: BorderRadius.circular(100),
-          
         ),
         width: 100,
         height: 100,
@@ -57,7 +50,6 @@ class LessonCard extends StatelessWidget {
                       : AppColors.lightGrey,
             ),
             const SizedBox(width: 16),
-            
           ],
         ),
       ),

@@ -1,5 +1,4 @@
 import 'package:app/data/repositories/trail/trail_repository.dart';
-import 'package:app/data/services/web_socket.dart';
 import 'package:app/models/trail/trail.dart';
 import 'package:app/routes/routes.dart';
 import 'package:app/ui/plano_de_estudos/view_model/forms_container_view_model.dart';
@@ -18,7 +17,6 @@ List<StatefulShellBranch> createTrailBranches = [
             create:
                 (context) => FormsContainerViewModel(
                   trailRepository: context.read<TrailRepositoryImpl>(),
-                  webSocketService: context.read<WebSocketServiceImpl>(),
                 ),
             child: child,
           );

@@ -1,5 +1,4 @@
 import 'package:app/data/repositories/trail/trail_repository.dart';
-import 'package:app/data/services/web_socket.dart';
 import 'package:app/helpers/errors.dart';
 import 'package:app/models/trail/trail.dart';
 import 'package:app/models/trail/trail_request.dart';
@@ -13,10 +12,8 @@ class FormsContainerViewModel extends ChangeNotifier {
   String errorText = "";
   Trail? _trail;
 
-  FormsContainerViewModel({
-    required TrailRepositoryImpl trailRepository,
-    required WebSocketServiceImpl webSocketService,
-  }) : _trailRepository = trailRepository;
+  FormsContainerViewModel({required TrailRepositoryImpl trailRepository})
+    : _trailRepository = trailRepository;
 
   TextEditingController theme = TextEditingController();
   SelectableGridController languageController = SelectableGridController();

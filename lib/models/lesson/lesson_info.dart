@@ -4,7 +4,6 @@ import 'package:app/models/option.dart';
 class LessonInfo extends Lesson {
   final String? content;
   final List<Option>? options;
-  final String? activityType;
   final String? question;
   final String? userAnswer;
 
@@ -13,8 +12,8 @@ class LessonInfo extends Lesson {
     required super.name,
     required super.hasFinished,
     required this.content,
+    required super.activityType,
     this.options,
-    this.activityType,
     this.question,
     this.userAnswer,
   });

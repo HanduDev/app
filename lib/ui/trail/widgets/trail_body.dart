@@ -1,3 +1,4 @@
+import 'package:app/models/lesson/lesson.dart';
 import 'package:app/models/trail/trail.dart';
 import 'package:app/ui/trail/view_model/trail_view_model.dart';
 import 'package:app/ui/trail/widgets/lesson_card.dart';
@@ -8,6 +9,22 @@ class TrailBody extends StatelessWidget {
   final Trail trail;
 
   const TrailBody({super.key, required this.trail});
+
+  IconData lessonIcon(Lesson lesson) {
+    if (lesson.activityType == 'text') {
+      return Icons.text_snippet_outlined;
+    }
+
+    if (lesson.activityType == 'multiple_choice') {
+      return Icons.check_circle_outline;
+    }
+
+    if (lesson.activityType == 'translation') {
+      return Icons.translate_outlined;
+    }
+
+    return Icons.subject;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,15 +55,23 @@ class TrailBody extends StatelessWidget {
             },
             itemBuilder: (context, index) {
               final lesson = trailInfo.lessons[index];
+
               bool isPreviousFinished =
                   index > 0 && trailInfo.lessons[index - 1].hasFinished;
+
               bool isNextFinished =
                   index < trailInfo.lessons.length - 1 &&
                   trailInfo.lessons[index + 1].hasFinished;
-              bool isCurrentLesson = isPreviousFinished && !isNextFinished;
+
+              bool isCurrentLesson =
+                  isPreviousFinished && !isNextFinished && !lesson.hasFinished;
+
               return LessonCard(
                 lesson: lesson,
-                isCurrentLesson: isCurrentLesson,
+                isCurrentLesson:
+                    isCurrentLesson ||
+                    (index == 0 && !isNextFinished && !lesson.hasFinished),
+                icon: lessonIcon(lesson),
               );
             },
           ),

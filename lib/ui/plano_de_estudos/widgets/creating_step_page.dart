@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:app/data/services/web_socket.dart';
+import 'package:app/config/environment.dart';
 import 'package:app/models/trail/trail.dart';
 import 'package:app/models/user.dart';
 import 'package:app/providers/auth_provider.dart';
@@ -9,7 +9,7 @@ import 'package:app/ui/plano_de_estudos/widgets/create_step_animations/loading.d
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:web_socket_channel/web_socket_channel.dart';
+import 'package:web_socket_channel/io.dart';
 
 class CreatingStepPage extends StatefulWidget {
   const CreatingStepPage({super.key});
@@ -21,27 +21,48 @@ class CreatingStepPage extends StatefulWidget {
 class _CreatingStepPageState extends State<CreatingStepPage>
     with TickerProviderStateMixin {
   late AnimationController _controller;
-
-  late WebSocketChannel _channel;
+  late IOWebSocketChannel _channel;
   Trail? _trail;
 
-  WebSocketChannel _setupWebSocket() {
-    final channel = WebSocketChannel.connect(Uri.parse('$url/cable'));
+  String getWebSocketUrl() {
+    final uri = Uri.parse(Environment.baseUrl);
+    final wsScheme = uri.scheme == 'https' ? 'wss' : 'ws';
 
-    final user = Provider.of<AuthProvider>(context, listen: false).user;
+    final port =
+        (uri.scheme == 'https' && uri.port == 443) ||
+                (uri.scheme == 'http' && uri.port == 80)
+            ? ''
+            : ':${uri.port}';
 
-    if (user == null) {
+    return '$wsScheme://${uri.host}$port/cable';
+  }
+
+  IOWebSocketChannel _setupWebSocket() {
+    try {
+      final uri = Uri.parse(getWebSocketUrl());
+
+      final channel = IOWebSocketChannel.connect(uri);
+
+      final user = Provider.of<AuthProvider>(context, listen: false).user;
+
+      if (user == null) {
+        return channel;
+      }
+
+      final data = {
+        'command': 'subscribe',
+        'identifier': jsonEncode({
+          'channel': 'TrailChannel',
+          'user_id': user.id,
+        }),
+      };
+
+      channel.sink.add(jsonEncode(data));
+
       return channel;
+    } catch (e) {
+      rethrow;
     }
-
-    final data = {
-      'command': 'subscribe',
-      'identifier': jsonEncode({'channel': 'TrailChannel', 'user_id': user.id}),
-    };
-
-    channel.sink.add(jsonEncode(data));
-
-    return channel;
   }
 
   Map<String, dynamic>? _checkSuccess(dynamic data) {

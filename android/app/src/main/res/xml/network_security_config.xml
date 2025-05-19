@@ -3,5 +3,6 @@
     <domain-config cleartextTrafficPermitted="true">
         <domain includeSubdomains="true">vlibras.gov.br</domain>
         <domain includeSubdomains="true">dicionario2.vlibras.gov.br</domain>
+        <domain includeSubdomains="true">54.233.43.189</domain>
     </domain-config>
 </network-security-config>

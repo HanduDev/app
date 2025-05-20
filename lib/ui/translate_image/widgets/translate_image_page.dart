@@ -136,7 +136,7 @@ class _TranslateImagePageState extends State<TranslateImagePage>
     await flutterTts.setPitch(1.0);
   }
 
-  Future<void> _speakText(String text) async {
+  Future<void> speakText(String text) async {
     if (text.isNotEmpty) {
       try {
         await flutterTts.speak(text);

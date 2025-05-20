@@ -1,5 +1,3 @@
-import 'package:app/models/lesson/lesson_type.dart';
-
 class Lesson {
   final int id;
   final String name;

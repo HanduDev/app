@@ -7,7 +7,6 @@ import 'package:app/ui/core/shared/primary_button.dart';
 import 'package:app/ui/core/themes/app_colors.dart';
 import 'package:app/ui/educacao/view_model/educacao_view_model.dart';
 import 'package:app/ui/educacao/widgets/card_progressbar.dart';
-import 'package:app/ui/educacao/widgets/card_recommendation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -58,7 +57,7 @@ class _EducacaoPageState extends State<EducacaoPage> {
           children: [
             Container(
               width: double.infinity,
-              height: 290,
+              height: 250,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.bottomLeft,
@@ -72,7 +71,7 @@ class _EducacaoPageState extends State<EducacaoPage> {
               ),
               child: Column(
                 children: [
-                  const SizedBox(height: 90),
+                  const SizedBox(height: 50),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -85,12 +84,12 @@ class _EducacaoPageState extends State<EducacaoPage> {
                               Text(
                                 'O que deseja aprender hoje,',
                                 style: TextStyle(
-                                  fontSize: 10,
+                                  fontSize: 12,
                                   color: AppColors.yellow,
                                 ),
                               ),
 
-                              const SizedBox(height: 5),
+                              const SizedBox(height: 6),
 
                               Text(
                                 getFirstName(authProvider.user?.fullName),
@@ -166,44 +165,7 @@ class _EducacaoPageState extends State<EducacaoPage> {
                   );
                 },
               ),
-            ),
-
-            const SizedBox(height: 30),
-
-            Padding(
-              padding: const EdgeInsets.only(right: 185),
-              child: Text(
-                'Recomendações',
-                style: TextStyle(
-                  fontSize: 18,
-                  color: AppColors.grey,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-
-            const SizedBox(height: 20),
-
-            SizedBox(
-              height: 110,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                children: [
-                  CardRecommendation(
-                    language: {'name': 'Português', 'countryCode': 'pt-br'},
-                    level: 'Iniciante',
-                    persons: 120,
-                  ),
-                  const SizedBox(width: 20),
-                  CardRecommendation(
-                    language: {'name': 'Inglês', 'countryCode': 'en'},
-                    level: 'Básico',
-                    persons: 2000,
-                  ),
-                ],
-              ),
-            ),
+            ),      
           ],
         ),
       ),

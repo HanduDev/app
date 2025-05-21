@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:app/data/repositories/auth/auth_repository_remote.dart';
-import '../__mocks__/general_mocks.mocks.dart'; 
+import '../__mocks__/general_mocks.mocks.dart';
 
 void main() {
   late MockGoogleAuthImpl googleAuth;
@@ -22,7 +22,7 @@ void main() {
   });
 
   group('AuthRepositoryRemote', () {
-    test('signInWithGoogle deve retornar um User e salvar token', () async {
+    test('signInWithGoogle retorna User e salva token', () async {
       final mockGoogleUser = MockGoogleSignInAccount();
       final mockAuth = MockGoogleSignInAuthentication();
 
@@ -47,7 +47,7 @@ void main() {
       verify(storage.write('token', 'abc123')).called(1);
     });
 
-    test('signIn deve retornar um User e salvar token', () async {
+    test('signIn retorna User e salva token', () async {
       when(http.post('/authentication/login', any)).thenAnswer(
         (_) async => {
           'id': 2,
@@ -68,8 +68,8 @@ void main() {
       verify(storage.write('token', 'login-token')).called(1);
     });
 
-    test('signUp deve retornar um User e salvar token', () async {
-      when(http.post('/authentication/register', argThat(isA<Map<String, dynamic>>()))).thenAnswer(
+    test('signUp retorna User e salva token', () async {
+      when(http.post('/authentication/register', any)).thenAnswer(
         (_) async => {
           'id': 3,
           'fullName': 'Novo Usuário',
@@ -90,9 +90,8 @@ void main() {
       verify(storage.write('token', 'token-novo')).called(1);
     });
 
-    test('me deve retornar o usuário salvo se token existir', () async {
+    test('me retorna usuário se token existir', () async {
       when(storage.read('token')).thenAnswer((_) async => 'token-valido');
-
       when(http.get(any)).thenAnswer(
         (_) async => {
           'id': 4,
@@ -108,7 +107,7 @@ void main() {
       expect(user?.fullName, 'Usuário Atual');
     });
 
-    test('me deve retornar null se não houver token', () async {
+    test('me retorna null se não houver token', () async {
       when(storage.read('token')).thenAnswer((_) async => null);
 
       final user = await repository.me();
@@ -116,14 +115,14 @@ void main() {
       expect(user, null);
     });
 
-    test('signOut deve limpar token e desconectar Google', () async {
+    test('signOut limpa token e desconecta Google', () async {
       await repository.signOut();
 
       verify(googleAuth.signOut()).called(1);
       verify(storage.delete('token')).called(1);
     });
 
-    test('verifyCode deve retornar usuário após verificação', () async {
+    test('verifyCode retorna usuário após verificação', () async {
       when(http.post('/users/confirm_email', any)).thenAnswer(
         (_) async => {
           'id': 5,
@@ -139,8 +138,10 @@ void main() {
       expect(user.fullName, 'Verificado');
     });
 
-    test('resendCode deve fazer POST sem erros', () async {
-      when(http.post('/users/resend_email_confirmation', any)).thenAnswer((_) async => {});
+    test('resendCode faz POST sem erros', () async {
+      when(
+        http.post('/users/resend_email_confirmation', any),
+      ).thenAnswer((_) async => {});
 
       await repository.resendCode(code: '123');
 

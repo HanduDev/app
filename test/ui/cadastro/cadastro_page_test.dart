@@ -7,17 +7,19 @@ import 'package:provider/provider.dart';
 import '../../__mocks__/general_mocks.mocks.dart'; 
 
 void main() {
-  late MockAuthProvider mockAuthProvider;
+  late MockAuthRepositoryImpl mockAuthRepository;
+  late AuthProvider authProvider;
 
   setUp(() {
-    mockAuthProvider = MockAuthProvider();
+    mockAuthRepository = MockAuthRepositoryImpl();
+    authProvider = AuthProvider(authRepository: mockAuthRepository);
   });
 
   Future<void> pumpForm(WidgetTester tester) async {
     await tester.pumpWidget(
       MaterialApp(
         home: ChangeNotifierProvider<AuthProvider>.value(
-          value: mockAuthProvider,
+          value: authProvider,
           child: Scaffold(body: FormsValidator()),
         ),
       ),
@@ -25,8 +27,14 @@ void main() {
   }
 
   group('FormsValidator - Preenchimento individual de campos', () {
+    setUp(() {
+      when(mockAuthRepository.me()).thenAnswer((_) async => null);
+      when(
+        mockAuthRepository.signInWithGoogle(),
+      ).thenAnswer((_) async => throw UnimplementedError());
+    });
+
     testWidgets('preenche campo nome', (WidgetTester tester) async {
-      when(mockAuthProvider.isAuthenticating).thenReturn(false);
       await pumpForm(tester);
 
       const nome = 'Everton';
@@ -36,7 +44,6 @@ void main() {
     });
 
     testWidgets('preenche campo email', (WidgetTester tester) async {
-      when(mockAuthProvider.isAuthenticating).thenReturn(false);
       await pumpForm(tester);
 
       const email = 'teste@email.com';
@@ -46,7 +53,6 @@ void main() {
     });
 
     testWidgets('preenche campo senha', (WidgetTester tester) async {
-      when(mockAuthProvider.isAuthenticating).thenReturn(false);
       await pumpForm(tester);
 
       const senha = '12345678';
@@ -58,7 +64,6 @@ void main() {
     testWidgets('preenche campo confirmação de senha', (
       WidgetTester tester,
     ) async {
-      when(mockAuthProvider.isAuthenticating).thenReturn(false);
       await pumpForm(tester);
 
       const confirmacao = '12345678';

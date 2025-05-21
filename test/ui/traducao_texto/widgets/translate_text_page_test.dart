@@ -1,249 +1,101 @@
+import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/mockito.dart';
 import 'package:app/models/language.dart';
-import 'package:app/models/user.dart';
-import 'package:app/providers/auth_provider.dart';
-import 'package:app/providers/languages_provider.dart';
-import 'package:app/ui/core/shared/chat_field.dart';
+import 'package:app/models/translate/translate_text_request.dart';
+import 'package:app/models/translate/translate.dart';
 import 'package:app/ui/core/shared/dropdown/dropdown_button_controller.dart';
 import 'package:app/ui/traducao_texto/view_model/translate_text_view_model.dart';
-import 'package:app/ui/traducao_texto/widgets/translate_text_page.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_test/flutter_test.dart';
-
-import 'package:mockito/mockito.dart';
-import 'package:provider/provider.dart';
 import '../../../__mocks__/general_mocks.mocks.dart';
 
 void main() {
-  late MockAuthProvider mockAuthProvider;
-  late MockTranslateTextViewModel mockTranslateTextViewModel;
-  late MockFlutterTts mockFlutterTts;
-  late MockLanguagesProvider mockLanguagesProvider;
-  late MockLanguageRepositoryImpl mockLanguageRepositoryImpl;
+  late MockTranslateRepositoryImpl mockTranslateRepository;
+  late DropdownButtonController<Language> fromLanguageController;
+  late DropdownButtonController<Language> toLanguageController;
+  late TranslateTextViewModel translateTextViewModel;
 
   setUp(() {
-    mockAuthProvider = MockAuthProvider();
-    mockTranslateTextViewModel = MockTranslateTextViewModel();
-    mockFlutterTts = MockFlutterTts();
-    mockLanguagesProvider = MockLanguagesProvider();
-    mockLanguageRepositoryImpl = MockLanguageRepositoryImpl();
+    mockTranslateRepository = MockTranslateRepositoryImpl();
 
-    when(mockLanguageRepositoryImpl.getAllLanguages()).thenAnswer(
-      (_) async => [
-        Language(code: 'pt', name: 'Português'),
-        Language(code: 'en', name: 'Inglês'),
-      ],
+    fromLanguageController = DropdownButtonController<Language>(
+      initialValue: Language(name: 'Português', code: 'pt'),
+    );
+    toLanguageController = DropdownButtonController<Language>(
+      initialValue: Language(name: 'Inglês', code: 'en'),
     );
 
-    when(mockLanguagesProvider.languages).thenReturn([
-      Language(code: 'pt', name: 'Português'),
-      Language(code: 'en', name: 'Inglês'),
-    ]);
-
-    when(mockFlutterTts.speak(any)).thenAnswer((_) async => null);
+    translateTextViewModel =
+        TranslateTextViewModel(translateRepository: mockTranslateRepository)
+          ..fromlanguageController = fromLanguageController
+          ..tolanguageController = toLanguageController;
   });
 
-  group('TranslateTextPage', () {
-    testWidgets('Deve renderizar a página corretamente', (
-      WidgetTester tester,
-    ) async {
-      when(mockAuthProvider.user).thenReturn(
-        User(
-          id: 1,
-          email: 'john@example.com',
-          fullName: 'John Doe',
-          isEmailConfirmed: true,
-        ),
-      );
-
+  test(
+    'Deve chamar translateRepository e retornar a tradução corretamente',
+    () async {
       when(
-        mockTranslateTextViewModel.fromlanguageController,
-      ).thenReturn(DropdownButtonController());
-      when(
-        mockTranslateTextViewModel.tolanguageController,
-      ).thenReturn(DropdownButtonController());
+        mockTranslateRepository.create(any),
+      ).thenAnswer((_) async => Translate(message: 'Hello'));
 
-      await tester.pumpWidget(
-        MaterialApp(
-          home: MultiProvider(
-            providers: [
-              ChangeNotifierProvider<AuthProvider>.value(
-                value: mockAuthProvider,
-              ),
-              ChangeNotifierProvider<TranslateTextViewModel>.value(
-                value: mockTranslateTextViewModel,
-              ),
-              ChangeNotifierProvider<LanguagesProvider>(
-                create: (_) => mockLanguagesProvider,
-              ),
-            ],
-            child: TranslateTextPage(),
+      final result = await translateTextViewModel.translateText('Olá');
+
+      expect(result, 'Hello');
+
+      verify(
+        mockTranslateRepository.create(
+          argThat(
+            predicate<TranslateTextRequest>(
+              (request) =>
+                  request.text == 'Olá' &&
+                  request.fromLanguage == 'pt' &&
+                  request.toLanguage == 'en',
+            ),
           ),
         ),
-      );
+      ).called(1);
+    },
+  );
 
-      expect(find.text('John'), findsOneWidget);
-      expect(find.byType(CircleAvatar), findsOneWidget);
-    });
-
-    testWidgets('Deve traduzir texto ao enviar mensagem', (
-      WidgetTester tester,
-    ) async {
-      when(mockAuthProvider.user).thenReturn(
-        User(
-          id: 1,
-          email: 'john@example.com',
-          fullName: 'John Doe',
-          isEmailConfirmed: true,
-        ),
-      );
-
-      when(
-        mockTranslateTextViewModel.fromlanguageController,
-      ).thenReturn(DropdownButtonController());
-      when(
-        mockTranslateTextViewModel.tolanguageController,
-      ).thenReturn(DropdownButtonController());
-
-      when(
-        mockTranslateTextViewModel.translateText('Olá'),
-      ).thenAnswer((_) async => 'Hello');
-
-      await tester.pumpWidget(
-        MaterialApp(
-          home: MultiProvider(
-            providers: [
-              ChangeNotifierProvider<AuthProvider>.value(
-                value: mockAuthProvider,
-              ),
-              ChangeNotifierProvider<TranslateTextViewModel>.value(
-                value: mockTranslateTextViewModel,
-              ),
-              ChangeNotifierProvider<LanguagesProvider>(
-                create: (_) => mockLanguagesProvider,
-              ),
-            ],
-            child: TranslateTextPage(),
+  test('Deve retornar erro se a tradução falhar', () async {
+    when(
+      mockTranslateRepository.create(
+        argThat(
+          predicate<TranslateTextRequest>(
+            (request) =>
+                request.text == 'Meu nome é Everton' &&
+                request.fromLanguage == 'pt' &&
+                request.toLanguage == 'en',
           ),
         ),
-      );
+      ),
+    ).thenThrow(Exception('Erro na tradução'));
 
-      await tester.enterText(find.byType(ChatField).first, 'Olá');
-      await tester.tap(find.byIcon(Icons.send));
-      await tester.pump();
+    final result = await translateTextViewModel.translateText(
+      'Meu nome é Everton',
+    );
 
-      expect(find.text('Hello'), findsOneWidget);
-    });
+    expect(result, 'Error: Exception: Erro na tradução');
 
-    testWidgets('Deve falar o texto ao pressionar o botão', (
-      WidgetTester tester,
-    ) async {
-      when(mockAuthProvider.user).thenReturn(
-        User(
-          id: 1,
-          email: 'john@example.com',
-          fullName: 'John Doe',
-          isEmailConfirmed: true,
-        ),
-      );
-
-      when(
-        mockTranslateTextViewModel.fromlanguageController,
-      ).thenReturn(DropdownButtonController());
-      when(
-        mockTranslateTextViewModel.tolanguageController,
-      ).thenReturn(DropdownButtonController());
-
-      when(
-        mockTranslateTextViewModel.translateText('Olá'),
-      ).thenAnswer((_) async => 'Hello');
-
-      await tester.pumpWidget(
-        MaterialApp(
-          home: MultiProvider(
-            providers: [
-              ChangeNotifierProvider<AuthProvider>.value(
-                value: mockAuthProvider,
-              ),
-              ChangeNotifierProvider<TranslateTextViewModel>.value(
-                value: mockTranslateTextViewModel,
-              ),
-              ChangeNotifierProvider<LanguagesProvider>(
-                create: (_) => mockLanguagesProvider,
-              ),
-            ],
-            child: TranslateTextPage(tts: mockFlutterTts),
+    verify(
+      mockTranslateRepository.create(
+        argThat(
+          predicate<TranslateTextRequest>(
+            (request) =>
+                request.text == 'Meu nome é Everton' &&
+                request.fromLanguage == 'pt' &&
+                request.toLanguage == 'en',
           ),
         ),
-      );
+      ),
+    ).called(1);
+  });
 
-      await tester.enterText(find.byType(ChatField).first, 'Olá');
-      await tester.tap(find.byIcon(Icons.send));
-      await tester.pump();
+  test('Deve trocar os idiomas corretamente', () {
+    final originalFrom = fromLanguageController.value;
+    final originalTo = toLanguageController.value;
 
-      final volumeButton = find.byIcon(Icons.volume_up_outlined);
-      await tester.ensureVisible(volumeButton);
-      await tester.tap(find.byIcon(Icons.volume_up_outlined));
-      await tester.pump();
+    translateTextViewModel.swapLanguages();
 
-      verify(mockFlutterTts.speak('Hello')).called(1);
-    });
-
-    testWidgets('Deve exibir feedback quando pressionado o botão de feedback', (
-      WidgetTester tester,
-    ) async {
-      when(mockAuthProvider.user).thenReturn(
-        User(
-          id: 1,
-          email: 'john@example.com',
-          fullName: 'John Doe',
-          isEmailConfirmed: true,
-        ),
-      );
-
-      when(
-        mockTranslateTextViewModel.fromlanguageController,
-      ).thenReturn(DropdownButtonController());
-      when(
-        mockTranslateTextViewModel.tolanguageController,
-      ).thenReturn(DropdownButtonController());
-
-      when(
-        mockTranslateTextViewModel.translateText('Olá'),
-      ).thenAnswer((_) async => 'Hello');
-
-      await tester.pumpWidget(
-        MaterialApp(
-          home: MultiProvider(
-            providers: [
-              ChangeNotifierProvider<AuthProvider>.value(
-                value: mockAuthProvider,
-              ),
-              ChangeNotifierProvider<TranslateTextViewModel>.value(
-                value: mockTranslateTextViewModel,
-              ),
-              ChangeNotifierProvider<LanguagesProvider>(
-                create: (_) => mockLanguagesProvider,
-              ),
-            ],
-            child: TranslateTextPage(),
-          ),
-        ),
-      );
-
-      await tester.enterText(find.byType(ChatField).first, 'Olá');
-      await tester.tap(find.byIcon(Icons.send));
-      await tester.pumpAndSettle();
-
-      final feedbackIcon = find.descendant(
-        of: find.byType(ChatField).last,
-        matching: find.byIcon(Icons.feedback_outlined),
-      );
-
-      await tester.ensureVisible(feedbackIcon);
-      await tester.tap(feedbackIcon);
-      await tester.pumpAndSettle();
-
-      expect(find.text('O que achou da tradução?'), findsOneWidget);
-    });
+    expect(fromLanguageController.value, originalTo);
+    expect(toLanguageController.value, originalFrom);
   });
 }

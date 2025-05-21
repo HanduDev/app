@@ -336,7 +336,6 @@ class MockHttpServiceImpl extends _i1.Mock implements _i11.HttpServiceImpl {
 /// A class which mocks [GoogleSignInAccount].
 ///
 /// See the documentation for Mockito's code generation for more information.
-// ignore: must_be_immutable
 class MockGoogleSignInAccount extends _i1.Mock
     implements _i4.GoogleSignInAccount {
   MockGoogleSignInAccount() {

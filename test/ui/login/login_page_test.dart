@@ -42,6 +42,7 @@ void main() {
   testWidgets('Deve fazer login com sucesso', (WidgetTester tester) async {
     when(
       mockAuthRepository.signInWithGoogle(),
+    // ignore: null_argument_to_non_null_type
     ).thenAnswer((_) async => Future.value());
 
     await pumpLogin(tester);

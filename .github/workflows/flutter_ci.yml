@@ -44,7 +44,7 @@ jobs:
         run: flutter analyze --fatal-infos
 
       - name: Format code
-        run: dart format --set-exit-if-changed .
+        run: dart format  --verify --set-exit-if-changed .
 
       - name: Run all tests
         run: flutter test

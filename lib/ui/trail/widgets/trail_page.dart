@@ -1,5 +1,4 @@
 import 'package:app/models/trail/trail.dart';
-import 'package:app/ui/core/shared/progress_bar.dart';
 import 'package:app/ui/core/shared/shared_header.dart';
 import 'package:app/ui/core/themes/app_colors.dart';
 import 'package:app/ui/core/themes/font.dart';

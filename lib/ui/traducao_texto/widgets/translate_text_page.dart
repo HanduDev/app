@@ -1,6 +1,6 @@
 import 'package:app/providers/auth_provider.dart';
 import 'package:app/ui/core/shared/chat_field.dart';
-import 'package:app/ui/traducao_texto/widgets/popup_feedback.dart';
+import 'package:app/ui/traducao_texto/widgets/pop_up_feedback.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:app/ui/core/shared/language_selector.dart';
@@ -12,6 +12,7 @@ import 'package:app/ui/traducao_texto/view_model/translate_text_view_model.dart'
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 
 class TranslateTextPage extends StatelessWidget {
   TranslateTextPage({super.key, FlutterTts? tts})
@@ -59,7 +60,10 @@ class TranslateTextPage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Boas vindas ao Handu,',
+                              FlutterI18n.translate(
+                                context,
+                                "common.greetings",
+                              ),
                               style: Font.primary(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w300,
@@ -111,17 +115,26 @@ class TranslateTextPage extends StatelessWidget {
                       items: [
                         SegmentedControlItem(
                           key: '/home',
-                          text: "Texto",
+                          text: FlutterI18n.translate(
+                            context,
+                            "translate.segmented_control.text",
+                          ),
                           icon: Icons.text_snippet_outlined,
                         ),
                         SegmentedControlItem(
                           key: '/audio',
-                          text: "Áudio",
+                          text: FlutterI18n.translate(
+                            context,
+                            'translate.segmented_control.audio',
+                          ),
                           icon: Icons.mic_none_outlined,
                         ),
                         SegmentedControlItem(
                           key: '/image',
-                          text: "Imagem",
+                          text: FlutterI18n.translate(
+                            context,
+                            'translate.segmented_control.image',
+                          ),
                           icon: Icons.image_outlined,
                         ),
                       ],
@@ -175,7 +188,10 @@ class TranslateTextPage extends StatelessWidget {
                         message,
                       );
                     },
-                    label: 'Digite algo',
+                    label: FlutterI18n.translate(
+                      context,
+                      "common.type_something",
+                    ),
                     minHeight: 150,
                   ),
                   ChatField(
@@ -209,7 +225,10 @@ class TranslateTextPage extends StatelessWidget {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   content: Text(
-                                    "A tradução precisa estar preenchida para enviar feedback.",
+                                    FlutterI18n.translate(
+                                      context,
+                                      "translate.errors.translate_need_feedback",
+                                    ),
                                   ),
                                   backgroundColor: Colors.red,
                                 ),

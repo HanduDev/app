@@ -1,5 +1,6 @@
 import 'package:app/ui/core/themes/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 
 void showFeedbackDialog(BuildContext context) {
   showDialog(
@@ -11,7 +12,7 @@ void showFeedbackDialog(BuildContext context) {
         builder: (BuildContext context, StateSetter setState) {
           return AlertDialog(
             title: Text(
-              "O que achou da tradução?",
+              FlutterI18n.translate(context, "translate.errors.what_did_you_think"),
               style: TextStyle(
                 fontWeight: FontWeight.normal,
                 color: AppColors.black,
@@ -49,7 +50,9 @@ void showFeedbackDialog(BuildContext context) {
                       onPressed: () {
                         Navigator.of(context).pop();
                       },
-                      child: Text("Cancelar"),
+                      child: Text(
+                        FlutterI18n.translate(context, "common.cancel"),
+                      ),
                     ),
                     ElevatedButton(
                       onPressed: () {
@@ -60,7 +63,10 @@ void showFeedbackDialog(BuildContext context) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text(
-                                "Por favor, selecione uma avaliação.",
+                                FlutterI18n.translate(
+                                  context,
+                                  "translate.errors.feedback_please_select",
+                                ),
                               ),
                               backgroundColor: Colors.red,
                             ),
@@ -71,7 +77,9 @@ void showFeedbackDialog(BuildContext context) {
                         backgroundColor: AppColors.primary500,
                         foregroundColor: Colors.white,
                       ),
-                      child: Text("Enviar"),
+                      child: Text(
+                        FlutterI18n.translate(context, "common.send"),
+                      ),
                     ),
                   ],
                 ),
@@ -97,7 +105,7 @@ void showFeedbackCompletedDialog(BuildContext context) {
 
       return AlertDialog(
         title: Text(
-          "Obrigado pelo feedback!",
+          FlutterI18n.translate(context, "translate.errors.feedback_success_message"),
           style: TextStyle(
             fontWeight: FontWeight.bold,
             color: AppColors.primary500,
@@ -106,7 +114,7 @@ void showFeedbackCompletedDialog(BuildContext context) {
           textAlign: TextAlign.center,
         ),
         content: Text(
-          "Seu feedback foi enviado com sucesso.",
+          FlutterI18n.translate(context, "translate.errors.feedback_success"),
           textAlign: TextAlign.center,
           style: TextStyle(
             fontWeight: FontWeight.normal,

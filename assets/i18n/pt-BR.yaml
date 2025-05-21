@@ -1,0 +1,23 @@
+common:
+  select: "Selecione"
+  type_something: "Digite algo"
+  close_and_save: "Fechar e Salvar"
+  menu: "Menu"
+  send: "Enviar"
+  cancel: "Cancelar"
+  greetings: "Boas vindas ao Handu"
+
+translate:
+  errors:
+    feedback: "Feedback"
+    what_did_you_think: "O que achou da tradução?"
+    feedback_please_select: "Por favor, selecione uma avaliação."
+    feedback_error: "Erro ao enviar feedback"
+    feedback_success: "Feedback enviado com sucesso"
+    feedback_success_message: "Obrigado pelo feedback!"
+    feedback_error_message: "Erro ao enviar feedback"
+    translate_need_feedback: "A tradução precisa estar preenchida para enviar feedback."
+  segmented_control:
+    text: "Texto"
+    audio: "Áudio"
+    image: "Imagem"

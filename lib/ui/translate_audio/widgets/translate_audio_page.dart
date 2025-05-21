@@ -10,6 +10,7 @@ import 'package:app/ui/libras/widgets/speech_button.dart';
 import 'package:app/ui/core/themes/font.dart';
 import 'package:app/ui/traducao_texto/view_model/translate_text_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_tts/flutter_tts.dart';
@@ -127,7 +128,7 @@ class _TranslateAudioPageState extends State<TranslateAudioPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Boas vindas ao Handu,',
+                          FlutterI18n.translate(context, "common.greetings"),
                           style: Font.primary(
                             fontSize: 12,
                             fontWeight: FontWeight.w300,

@@ -14,10 +14,22 @@ import 'package:app/ui/core/themes/app_colors.dart';
 import 'package:app/ui/core/themes/font.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:flutter_i18n/loaders/decoders/yaml_decode_strategy.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 
 class AppHandu extends StatelessWidget {
-  const AppHandu({super.key});
+  AppHandu({super.key});
+
+  final FlutterI18nDelegate _flutterI18nDelegate = FlutterI18nDelegate(
+    translationLoader: FileTranslationLoader(
+      basePath: 'i18n',
+      fallbackFile: 'pt-BR',
+      useCountryCode: false,
+      decodeStrategies: [YamlDecodeStrategy()],
+    ),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -69,6 +81,12 @@ class AppHandu extends StatelessWidget {
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return MaterialApp(
+                title: 'Handu',
+                localizationsDelegates: [
+                  _flutterI18nDelegate,
+                  GlobalMaterialLocalizations.delegate,
+                  GlobalWidgetsLocalizations.delegate,
+                ],
                 builder: (_, child) {
                   return Scaffold(
                     body: const Center(
@@ -83,6 +101,11 @@ class AppHandu extends StatelessWidget {
 
             if (snapshot.hasError) {
               return MaterialApp(
+                localizationsDelegates: [
+                  _flutterI18nDelegate,
+                  GlobalMaterialLocalizations.delegate,
+                  GlobalWidgetsLocalizations.delegate,
+                ],
                 builder: (_, child) {
                   return Scaffold(
                     body: Center(child: Text('Error: ${snapshot.error}')),
@@ -92,6 +115,12 @@ class AppHandu extends StatelessWidget {
             }
 
             return MaterialApp.router(
+              localizationsDelegates: [
+                _flutterI18nDelegate,
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+              ],
+              supportedLocales: const [Locale('en', 'US'), Locale('pt', 'BR')],
               theme: ThemeData(textTheme: Font.primaryTheme()),
               routerConfig: router(),
             );

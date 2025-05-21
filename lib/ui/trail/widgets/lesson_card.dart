@@ -2,19 +2,24 @@ import 'package:app/helpers/toast.dart';
 import 'package:app/models/lesson/lesson.dart';
 import 'package:app/routes/routes.dart';
 import 'package:app/ui/core/themes/app_colors.dart';
+import 'package:app/ui/core/themes/font.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+
+double radius = 30;
 
 class LessonCard extends StatelessWidget {
   final Lesson lesson;
   final bool isCurrentLesson;
   final IconData icon;
+  final int index;
 
   const LessonCard({
     super.key,
     required this.lesson,
     required this.isCurrentLesson,
     required this.icon,
+    required this.index,
   });
 
   Map<String, Color> colorsConfig() {
@@ -45,9 +50,8 @@ class LessonCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = colorsConfig();
     final backgroundColor = colors["backgroundColor"]!;
-    final borderColor = colors["borderColor"]!;
 
-    return GestureDetector(
+    return InkWell(
       onTap: () {
         if (!isCurrentLesson && !lesson.hasFinished) {
           Toast.info(context, "Você ainda não pode acessar esta aula");
@@ -56,25 +60,56 @@ class LessonCard extends StatelessWidget {
 
         context.push(Routes.aula, extra: {"lesson": lesson});
       },
-      child: CircleAvatar(
-        radius: 50,
-        child: Container(
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            color: backgroundColor,
-            borderRadius: BorderRadius.circular(100),
-            boxShadow: [
-              BoxShadow(
-                color: borderColor,
-                spreadRadius: -0.5,
-                offset: Offset(0, 5),
+      child: Row(
+        children: [
+          CircleAvatar(
+            radius: radius,
+            child: Center(
+              child: Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  border: Border.all(color: backgroundColor, width: 6),
+                  color: AppColors.white,
+                  borderRadius: BorderRadius.circular(100),
+                ),
+                width: radius * 2,
+                height: radius * 2,
+                child: Icon(
+                  icon,
+                  color:
+                      lesson.hasFinished || isCurrentLesson
+                          ? AppColors.grey
+                          : AppColors.lightGrey,
+                  size: radius / 1.2,
+                ),
               ),
-            ],
+            ),
           ),
-          width: 100,
-          height: 100,
-          child: Icon(icon, color: colors["textColor"], size: 30),
-        ),
+          const SizedBox(width: 16),
+          Flexible(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  lesson.activityType != null ? "Prática" : "Aula ${index + 1}",
+                  style: Font.primary(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                Text(
+                  lesson.activityType != null
+                      ? "${lesson.activityType}"
+                      : lesson.name.split(":").last.trim(),
+                  style: Font.primary(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

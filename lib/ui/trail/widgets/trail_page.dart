@@ -55,34 +55,8 @@ class TrailPage extends StatelessWidget {
                 ],
               ),
             ),
-            Center(
-              child: Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Row(
-                  children: [
-                    Flexible(
-                      child: Hero(
-                        tag: '${trail.id}-progress',
-                        child: ProgressBar(value: trail.progress),
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                    Hero(
-                      tag: '${trail.id}-progress-text',
-                      child: Text(
-                        '${trail.progress * 100} %',
-                        style: Font.primary(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                          color: AppColors.black,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            const SizedBox(height: 16),
+           
+            const SizedBox(height: 32),
             TrailBody(trail: trail),
           ],
         ),

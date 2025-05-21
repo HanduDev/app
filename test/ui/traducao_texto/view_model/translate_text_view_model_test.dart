@@ -1,16 +1,11 @@
-import 'package:app/data/repositories/translate/translate_repository.dart';
 import 'package:app/models/language.dart';
 import 'package:app/models/translate/translate.dart';
 import 'package:app/models/translate/translate_text_request.dart';
-import 'package:app/ui/core/shared/dropdown/dropdown_button_controller.dart';
 import 'package:app/ui/traducao_texto/view_model/translate_text_view_model.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
+import '../../../__mocks__/general_mocks.mocks.dart'; 
 
-import 'translate_text_view_model_test.mocks.dart';
-
-@GenerateMocks([TranslateRepositoryImpl, DropdownButtonController])
 void main() {
   late MockTranslateRepositoryImpl mockTranslateRepository;
   late MockDropdownButtonController mockFromLanguageController;

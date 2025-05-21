@@ -2,12 +2,10 @@ import 'package:app/providers/auth_provider.dart';
 import 'package:app/ui/cadastro/widgets/form_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:provider/provider.dart';
+import '../../__mocks__/general_mocks.mocks.dart'; 
 
-import 'cadastro_page_test.mocks.dart';
-@GenerateMocks([AuthProvider])
 void main() {
   late MockAuthProvider mockAuthProvider;
 

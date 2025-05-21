@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:mockito/annotations.dart';
-import 'package:app/providers/auth_provider.dart';
 import 'package:app/ui/login/widgets/login_controller.dart';
+import '../../__mocks__/general_mocks.mocks.dart'; 
 
-import 'login_page_test.mocks.dart';
-
-@GenerateMocks([AuthProvider])
 void main() {
   late MockAuthProvider mockAuthProvider;
 

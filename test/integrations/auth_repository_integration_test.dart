@@ -1,8 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:app/data/repositories/auth/auth_repository_remote.dart';
-
-import 'auth_repository_integration_test.mocks.dart';
+import '../__mocks__/general_mocks.mocks.dart'; 
 
 void main() {
   late MockGoogleAuthImpl googleAuth;

@@ -1,12 +1,8 @@
-import 'package:app/data/repositories/auth/auth_repository.dart';
 import 'package:app/models/user.dart';
 import 'package:app/providers/auth_provider.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-
-@GenerateMocks([AuthRepositoryImpl])
-import 'auth_provider_mock_test.mocks.dart';
+import '../__mocks__/general_mocks.mocks.dart'; 
 
 void main() {
   late MockAuthRepositoryImpl mockAuthRepository;

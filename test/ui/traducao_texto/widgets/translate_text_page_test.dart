@@ -1,4 +1,3 @@
-import 'package:app/data/repositories/language/language_repository.dart';
 import 'package:app/models/language.dart';
 import 'package:app/models/user.dart';
 import 'package:app/providers/auth_provider.dart';
@@ -9,20 +8,11 @@ import 'package:app/ui/traducao_texto/view_model/translate_text_view_model.dart'
 import 'package:app/ui/traducao_texto/widgets/translate_text_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_tts/flutter_tts.dart';
-import 'package:mockito/annotations.dart';
+
 import 'package:mockito/mockito.dart';
 import 'package:provider/provider.dart';
+import '../../../__mocks__/general_mocks.mocks.dart';
 
-import 'translate_text_page_test.mocks.dart';
-
-@GenerateMocks([
-  AuthProvider,
-  TranslateTextViewModel,
-  FlutterTts,
-  LanguagesProvider,
-  LanguageRepositoryImpl,
-])
 void main() {
   late MockAuthProvider mockAuthProvider;
   late MockTranslateTextViewModel mockTranslateTextViewModel;

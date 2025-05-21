@@ -55,33 +55,6 @@ class AccountPage extends StatelessWidget {
             ),
 
             Positioned(
-              left: 230,
-              top: 100.5,
-              child: Container(
-                width: 46,
-                height: 46,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: AppColors.white,
-                  border: Border.all(color: Colors.white, width: 5),
-                ),
-                child: Center(
-                  child: IconButton(
-                    icon: const Icon(Icons.edit_outlined),
-                    color: AppColors.black,
-                    onPressed: () {
-                      showDialog(
-                  context: context,
-                  builder:
-                      (context) => EmDesenvolvimento(title: 'Editar Perfil'),
-                );
-                    },
-                  ),
-                ),
-              ),
-            ),
-
-            Positioned(
               top: 42,
               left: 24,
               right: 16,
@@ -169,14 +142,10 @@ class AccountPage extends StatelessWidget {
         ConfigCard(
           widgets: [
             ConfigItem(
-              icon: Icons.settings_outlined,
-              title: 'Configurações',
+              icon: Icons.person_outlined,
+              title: 'Perfil',
               onTap: () {
-                showDialog(
-                  context: context,
-                  builder:
-                      (context) => EmDesenvolvimento(title: 'Configurações'),
-                );
+                context.pushReplacement(Routes.editar);
               },
             ),
             ConfigItem(
@@ -190,23 +159,23 @@ class AccountPage extends StatelessWidget {
               },
             ),
             ConfigItem(
-              icon: Icons.notifications_outlined,
-              title: 'Notificações',
+              icon: Icons.language_outlined,
+              title: 'Idioma do App',
               onTap: () {
                 showDialog(
                   context: context,
                   builder:
-                      (context) => EmDesenvolvimento(title: 'Notificações'),
+                      (context) => EmDesenvolvimento(title: 'Idioma'),
                 );
               },
             ),
             ConfigItem(
-              icon: Icons.translate_outlined,
-              title: 'Linguagem',
+              icon: Icons.smartphone_outlined,
+              title: 'Permissões do Dispositivo',
               onTap: () {
                 showDialog(
                   context: context,
-                  builder: (context) => EmDesenvolvimento(title: 'Linguagem'),
+                  builder: (context) => EmDesenvolvimento(title: 'Permissões do Dispositivo'),
                 );
               },
             ),

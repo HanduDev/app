@@ -1,6 +1,5 @@
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-
 abstract class Environment {
-  static String baseUrl = dotenv.env['API_URL'] ?? 'http://localhost:8080';
-  static String googleClientId = dotenv.env['GOOGLE_CLIENT_ID'] ?? '';
+  static String baseUrl = 'http://172.22.64.111:8080/api/v1';
+  static String googleClientId =
+      '1082803010557-v27ef3hee3qm45klpjrj4koeovqb02eu.apps.googleusercontent.com';
 }

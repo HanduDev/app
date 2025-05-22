@@ -14,25 +14,18 @@ import 'package:app/ui/core/themes/app_colors.dart';
 import 'package:app/ui/core/themes/font.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_i18n/flutter_i18n.dart';
-import 'package:flutter_i18n/loaders/decoders/yaml_decode_strategy.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:localization/localization.dart';
 import 'package:provider/provider.dart';
 
 class AppHandu extends StatelessWidget {
-  AppHandu({super.key});
-
-  final FlutterI18nDelegate _flutterI18nDelegate = FlutterI18nDelegate(
-    translationLoader: FileTranslationLoader(
-      basePath: 'i18n',
-      fallbackFile: 'pt-BR',
-      useCountryCode: false,
-      decodeStrategies: [YamlDecodeStrategy()],
-    ),
-  );
+  const AppHandu({super.key});
 
   @override
   Widget build(BuildContext context) {
+    LocalJsonLocalization.delegate.directories = ['i18n'];
+    List<Locale> supportedLocales = [const Locale('pt', 'BR')];
+
     final secureStorage = SecureStorage();
     final authProvider = AuthProvider(
       authRepository: AuthRepositoryRemote(
@@ -82,10 +75,12 @@ class AppHandu extends StatelessWidget {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return MaterialApp(
                 title: 'Handu',
+                supportedLocales: supportedLocales,
                 localizationsDelegates: [
-                  _flutterI18nDelegate,
                   GlobalMaterialLocalizations.delegate,
                   GlobalWidgetsLocalizations.delegate,
+                  GlobalCupertinoLocalizations.delegate,
+                  LocalJsonLocalization.delegate,
                 ],
                 builder: (_, child) {
                   return Scaffold(
@@ -102,10 +97,12 @@ class AppHandu extends StatelessWidget {
             if (snapshot.hasError) {
               return MaterialApp(
                 localizationsDelegates: [
-                  _flutterI18nDelegate,
                   GlobalMaterialLocalizations.delegate,
                   GlobalWidgetsLocalizations.delegate,
+                  GlobalCupertinoLocalizations.delegate,
+                  LocalJsonLocalization.delegate,
                 ],
+                supportedLocales: supportedLocales,
                 builder: (_, child) {
                   return Scaffold(
                     body: Center(child: Text('Error: ${snapshot.error}')),
@@ -116,11 +113,12 @@ class AppHandu extends StatelessWidget {
 
             return MaterialApp.router(
               localizationsDelegates: [
-                _flutterI18nDelegate,
                 GlobalMaterialLocalizations.delegate,
                 GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+                LocalJsonLocalization.delegate,
               ],
-              supportedLocales: const [Locale('en', 'US'), Locale('pt', 'BR')],
+              supportedLocales: supportedLocales,
               theme: ThemeData(textTheme: Font.primaryTheme()),
               routerConfig: router(),
             );

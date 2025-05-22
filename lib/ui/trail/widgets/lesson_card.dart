@@ -30,8 +30,16 @@ class LessonCard extends StatelessWidget {
     }
 
     if (lesson.hasFinished) {
+      if (lesson.isCorrect || lesson.isTheorical) {
+        return {
+          "backgroundColor": AppColors.green,
+          "borderColor": const Color.fromARGB(255, 51, 112, 53),
+          "textColor": const Color.fromARGB(255, 51, 112, 53),
+        };
+      }
+
       return {
-        "backgroundColor": AppColors.green,
+        "backgroundColor": AppColors.error,
         "borderColor": const Color.fromARGB(255, 51, 112, 53),
         "textColor": const Color.fromARGB(255, 51, 112, 53),
       };

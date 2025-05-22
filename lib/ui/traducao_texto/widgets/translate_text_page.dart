@@ -11,8 +11,8 @@ import 'package:app/ui/core/themes/font.dart';
 import 'package:app/ui/traducao_texto/view_model/translate_text_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:localization/localization.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_i18n/flutter_i18n.dart';
 
 class TranslateTextPage extends StatelessWidget {
   TranslateTextPage({super.key, FlutterTts? tts})
@@ -60,10 +60,7 @@ class TranslateTextPage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              FlutterI18n.translate(
-                                context,
-                                "common.greetings",
-                              ),
+                              "common.greetings".i18n(),
                               style: Font.primary(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w300,
@@ -115,26 +112,17 @@ class TranslateTextPage extends StatelessWidget {
                       items: [
                         SegmentedControlItem(
                           key: '/home',
-                          text: FlutterI18n.translate(
-                            context,
-                            "translate.segmented_control.text",
-                          ),
+                          text: "translate.segmented_control.text".i18n(),
                           icon: Icons.text_snippet_outlined,
                         ),
                         SegmentedControlItem(
                           key: '/audio',
-                          text: FlutterI18n.translate(
-                            context,
-                            'translate.segmented_control.audio',
-                          ),
+                          text: "translate.segmented_control.audio".i18n(),
                           icon: Icons.mic_none_outlined,
                         ),
                         SegmentedControlItem(
                           key: '/image',
-                          text: FlutterI18n.translate(
-                            context,
-                            'translate.segmented_control.image',
-                          ),
+                          text: "translate.segmented_control.image".i18n(),
                           icon: Icons.image_outlined,
                         ),
                       ],
@@ -188,10 +176,7 @@ class TranslateTextPage extends StatelessWidget {
                         message,
                       );
                     },
-                    label: FlutterI18n.translate(
-                      context,
-                      "common.type_something",
-                    ),
+                    label: "common.type_something".i18n(),
                     minHeight: 150,
                   ),
                   ChatField(
@@ -225,10 +210,8 @@ class TranslateTextPage extends StatelessWidget {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   content: Text(
-                                    FlutterI18n.translate(
-                                      context,
-                                      "translate.errors.translate_need_feedback",
-                                    ),
+                                    "translate.errors.translate_need_feedback"
+                                        .i18n(),
                                   ),
                                   backgroundColor: Colors.red,
                                 ),

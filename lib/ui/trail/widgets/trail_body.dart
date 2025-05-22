@@ -103,7 +103,9 @@ class TrailBody extends StatelessWidget {
 
               final color =
                   lesson.hasFinished
-                      ? AppColors.green
+                      ? lesson.isCorrect || lesson.isTheorical
+                          ? AppColors.green
+                          : AppColors.error
                       : isCurrent
                       ? AppColors.primary300
                       : AppColors.lightGrey;

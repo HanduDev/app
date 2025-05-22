@@ -1,6 +1,6 @@
 import 'package:app/ui/core/themes/app_colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:localization/localization.dart';
 
 void showFeedbackDialog(BuildContext context) {
   showDialog(
@@ -12,10 +12,7 @@ void showFeedbackDialog(BuildContext context) {
         builder: (BuildContext context, StateSetter setState) {
           return AlertDialog(
             title: Text(
-              FlutterI18n.translate(
-                context,
-                "translate.errors.what_did_you_think",
-              ),
+              "translate.errors.what_did_you_think".i18n(),
               style: TextStyle(
                 fontWeight: FontWeight.normal,
                 color: AppColors.black,
@@ -53,9 +50,7 @@ void showFeedbackDialog(BuildContext context) {
                       onPressed: () {
                         Navigator.of(context).pop();
                       },
-                      child: Text(
-                        FlutterI18n.translate(context, "common.cancel"),
-                      ),
+                      child: Text("common.cancel".i18n()),
                     ),
                     ElevatedButton(
                       onPressed: () {
@@ -66,10 +61,8 @@ void showFeedbackDialog(BuildContext context) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text(
-                                FlutterI18n.translate(
-                                  context,
-                                  "translate.errors.feedback_please_select",
-                                ),
+                                "translate.errors.feedback_please_select"
+                                    .i18n(),
                               ),
                               backgroundColor: Colors.red,
                             ),
@@ -80,9 +73,7 @@ void showFeedbackDialog(BuildContext context) {
                         backgroundColor: AppColors.primary500,
                         foregroundColor: Colors.white,
                       ),
-                      child: Text(
-                        FlutterI18n.translate(context, "common.send"),
-                      ),
+                      child: Text("common.send".i18n()),
                     ),
                   ],
                 ),
@@ -108,10 +99,7 @@ void showFeedbackCompletedDialog(BuildContext context) {
 
       return AlertDialog(
         title: Text(
-          FlutterI18n.translate(
-            context,
-            "translate.errors.feedback_success_message",
-          ),
+          "translate.errors.feedback_success_message".i18n(),
           style: TextStyle(
             fontWeight: FontWeight.bold,
             color: AppColors.primary500,
@@ -120,7 +108,7 @@ void showFeedbackCompletedDialog(BuildContext context) {
           textAlign: TextAlign.center,
         ),
         content: Text(
-          FlutterI18n.translate(context, "translate.errors.feedback_success"),
+          "translate.errors.feedback_success".i18n(),
           textAlign: TextAlign.center,
           style: TextStyle(
             fontWeight: FontWeight.normal,

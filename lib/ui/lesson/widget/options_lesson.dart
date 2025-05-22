@@ -12,11 +12,18 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
-class OptionsLesson extends StatelessWidget {
+class OptionsLesson extends StatefulWidget {
   final LessonInfo lesson;
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  OptionsLesson({super.key, required this.lesson});
+  const OptionsLesson({super.key, required this.lesson});
+
+  @override
+  State<OptionsLesson> createState() => _OptionsLessonState();
+}
+
+class _OptionsLessonState extends State<OptionsLesson> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  late LessonInfo _lesson;
 
   void _checkAnswer(
     BuildContext context,
@@ -33,7 +40,7 @@ class OptionsLesson extends StatelessWidget {
       if (selectedOption == null) return;
 
       final isCorrect = await context.read<LessonViewModel>().checkAnswer(
-        lesson.id,
+        _lesson.id,
         selectedOption,
       );
 
@@ -45,6 +52,11 @@ class OptionsLesson extends StatelessWidget {
         return;
       }
 
+      _lesson = await context.read<LessonViewModel>().initialize(_lesson.id);
+      setState(() {});
+
+      if (!context.mounted) return;
+
       Toast.error(context, 'Resposta incorreta!');
     } catch (e) {
       Toast.error(context, getErrorMessage(e));
@@ -54,9 +66,10 @@ class OptionsLesson extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = SelectableGridController();
+    int attemptCount = 3 - _lesson.attemptCount;
 
     List<SelectableGridModel> list =
-        lesson.options!
+        _lesson.options!
             .map(
               (option) => SelectableGridModel(
                 value: option.id.toString(),
@@ -68,13 +81,22 @@ class OptionsLesson extends StatelessWidget {
     return Form(
       key: _formKey,
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            lesson.question ?? "",
+            _lesson.question ?? "",
             style: Font.primary(fontSize: 16, fontWeight: FontWeight.w600),
           ),
+          const SizedBox(height: 4),
+
+          if (!_lesson.hasFinished)
+            Text(
+              attemptCount == 0
+                  ? "Sem tentativas restantes"
+                  : "Você ainda tem ${3 - _lesson.attemptCount} tentativas",
+              style: Font.primary(fontSize: 14, color: AppColors.grey),
+            ),
           const SizedBox(height: 16),
           SelectableGrid(
             items: list,
@@ -112,11 +134,17 @@ class OptionsLesson extends StatelessWidget {
           const SizedBox(height: 16),
           PrimaryButton(
             onPressed: () => _checkAnswer(context, controller),
-            text: lesson.hasFinished ? "Concluído" : "Enviar resposta",
-            disabled: lesson.hasFinished,
+            text: _lesson.hasFinished ? "Concluído" : "Enviar resposta",
+            disabled: _lesson.hasFinished,
           ),
         ],
       ),
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _lesson = widget.lesson;
   }
 }

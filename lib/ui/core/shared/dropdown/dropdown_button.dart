@@ -2,7 +2,7 @@ import 'package:app/ui/core/shared/dropdown/dropdown_button_controller.dart';
 import 'package:app/ui/core/shared/primary_button.dart';
 import 'package:flutter/material.dart';
 import 'package:app/ui/core/themes/app_colors.dart';
-import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:localization/localization.dart';
 
 class Dropdown<T> extends StatefulWidget {
   final List<T> data;
@@ -98,7 +98,7 @@ class _DropdownState<T> extends State<Dropdown<T>> {
                             ]
                             : [
                               Text(
-                                FlutterI18n.translate(context, "common.select"),
+                                "common.select".i18n(),
                                 style: TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w400,
@@ -147,8 +147,7 @@ class _DropdownState<T> extends State<Dropdown<T>> {
               child: Column(
                 children: [
                   Text(
-                    widget.title ??
-                        FlutterI18n.translate(context, "common.menu"),
+                    widget.title ?? "common.menu".i18n(),
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 16),
@@ -181,10 +180,7 @@ class _DropdownState<T> extends State<Dropdown<T>> {
                   ),
                   const SizedBox(height: 16),
                   PrimaryButton(
-                    text: FlutterI18n.translate(
-                      context,
-                      "common.close_and_save",
-                    ),
+                    text: "common.close_and_save".i18n(),
                     onPressed: () {
                       Navigator.of(context).pop();
                     },

@@ -3,12 +3,14 @@ class Lesson {
   final String name;
   final bool hasFinished;
   final String? activityType;
+  final bool isCorrect;
 
   Lesson({
     required this.id,
     required this.name,
     required this.hasFinished,
     required this.activityType,
+    required this.isCorrect,
   });
 
   factory Lesson.fromJson(Map<String, dynamic> json) {
@@ -17,6 +19,7 @@ class Lesson {
       name: json['name'],
       hasFinished: json['hasFinished'] ?? false,
       activityType: json['activityType'],
+      isCorrect: json['isCorrect'],
     );
   }
 
@@ -26,6 +29,7 @@ class Lesson {
       'name': name,
       'hasFinished': hasFinished,
       'activityType': activityType,
+      'isCorrect': isCorrect,
     };
   }
 

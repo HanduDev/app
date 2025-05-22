@@ -8,6 +8,8 @@ class LessonViewModel extends ChangeNotifier {
   final LessonRepositoryImpl _lessonRepository;
   final CheckAnswerRepositoryImpl _checkAnswerRepository;
 
+  bool isAnswering = false;
+
   LessonInfo? _lesson;
 
   LessonInfo? get lesson => _lesson;
@@ -23,7 +25,16 @@ class LessonViewModel extends ChangeNotifier {
   }
 
   Future<bool> checkAnswer(int trailId, String answer) async {
-    return await _checkAnswerRepository.checkAnswer(trailId, answer);
+    try {
+      isAnswering = true;
+      notifyListeners();
+      return await _checkAnswerRepository.checkAnswer(trailId, answer);
+    } catch (e) {
+      rethrow;
+    } finally {
+      isAnswering = false;
+      notifyListeners();
+    }
   }
 
   Future<void> update(LessonUpdateRequest lessonUpdateRequest) async {

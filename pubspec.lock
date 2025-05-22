@@ -307,14 +307,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_i18n:
-    dependency: "direct main"
-    description:
-      name: flutter_i18n
-      sha256: fe2bd740fe522d9dd791850baa6cba492f00c283f3c0b0012995d538ce66570c
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.36.3"
   flutter_launcher_icons:
     dependency: "direct main"
     description:
@@ -652,6 +644,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.1.1"
+  localization:
+    dependency: "direct main"
+    description:
+      name: localization
+      sha256: "9fa21644b75ca3fe844f8f115d03cd6fdc675054dd9aab6c5de5861145ea57b5"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.1"
   logging:
     dependency: "direct main"
     description:
@@ -876,14 +876,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.5.0"
-  rxdart:
-    dependency: transitive
-    description:
-      name: rxdart
-      sha256: "5c3004a4a8dbb94bd4bf5412a4def4acdaa12e12f269737a5751369e12d1a962"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.28.0"
   shelf:
     dependency: transitive
     description:
@@ -1009,14 +1001,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.2"
-  toml:
-    dependency: transitive
-    description:
-      name: toml
-      sha256: d968d149c8bd06dc14e09ea3a140f90a3f2ba71949e7a91df4a46f3107400e71
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.16.0"
   typed_data:
     dependency: transitive
     description:
@@ -1161,14 +1145,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.5.0"
-  xml2json:
-    dependency: transitive
-    description:
-      name: xml2json
-      sha256: "8a7ae63b76676f083d81287b61f03222952609c0507893bc62e60a4a588a9702"
-      url: "https://pub.dev"
-    source: hosted
-    version: "6.2.7"
   yaml:
     dependency: transitive
     description:

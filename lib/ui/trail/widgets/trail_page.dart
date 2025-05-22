@@ -1,4 +1,5 @@
 import 'package:app/models/trail/trail.dart';
+import 'package:app/routes/routes.dart';
 import 'package:app/ui/core/shared/shared_header.dart';
 import 'package:app/ui/core/themes/app_colors.dart';
 import 'package:app/ui/core/themes/font.dart';
@@ -28,7 +29,7 @@ class TrailPage extends StatelessWidget {
                 ),
               ),
               onBackPressed: () {
-                context.pop();
+                context.pushReplacement(Routes.educacao);
               },
               subtitle: Row(
                 children: [
@@ -55,7 +56,6 @@ class TrailPage extends StatelessWidget {
               ),
             ),
 
-            const SizedBox(height: 32),
             TrailBody(trail: trail),
           ],
         ),

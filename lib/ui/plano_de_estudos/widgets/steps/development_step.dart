@@ -17,10 +17,26 @@ class DevelopmentStep extends StatefulWidget {
 
 class _DevelopmentStepState extends State<DevelopmentStep> {
   final List<Map<String, String>> _developments = [
-    {"icon": "assets/images/icons/leitura.svg", "name": "Leitura"},
-    {"icon": "assets/images/icons/escrita.svg", "name": "Escrita"},
-    {"icon": "assets/images/icons/escuta.svg", "name": "Escuta"},
-    {"icon": "assets/images/icons/falando.svg", "name": "Fala"},
+    {
+      "icon": "assets/images/icons/leitura.svg",
+      "name": "Leitura",
+      "value": 'reading',
+    },
+    {
+      "icon": "assets/images/icons/escrita.svg",
+      "name": "Escrita",
+      "value": 'writing',
+    },
+    {
+      "icon": "assets/images/icons/escuta.svg",
+      "name": "Escuta",
+      "value": 'listening',
+    },
+    {
+      "icon": "assets/images/icons/falando.svg",
+      "name": "Fala",
+      "value": 'speaking',
+    },
   ];
 
   @override
@@ -35,7 +51,7 @@ class _DevelopmentStepState extends State<DevelopmentStep> {
           _developments
               .map(
                 (element) => SelectableGridModel(
-                  value: element["name"]!,
+                  value: element["value"]!,
                   label: element["name"]!,
                   icon: SvgPicture.asset(
                     element["icon"]!,
@@ -64,7 +80,7 @@ class _DevelopmentStepState extends State<DevelopmentStep> {
             item.icon,
             const SizedBox(width: 12),
             Text(
-              item.value,
+              item.label,
               style: Font.primary(
                 color: isSelected ? AppColors.primary500 : AppColors.black,
                 fontSize: 16,

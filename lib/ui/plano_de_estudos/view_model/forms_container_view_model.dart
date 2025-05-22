@@ -63,7 +63,7 @@ class FormsContainerViewModel extends ChangeNotifier {
         TrailRequest(
           language: languageController.value!.value,
           developments: developController.values.map((e) => e.value).toList(),
-          themes: developController.values.map((e) => e.value).toList(),
+          themes: themesController.values.map((e) => e.value).toList(),
           level: levelController.value!.value,
           timeToLearn: "12 meses",
           timeToStudy: timeToStudyController.value!.value,

@@ -12,14 +12,12 @@ class LessonCard extends StatelessWidget {
   final Lesson lesson;
   final bool isCurrentLesson;
   final IconData icon;
-  final int index;
 
   const LessonCard({
     super.key,
     required this.lesson,
     required this.isCurrentLesson,
     required this.icon,
-    required this.index,
   });
 
   Map<String, Color> colorsConfig() {
@@ -91,16 +89,14 @@ class LessonCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  lesson.activityType != null ? "Prática" : "Aula ${index + 1}",
+                  lesson.title,
                   style: Font.primary(
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
                 Text(
-                  lesson.activityType != null
-                      ? "${lesson.activityType}"
-                      : lesson.name.split(":").last.trim(),
+                  lesson.subtitle,
                   style: Font.primary(
                     fontSize: 12,
                     fontWeight: FontWeight.w400,

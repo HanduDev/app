@@ -28,4 +28,16 @@ class Lesson {
       'activityType': activityType,
     };
   }
+
+  bool get isTheorical {
+    return activityType == 'theorical';
+  }
+
+  String get title {
+    return isTheorical ? name.split(":").first.trim() : "Prática";
+  }
+
+  String get subtitle {
+    return isTheorical ? name.split(":").last.trim() : activityType ?? "";
+  }
 }

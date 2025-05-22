@@ -8,8 +8,37 @@ import 'package:provider/provider.dart';
 
 class TrailBody extends StatelessWidget {
   final Trail trail;
+  final ScrollController scrollController = ScrollController();
 
-  const TrailBody({super.key, required this.trail});
+  TrailBody({super.key, required this.trail});
+
+  int getCurrentLessonIndex(List<Lesson> lessons) {
+    for (int i = 0; i < lessons.length; i++) {
+      if (isCurrentLesson(i, lessons)) {
+        return i;
+      }
+    }
+    return 0;
+  }
+
+  void scrollToCurrentLesson(List<Lesson> lessons) {
+    final currentIndex = getCurrentLessonIndex(lessons);
+
+    if (currentIndex >= 0 && currentIndex < lessons.length) {
+      final itemHeight = 40.0;
+      final separatorHeight = 28.0;
+      final padding = 32.0;
+
+      final position =
+          (currentIndex * (itemHeight + separatorHeight)) + padding;
+
+      scrollController.animateTo(
+        position,
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.easeInOut,
+      );
+    }
+  }
 
   IconData lessonIcon(Lesson lesson) {
     if (lesson.activityType == 'text') {
@@ -30,13 +59,12 @@ class TrailBody extends StatelessWidget {
   bool isCurrentLesson(int index, List<Lesson> lessons) {
     final lesson = lessons[index];
 
-    bool isPreviousFinished = index > 0 && lessons[index - 1].hasFinished;
+    bool isFirstUnfinishedAfterFinished =
+        index > 0 && lessons[index - 1].hasFinished && !lesson.hasFinished;
 
-    bool isNextFinished =
-        index < lessons.length - 1 && lessons[index + 1].hasFinished;
+    bool isFirstUnfinishedLesson = index == 0 && !lesson.hasFinished;
 
-    return (isPreviousFinished && !isNextFinished && !lesson.hasFinished) ||
-        (index == 0 && !isNextFinished && !lesson.hasFinished);
+    return isFirstUnfinishedAfterFinished || isFirstUnfinishedLesson;
   }
 
   @override
@@ -58,10 +86,16 @@ class TrailBody extends StatelessWidget {
           return const Center(child: Text('Nenhum dado encontrado'));
         }
 
+        // Chama a função de scroll quando os dados são carregados
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          scrollToCurrentLesson(trailInfo.lessons);
+        });
+
         return Expanded(
           child: ListView.separated(
+            controller: scrollController,
             itemCount: trailInfo.lessons.length,
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 32),
             shrinkWrap: true,
             separatorBuilder: (context, index) {
               final lesson = trailInfo.lessons[index];
@@ -98,18 +132,10 @@ class TrailBody extends StatelessWidget {
             itemBuilder: (context, index) {
               final lesson = trailInfo.lessons[index];
 
-              int currentIndex =
-                  index -
-                  trailInfo.lessons
-                      .sublist(0, index)
-                      .where((element) => element.activityType != null)
-                      .length;
-
               return LessonCard(
                 lesson: lesson,
                 isCurrentLesson: isCurrentLesson(index, trailInfo.lessons),
                 icon: lessonIcon(lesson),
-                index: currentIndex,
               );
             },
           ),

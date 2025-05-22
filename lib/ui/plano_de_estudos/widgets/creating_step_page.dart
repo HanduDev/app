@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:web_socket_channel/io.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
 
 class CreatingStepPage extends StatefulWidget {
   const CreatingStepPage({super.key});
@@ -21,7 +22,7 @@ class CreatingStepPage extends StatefulWidget {
 class _CreatingStepPageState extends State<CreatingStepPage>
     with TickerProviderStateMixin {
   late AnimationController _controller;
-  late IOWebSocketChannel _channel;
+  late WebSocketChannel _channel;
   Trail? _trail;
 
   String getWebSocketUrl() {
@@ -37,11 +38,11 @@ class _CreatingStepPageState extends State<CreatingStepPage>
     return '$wsScheme://${uri.host}$port/cable';
   }
 
-  IOWebSocketChannel _setupWebSocket() {
+  WebSocketChannel _setupWebSocket() {
     try {
       final uri = Uri.parse(getWebSocketUrl());
 
-      final channel = IOWebSocketChannel.connect(uri);
+      final channel = WebSocketChannel.connect(uri);
 
       final user = Provider.of<AuthProvider>(context, listen: false).user;
 

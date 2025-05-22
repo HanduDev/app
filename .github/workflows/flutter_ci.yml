@@ -46,5 +46,11 @@ jobs:
       - name: Format code
         run: dart format --set-exit-if-changed --output=none .
 
+      - name: Create assets/.config with secrets
+        run: |
+          mkdir -p assets
+          echo "API_URL = ${{ secrets.CONFIG_API_URL }}" > assets/.config
+          echo "GOOGLE_CLIENT_ID=${{ secrets.CONFIG_GOOGLE_CLIENT_ID }}" >> assets/.config
+
       - name: Run all tests
         run: flutter test

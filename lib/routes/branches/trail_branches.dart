@@ -39,7 +39,8 @@ List<StatefulShellBranch> trailBranches = [
             create:
                 (context) => LessonViewModel(
                   lessonRepository: context.read<LessonRepositoryImpl>(),
-                  checkAnswerRepository: context.read<CheckAnswerRepositoryImpl>(),
+                  checkAnswerRepository:
+                      context.read<CheckAnswerRepositoryImpl>(),
                 ),
             child: LessonPage(lesson: lessonData),
           );

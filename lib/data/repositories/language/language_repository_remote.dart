@@ -2,7 +2,6 @@ import 'package:app/data/repositories/language/language_repository.dart';
 import 'package:app/data/services/http.dart';
 import 'package:app/models/language.dart';
 
-
 class LanguageRepositoryRemote extends LanguageRepositoryImpl {
   final HttpServiceImpl _httpService;
 
@@ -13,6 +12,8 @@ class LanguageRepositoryRemote extends LanguageRepositoryImpl {
   Future<List<Language>> getAllLanguages() async {
     var response = await _httpService.get('/languages');
 
-    return response["languages"].map<Language>((language) => Language.fromJson(language)).toList();
+    return response["languages"]
+        .map<Language>((language) => Language.fromJson(language))
+        .toList();
   }
 }

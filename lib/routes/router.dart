@@ -45,8 +45,8 @@ GoRouter router() {
       ),
       GoRoute(
         path: Routes.editar,
-        builder: (context, state) => AccountEditPage(), 
-        ),
+        builder: (context, state) => AccountEditPage(),
+      ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) => navigationShell,
         branches: authBranches,

@@ -164,8 +164,7 @@ class AccountPage extends StatelessWidget {
               onTap: () {
                 showDialog(
                   context: context,
-                  builder:
-                      (context) => EmDesenvolvimento(title: 'Idioma'),
+                  builder: (context) => EmDesenvolvimento(title: 'Idioma'),
                 );
               },
             ),
@@ -175,7 +174,9 @@ class AccountPage extends StatelessWidget {
               onTap: () {
                 showDialog(
                   context: context,
-                  builder: (context) => EmDesenvolvimento(title: 'Permissões do Dispositivo'),
+                  builder:
+                      (context) =>
+                          EmDesenvolvimento(title: 'Permissões do Dispositivo'),
                 );
               },
             ),

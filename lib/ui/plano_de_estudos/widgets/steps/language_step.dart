@@ -49,7 +49,7 @@ class _LanguageStepState extends State<LanguageStep> {
         if (value.isEmpty) {
           return "Selecione pelo menos um idioma";
         }
-        
+
         return null;
       },
       render: (item, isSelected) {

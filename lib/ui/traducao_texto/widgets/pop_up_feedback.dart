@@ -12,7 +12,10 @@ void showFeedbackDialog(BuildContext context) {
         builder: (BuildContext context, StateSetter setState) {
           return AlertDialog(
             title: Text(
-              FlutterI18n.translate(context, "translate.errors.what_did_you_think"),
+              FlutterI18n.translate(
+                context,
+                "translate.errors.what_did_you_think",
+              ),
               style: TextStyle(
                 fontWeight: FontWeight.normal,
                 color: AppColors.black,
@@ -105,7 +108,10 @@ void showFeedbackCompletedDialog(BuildContext context) {
 
       return AlertDialog(
         title: Text(
-          FlutterI18n.translate(context, "translate.errors.feedback_success_message"),
+          FlutterI18n.translate(
+            context,
+            "translate.errors.feedback_success_message",
+          ),
           style: TextStyle(
             fontWeight: FontWeight.bold,
             color: AppColors.primary500,

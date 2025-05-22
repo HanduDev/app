@@ -95,13 +95,16 @@ class _SpeechButtonState extends State<SpeechButton> {
         width: widget.size, // Usa o tamanho definido na propriedade
         height: widget.size, // Usa o tamanho definido na propriedade
         decoration: BoxDecoration(
-          color: widget.backgroundColor ?? Colors.transparent, // Cor do fundo ou transparente
+          color:
+              widget.backgroundColor ??
+              Colors.transparent, // Cor do fundo ou transparente
           shape: BoxShape.circle, // Fundo circular
         ),
         child: Icon(
           isListening ? Icons.mic : Icons.mic_off,
           color: AppColors.white,
-          size: widget.size * 0.5, // Ajusta o tamanho do ícone proporcionalmente
+          size:
+              widget.size * 0.5, // Ajusta o tamanho do ícone proporcionalmente
         ),
       ),
     );

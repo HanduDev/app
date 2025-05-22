@@ -10,10 +10,6 @@ class LessonRequest {
   });
 
   Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'name': name,
-      'has_finished': hasFinished,
-    };
+    return {'id': id, 'name': name, 'has_finished': hasFinished};
   }
 }

@@ -14,7 +14,10 @@ class TranslateLesson extends StatelessWidget {
 
   TranslateLesson({super.key, required this.lesson});
 
-  void _checkAnswer(BuildContext context, TextEditingController controller) async {
+  void _checkAnswer(
+    BuildContext context,
+    TextEditingController controller,
+  ) async {
     if (!_formKey.currentState!.validate()) return;
 
     final isCorrect = await context.read<LessonViewModel>().checkAnswer(

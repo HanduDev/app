@@ -14,10 +14,11 @@ class FlatButton extends BaseButton {
     super.rightIcon,
     super.leftIcon,
   }) : super(
-            rounded: false,
-            backgroundColor: AppColors.transparent,
-            textColor: AppColors.grey,
-            disabledBackgroundColor: AppColors.transparent,
-            elevation: 0,
-            disabledTextColor: AppColors.grey.withAlpha(160));
+         rounded: false,
+         backgroundColor: AppColors.transparent,
+         textColor: AppColors.grey,
+         disabledBackgroundColor: AppColors.transparent,
+         elevation: 0,
+         disabledTextColor: AppColors.grey.withAlpha(160),
+       );
 }

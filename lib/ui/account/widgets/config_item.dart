@@ -17,11 +17,14 @@ class ConfigItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       leading: Icon(icon, color: AppColors.black, size: 24),
-      title: Text(title, style: TextStyle(
-        fontSize: 14,
-        fontWeight: FontWeight.bold,
-        color: AppColors.black,
-      )),
+      title: Text(
+        title,
+        style: TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.bold,
+          color: AppColors.black,
+        ),
+      ),
       onTap: onTap,
     );
   }

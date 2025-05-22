@@ -165,7 +165,7 @@ class _EducacaoPageState extends State<EducacaoPage> {
                   );
                 },
               ),
-            ),      
+            ),
           ],
         ),
       ),

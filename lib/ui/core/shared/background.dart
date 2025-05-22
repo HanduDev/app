@@ -10,7 +10,6 @@ class Background extends StatelessWidget {
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
-          
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment(0.1, 1.5),

@@ -56,10 +56,14 @@ class HttpService extends HttpServiceImpl {
     // Add files
     files.forEach((key, bytes) {
       request.files.add(
-        http.MultipartFile.fromBytes(key, bytes, filename: 'image.jpg', contentType: MediaType('image', 'jpeg')),
+        http.MultipartFile.fromBytes(
+          key,
+          bytes,
+          filename: 'image.jpg',
+          contentType: MediaType('image', 'jpeg'),
+        ),
       );
     });
-
 
     // Add auth header only
     String? token = await _secureStorage.read("token");

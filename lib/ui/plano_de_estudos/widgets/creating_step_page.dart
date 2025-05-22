@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:app/config/environment.dart';
 import 'package:app/models/trail/trail.dart';
 import 'package:app/models/user.dart';
@@ -42,7 +43,10 @@ class _CreatingStepPageState extends State<CreatingStepPage>
     try {
       final uri = Uri.parse(getWebSocketUrl());
 
-      final channel = WebSocketChannel.connect(uri);
+      final channel =
+          Platform.isAndroid
+              ? IOWebSocketChannel.connect(uri)
+              : WebSocketChannel.connect(uri);
 
       final user = Provider.of<AuthProvider>(context, listen: false).user;
 

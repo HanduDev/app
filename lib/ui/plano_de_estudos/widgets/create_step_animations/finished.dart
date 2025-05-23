@@ -5,6 +5,7 @@ import 'package:app/ui/core/themes/app_colors.dart';
 import 'package:app/ui/core/themes/font.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:localization/localization.dart';
 import 'package:lottie/lottie.dart';
 
 class Finished extends StatefulWidget {
@@ -84,7 +85,9 @@ class _FinishedState extends State<Finished> with TickerProviderStateMixin {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    hasError ? widget.errorMessage : 'Criado com sucesso!',
+                    hasError
+                        ? widget.errorMessage
+                        : 'plano_de_estudos.created'.i18n(),
                     textAlign: TextAlign.center,
                     style: Font.primary(
                       fontSize: 16,
@@ -95,7 +98,9 @@ class _FinishedState extends State<Finished> with TickerProviderStateMixin {
                   const SizedBox(height: 16),
                   PrimaryButton(
                     text:
-                        hasError ? "Tentar novamente" : 'Ver plano de estudos',
+                        hasError
+                            ? "plano_de_estudos.try_again".i18n()
+                            : 'plano_de_estudos.view_study_plan'.i18n(),
                     onPressed: () {
                       if (hasError) {
                         context.pushReplacement(Routes.planoDeEstudos);
@@ -107,7 +112,8 @@ class _FinishedState extends State<Finished> with TickerProviderStateMixin {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    "Ou aguarde $_afterCreatedSeconds segundos",
+                    "plano_de_estudos.after_created_seconds".i18n(
+                    ).replaceAll("{{seconds}}", _afterCreatedSeconds.toString()),
                     style: Font.primary(fontSize: 13, color: AppColors.white),
                   ),
                 ],

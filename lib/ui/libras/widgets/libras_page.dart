@@ -9,6 +9,7 @@ import 'package:app/ui/libras/widgets/vlibras_web_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:localization/localization.dart';
 
 class LibrasPage extends StatelessWidget {
   const LibrasPage({super.key});
@@ -26,7 +27,7 @@ class LibrasPage extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(12.0),
                     child: Text(
-                      "Seu dispositivo não tem suporte para esta funcionalidade",
+                      "libras.device_not_supported".i18n(),
                       textAlign: TextAlign.center,
                       style: Font.primary(
                         color: AppColors.grey,
@@ -46,12 +47,12 @@ class LibrasPage extends StatelessWidget {
                   items: [
                     SegmentedControlItem(
                       key: '/intro',
-                      text: "Texto",
+                      text: "segmented_control.text".i18n(),
                       icon: Icons.text_snippet_outlined,
                     ),
                     SegmentedControlItem(
                       key: '/intro',
-                      text: "Imagem",
+                      text: "segmented_control.image".i18n(),
                       icon: Icons.image_outlined,
                     ),
                   ],

@@ -1,0 +1,231 @@
+{
+  "common": {
+    "select": "Seleccionar",
+    "type_something": "Escribe algo",
+    "close_and_save": "Cerrar y guardar",
+    "menu": "Menú",
+    "send": "Enviar",
+    "cancel": "Cancelar",
+    "greetings": "Bienvenido a Handu",
+    "logout": "Cerrar sesión",
+    "logout_confirmation": "¿Estás seguro de que quieres cerrar sesión?",
+    "login": "Iniciar sesión",
+    "select_option": "Selecciona una opción",
+    "save": "Guardar",
+    "back": "Atrás"
+  },
+  "translate": {
+    "errors": {
+      "feedback": "Comentarios",
+      "what_did_you_think": "¿Qué te pareció la traducción?",
+      "feedback_please_select": "Por favor selecciona una calificación.",
+      "feedback_error": "Error al enviar comentarios",
+      "feedback_success": "Comentarios enviados con éxito",
+      "feedback_success_message": "¡Gracias por tus comentarios!",
+      "feedback_error_message": "Error al enviar comentarios",
+      "translate_need_feedback": "La traducción debe estar completa para enviar comentarios."
+    }
+  },
+  "errors": {
+    "speech_error": "Ocurrió un error durante la grabación"
+  },
+  "segmented_control": {
+    "text": "Texto",
+    "audio": "Audio",
+    "image": "Imagen"
+  },
+  "account": {
+    "options": {
+      "profile": "Perfil",
+      "achievements": "Logros",
+      "language": "Idioma de la aplicación",
+      "device_permissions": "Permisos del dispositivo",
+      "contact": "Contáctanos",
+      "privacy_policy": "Política de privacidad"
+    },
+    "edit": {
+      "name": "Cambiar nombre",
+      "email": "Cambiar correo electrónico",
+      "password": "Cambiar contraseña"
+    },
+    "register": {
+      "title": "Registrarse",
+      "name": "Nombre completo",
+      "email": "Correo electrónico",
+      "or_continue_with": "O continuar con",
+      "already_have_account": "¿Ya tienes una cuenta?",
+      "register": "Registrar cuenta",
+      "password": "Contraseña",
+      "confirm_password": "Confirmar contraseña"
+    },
+    "login": {
+      "title": "Iniciar sesión",
+      "subtitle": "O continuar con",
+      "forgot_password": "¿Olvidaste tu contraseña?",
+      "remember_me": "Recordarme",
+      "no_account": "¿No tienes una cuenta?",
+      "register": "Registrarse"
+    },
+    "email_validation_required": "El correo electrónico es obligatorio",
+    "email_validator": "Correo electrónico inválido",
+    "name_validation_required": "El nombre es obligatorio",
+    "password_validation_required": "La contraseña es obligatoria",
+    "password_confirmation_required": "La confirmación de contraseña es obligatoria",
+    "password_not_match": "Las contraseñas no coinciden",
+    "password_validation_min_length": "La contraseña debe tener al menos 8 caracteres",
+    "password_validation_letters_and_numbers": "Usa letras y números"
+  },
+  "confirmacao_cadastro": {
+    "verify_email": "Verifica tu correo electrónico",
+    "verify_email_description": "Enviamos un código de cuatro dígitos al correo",
+    "verify_email_below": "Ingresa el código a continuación para verificarlo",
+    "verify_email_not_received": "¿No recibiste el código?",
+    "verify_email_resend_code_success": "Código reenviado con éxito",
+    "verify_email_resend": "Reenviar",
+    "verify_email_resend_in": "Reenviar en",
+    "verify_email_go_to_app": "Ir a la aplicación",
+    "verify_email_join_another_account": "Iniciar sesión con otra cuenta"
+  },
+  "educacao": {
+    "title": "¿Qué quieres aprender hoy?",
+    "create_study_plan": "Crear plan de estudios",
+    "subtitle": "Continuar planes de estudio",
+    "progress": "Progreso"
+  },
+  "intro": {
+    "title": "Elige una opción para continuar",
+    "description": "Con la inclusión de lenguas de señas para expandir tu conexión.",
+    "description_2": "Adquiere conocimientos en varios idiomas a través de planes de estudio.",
+    "create_account": "Crear cuenta",
+    "login_with_google": "Iniciar sesión con Google",
+    "titles": {
+      "0": "Un traductor en tiempo real conectando personas de varios idiomas.",
+      "1": "Con la inclusión de lenguas de señas para expandir tu conexión.",
+      "2": "Adquiere conocimientos en varios idiomas a través de planes de estudio."
+    }
+  },
+  "lesson": {
+    "finished": "¡Lección completada con éxito!",
+    "mark_as_finished": "Marcar como completada",
+    "completed": "Completada",
+    "send_answer": "Enviar respuesta",
+    "activity_type": {
+      "translation": "Traducción",
+      "multiple_choice": "Opción múltiple",
+      "theorical": "Teórico"
+    },
+    "activity_practice": "Práctica",
+    "correct": "¡Respuesta correcta!",
+    "incorrect": "¡Respuesta incorrecta!",
+    "remaining_attempts": "Todavía tienes {{attempts}} intentos",
+    "no_attempts": "No quedan intentos",
+    "your_answer": "Tu respuesta",
+    "suggested_answer": "Respuesta sugerida por Handu",
+    "answer_required": "La respuesta es obligatoria"
+  },
+  "libras": {
+    "device_not_supported": "Tu dispositivo no soporta esta función"
+  },
+  "plano_de_estudos": {
+    "title": "Plan de estudios",
+    "created": "¡Plan de estudios creado con éxito!",
+    "try_again": "Intentar de nuevo",
+    "view_study_plan": "Ver plan de estudios",
+    "after_created_seconds": "O espera {{seconds}} segundos",
+    "working": "Trabajando en ello...",
+    "almost_done": "Casi terminamos",
+    "error_creating_study_plan": "Error al crear el plan de estudios",
+    "no_user_found": "Usuario no encontrado",
+    "connecting_to_server": "Conectando al servidor...",
+    "connection_error": "Error de conexión: {{error}}",
+    "finish": "Finalizar",
+    "next": "Siguiente",
+    "select_at_least_one_item": "Selecciona al menos un elemento",
+    "steps": {
+      "development": {
+        "options": {
+          "reading": "Lectura",
+          "writing": "Escritura",
+          "listening": "Comprensión auditiva",
+          "speaking": "Expresión oral"
+        },
+        "select_one_at_least": "Selecciona al menos un desarrollo"
+      },
+      "language": {
+        "select_one_at_least": "Selecciona al menos un idioma"
+      },
+      "levels": {
+        "options": {
+          "beginner": "Principiante",
+          "intermediate": "Intermedio",
+          "advanced": "Avanzado"
+        }
+      },
+      "themes": {
+        "options": {
+          "music": "Música",
+          "entertainment": "Entretenimiento",
+          "sports": "Deportes",
+          "fashion_and_beauty": "Moda y belleza",
+          "technology": "Tecnología",
+          "programming": "Programación",
+          "travel": "Viajes",
+          "anime": "Anime",
+          "profession": "Profesión",
+          "family": "Familia"
+        }
+      },
+      "time_to_study": {
+        "options": {
+          "5_min": "5 min/día",
+          "15_min": "15 min/día",
+          "30_min": "30 min/día",
+          "45_min": "45 min/día",
+          "1h": "1h/día"
+        }
+      },
+      "titles": {
+        "0": "¿Qué idioma quieres aprender?",
+        "1": "¿Qué quieres aprender?",
+        "2": "¿Cuál es tu nivel en {{language}}?",
+        "3": "¿Cuánto tiempo tienes disponible por día?",
+        "4": "¿Te gustaría hablar sobre algún tema específico? (opcional)",
+        "5": "Selecciona uno o más elementos a continuación",
+        "6": "¿Cuánto tiempo quieres aprender?"
+      },
+      "subtitle": {
+        "0": "",
+        "1": "Selecciona uno o más elementos a continuación",
+        "2": "",
+        "3": "",
+        "4": "Selecciona uno o más elementos a continuación",
+        "5": "",
+        "6": ""
+      }
+    },
+    "dialog": {
+      "title": "¿Crear plan?",
+      "content": "¿Podemos proceder con la creación de tu plan de estudios?",
+      "not_now": "Ahora no",
+      "yes_please": "Sí, por favor"
+    }
+  },
+  "trail": {
+    "no_data_found": "No se encontraron datos",
+    "lesson_card": {
+      "unpermitted_access": "Aún no puedes acceder a esta lección"
+    }
+  },
+  "translate_audio": {
+    "please_select_languages": "Por favor selecciona los idiomas de origen y destino",
+    "say_something_to_translate": "Por favor di algo para traducir",
+    "select_language": "Seleccionar idioma",
+    "translating": "Traduciendo...",
+    "error_translating": "Error al traducir. Por favor intenta de nuevo.",
+    "say_something": "Di algo..."
+  },
+  "translate_image": {
+    "network_error": "Error de conexión. Verifica tu internet e intenta de nuevo",
+    "take_another_photo": "Tomar otra foto"
+  }
+}

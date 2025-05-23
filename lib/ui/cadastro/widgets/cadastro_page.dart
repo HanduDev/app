@@ -10,6 +10,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:app/ui/core/shared/flat_button.dart';
+import 'package:localization/localization.dart';
 import 'package:provider/provider.dart';
 
 class CadastroPage extends StatelessWidget {
@@ -59,7 +60,7 @@ class CadastroPage extends StatelessWidget {
                       width: 120,
                     ),
                     Text(
-                      'Cadastro',
+                      'account.register.title'.i18n(),
                       style: Font.primary(
                         color: AppColors.grey,
                         fontSize: 24,
@@ -69,7 +70,10 @@ class CadastroPage extends StatelessWidget {
                     const SizedBox(height: 32),
                     FormsValidator(),
                     const SizedBox(height: 24),
-                    Text('Ou continue com', style: Font.primary(fontSize: 12)),
+                    Text(
+                      'account.register.or_continue_with'.i18n(),
+                      style: Font.primary(fontSize: 12),
+                    ),
                     const SizedBox(height: 16),
                     FlatButton(
                       loading: context.watch<AuthProvider>().isGoogleLoading,
@@ -84,7 +88,7 @@ class CadastroPage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'Já tem uma conta?',
+                          'account.register.already_have_account'.i18n(),
                           style: Font.primary(fontSize: 12),
                         ),
                         TextButton(
@@ -92,7 +96,7 @@ class CadastroPage extends StatelessWidget {
                             context.pushReplacement(Routes.login);
                           },
                           child: Text(
-                            'Entrar',
+                            'common.login'.i18n(),
                             style: Font.primary(
                               fontSize: 12,
                               color: AppColors.primary300,

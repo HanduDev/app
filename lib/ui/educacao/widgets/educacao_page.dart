@@ -9,6 +9,7 @@ import 'package:app/ui/educacao/view_model/educacao_view_model.dart';
 import 'package:app/ui/educacao/widgets/card_progressbar.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:localization/localization.dart';
 import 'package:provider/provider.dart';
 
 class EducacaoPage extends StatefulWidget {
@@ -82,7 +83,7 @@ class _EducacaoPageState extends State<EducacaoPage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'O que deseja aprender hoje,',
+                                'educacao.title'.i18n(),
                                 style: TextStyle(
                                   fontSize: 12,
                                   color: AppColors.yellow,
@@ -126,14 +127,14 @@ class _EducacaoPageState extends State<EducacaoPage> {
                   context.push(Routes.planoDeEstudos);
                 },
                 leftIcon: Icon(Icons.add_outlined, size: 25),
-                text: 'Criar Plano de Estudos',
+                text: 'educacao.create_study_plan'.i18n(),
               ),
             ),
             const SizedBox(height: 40),
             Padding(
               padding: const EdgeInsets.only(right: 80),
               child: Text(
-                'Continuar planos de estudos',
+                'educacao.subtitle'.i18n(),
                 style: TextStyle(
                   fontSize: 18,
                   color: AppColors.grey,

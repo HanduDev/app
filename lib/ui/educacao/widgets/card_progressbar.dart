@@ -1,5 +1,6 @@
 import 'package:app/ui/core/themes/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
 
 class CardProgressBar extends StatelessWidget {
   final String title;
@@ -93,7 +94,7 @@ class CardProgressBar extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          'Progresso',
+                          'educacao.progress'.i18n(),
                           style: TextStyle(
                             fontSize: 12,
                             color: AppColors.lightGrey,

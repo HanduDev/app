@@ -3,11 +3,11 @@ import 'package:app/providers/languages_provider.dart';
 import 'package:app/ui/core/shared/selectable_grid/selectable_grid.dart';
 import 'package:app/ui/core/shared/selectable_grid/selectable_grid_controller.dart';
 import 'package:app/ui/core/shared/selectable_grid/selectable_grid_model.dart';
-import 'package:app/ui/core/themes/app_colors.dart';
 import 'package:app/ui/core/themes/font.dart';
 import 'package:app/ui/plano_de_estudos/view_model/forms_container_view_model.dart';
 import 'package:country_flags/country_flags.dart';
 import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
 import 'package:provider/provider.dart';
 
 class LanguageStep extends StatefulWidget {
@@ -47,7 +47,7 @@ class _LanguageStepState extends State<LanguageStep> {
       crossAxisCount: 3,
       validator: (value) {
         if (value.isEmpty) {
-          return "Selecione pelo menos um idioma";
+          return "plano_de_estudos.steps.language.select_one_at_least".i18n();
         }
 
         return null;

@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 import 'package:app/config/environment.dart';
 import 'package:app/models/trail/trail.dart';
 import 'package:app/models/user.dart';
@@ -7,8 +6,10 @@ import 'package:app/providers/auth_provider.dart';
 import 'package:app/routes/routes.dart';
 import 'package:app/ui/core/themes/app_colors.dart';
 import 'package:app/ui/plano_de_estudos/widgets/create_step_animations/loading.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:localization/localization.dart';
 import 'package:provider/provider.dart';
 import 'package:web_socket_channel/io.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
@@ -44,9 +45,9 @@ class _CreatingStepPageState extends State<CreatingStepPage>
       final uri = Uri.parse(getWebSocketUrl());
 
       final channel =
-          Platform.isAndroid
-              ? IOWebSocketChannel.connect(uri)
-              : WebSocketChannel.connect(uri);
+          kIsWeb
+              ? WebSocketChannel.connect(uri)
+              : IOWebSocketChannel.connect(uri);
 
       final user = Provider.of<AuthProvider>(context, listen: false).user;
 
@@ -80,7 +81,7 @@ class _CreatingStepPageState extends State<CreatingStepPage>
 
       return decoded['message'];
     } catch (e) {
-      return {'error': 'Erro ao criar o plano de estudos'};
+      return {'error': 'plano_de_estudos.error_creating_study_plan'.i18n()};
     }
   }
 
@@ -89,7 +90,7 @@ class _CreatingStepPageState extends State<CreatingStepPage>
     final user = context.select<AuthProvider, User?>((value) => value.user);
 
     if (user == null) {
-      return const Center(child: Text('Nenhum usuário encontrado'));
+      return Center(child: Text('plano_de_estudos.no_user_found'.i18n()));
     }
 
     return Scaffold(
@@ -106,12 +107,23 @@ class _CreatingStepPageState extends State<CreatingStepPage>
                     stream: _channel.stream,
                     builder: (context, snapshot) {
                       if (snapshot.hasError) {
-                        return Center(child: Text('Conectando ao servidor...'));
+                        return Center(
+                          child: Text(
+                            'plano_de_estudos.connecting_to_server'.i18n(),
+                          ),
+                        );
                       }
 
                       if (snapshot.hasError) {
                         return Center(
-                          child: Text('Erro de conexão: ${snapshot.error}'),
+                          child: Text(
+                            'plano_de_estudos.connection_error'
+                                .i18n()
+                                .replaceAll(
+                                  "{{error}}",
+                                  snapshot.error.toString(),
+                                ),
+                          ),
                         );
                       }
 

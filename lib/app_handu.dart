@@ -7,6 +7,7 @@ import 'package:app/data/services/secure_storage.dart';
 import 'package:app/providers/auth_provider.dart';
 import 'package:app/providers/languages_provider.dart';
 import 'package:app/providers/lesson_provider.dart';
+import 'package:app/providers/locale_provider.dart';
 import 'package:app/providers/notifier.dart';
 import 'package:app/repositories.dart';
 import 'package:app/routes/router.dart';
@@ -24,9 +25,9 @@ class AppHandu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     LocalJsonLocalization.delegate.directories = ['assets/i18n'];
-    List<Locale> supportedLocales = [const Locale('pt', 'BR')];
 
     final secureStorage = SecureStorage();
+    final localeProvider = LocaleProvider(secureStorage: secureStorage);
     final authProvider = AuthProvider(
       authRepository: AuthRepositoryRemote(
         googleAuth: GoogleAuth(),
@@ -40,10 +41,18 @@ class AppHandu extends StatelessWidget {
       ),
     );
 
+    Future<Null> initialize() async {
+      await localeProvider.initialize();
+      await authProvider.init();
+
+      return null;
+    }
+
     return MultiProvider(
       providers:
           [
             Provider<SecureStorageImpl>(create: (context) => secureStorage),
+            ChangeNotifierProvider<LocaleProvider>.value(value: localeProvider),
             ChangeNotifierProvider<AuthProvider>.value(value: authProvider),
             ChangeNotifierProvider<Notifier>(create: (_) => Notifier()),
             Provider<HttpServiceImpl>(
@@ -70,18 +79,27 @@ class AppHandu extends StatelessWidget {
           statusBarIconBrightness: Brightness.light,
         ),
         child: FutureBuilder(
-          future: authProvider.init(),
+          future: initialize(),
           builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
+            final locale = context.select<LocaleProvider, Locale>(
+              (value) => value.locale,
+            );
+            final supportedLocales = context
+                .select<LocaleProvider, List<Locale>>(
+                  (value) => value.supportedLocales,
+                );
+
+            final isLocaleLoading = context.select<LocaleProvider, bool>(
+              (value) => value.isLoading,
+            );
+
+            final isLoading =
+                snapshot.connectionState == ConnectionState.waiting ||
+                isLocaleLoading;
+
+            if (isLoading) {
               return MaterialApp(
                 title: 'Handu',
-                supportedLocales: supportedLocales,
-                localizationsDelegates: [
-                  GlobalMaterialLocalizations.delegate,
-                  GlobalWidgetsLocalizations.delegate,
-                  GlobalCupertinoLocalizations.delegate,
-                  LocalJsonLocalization.delegate,
-                ],
                 builder: (_, child) {
                   return Scaffold(
                     body: const Center(
@@ -96,13 +114,6 @@ class AppHandu extends StatelessWidget {
 
             if (snapshot.hasError) {
               return MaterialApp(
-                localizationsDelegates: [
-                  GlobalMaterialLocalizations.delegate,
-                  GlobalWidgetsLocalizations.delegate,
-                  GlobalCupertinoLocalizations.delegate,
-                  LocalJsonLocalization.delegate,
-                ],
-                supportedLocales: supportedLocales,
                 builder: (_, child) {
                   return Scaffold(
                     body: Center(child: Text('Error: ${snapshot.error}')),
@@ -112,12 +123,14 @@ class AppHandu extends StatelessWidget {
             }
 
             return MaterialApp.router(
+              key: ValueKey(locale),
               localizationsDelegates: [
                 GlobalMaterialLocalizations.delegate,
                 GlobalWidgetsLocalizations.delegate,
                 GlobalCupertinoLocalizations.delegate,
                 LocalJsonLocalization.delegate,
               ],
+              locale: locale,
               supportedLocales: supportedLocales,
               theme: ThemeData(textTheme: Font.primaryTheme()),
               routerConfig: router(),

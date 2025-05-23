@@ -11,6 +11,7 @@ import 'package:app/ui/intro/view_model/intro_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:localization/localization.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -59,7 +60,7 @@ class IntroBottom extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             Text(
-              'Escolha uma opção para continuar',
+              'intro.description'.i18n(),
               style: Font.primary(fontSize: 13, fontWeight: FontWeight.w300),
               textAlign: TextAlign.center,
             ),
@@ -73,7 +74,7 @@ class IntroBottom extends StatelessWidget {
                 onPressed: () {
                   context.push(Routes.cadastro);
                 },
-                text: 'Criar conta',
+                text: 'intro.create_account'.i18n(),
               ),
             ),
             const SizedBox(height: 16),
@@ -85,14 +86,14 @@ class IntroBottom extends StatelessWidget {
                 onPressed: () {
                   context.push(Routes.login);
                 },
-                text: 'Entrar',
+                text: 'common.login'.i18n(),
               ),
             ),
             const SizedBox(height: 32),
             FlatButton(
               loading: isGoogleLoading,
               onPressed: onLoginWithGoogle,
-              text: 'Entrar com o Google',
+              text: 'intro.login_with_google'.i18n(),
               leftIcon: SvgPicture.asset('assets/images/icons/google.svg'),
             ),
           ],

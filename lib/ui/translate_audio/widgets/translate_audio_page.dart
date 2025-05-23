@@ -64,7 +64,7 @@ class _TranslateAudioPageState extends State<TranslateAudioPage> {
       if (mounted) {
         setState(() {
           responseController.text =
-              'Por favor, selecione os idiomas de origem e destino';
+              'translate_audio.please_select_languages'.i18n();
         });
       }
       return;
@@ -73,7 +73,8 @@ class _TranslateAudioPageState extends State<TranslateAudioPage> {
     if (text.trim().isEmpty) {
       if (mounted) {
         setState(() {
-          responseController.text = 'Por favor, fale algo para traduzir';
+          responseController.text =
+              'translate_audio.say_something_to_translate'.i18n();
         });
       }
       return;
@@ -81,7 +82,7 @@ class _TranslateAudioPageState extends State<TranslateAudioPage> {
 
     if (mounted) {
       setState(() {
-        responseController.text = 'Traduzindo...';
+        responseController.text = 'translate_audio.translating'.i18n();
       });
     }
 
@@ -101,8 +102,7 @@ class _TranslateAudioPageState extends State<TranslateAudioPage> {
     } catch (e) {
       if (mounted) {
         setState(() {
-          responseController.text =
-              'Erro ao traduzir. Por favor, tente novamente.';
+          responseController.text = 'translate_audio.error_translating'.i18n();
         });
       }
     }
@@ -180,17 +180,17 @@ class _TranslateAudioPageState extends State<TranslateAudioPage> {
                   items: [
                     SegmentedControlItem(
                       key: '/home',
-                      text: "Texto",
+                      text: "segmented_control.text".i18n(),
                       icon: Icons.text_snippet_outlined,
                     ),
                     SegmentedControlItem(
                       key: '/audio',
-                      text: "Audio",
+                      text: "segmented_control.audio".i18n(),
                       icon: Icons.mic_none_outlined,
                     ),
                     SegmentedControlItem(
                       key: '/image',
-                      text: "Imagem",
+                      text: "segmented_control.image".i18n(),
                       icon: Icons.image_outlined,
                     ),
                   ],
@@ -253,7 +253,7 @@ class _TranslateAudioPageState extends State<TranslateAudioPage> {
                       onSendMessage: (message) async {
                         await _translateText(message);
                       },
-                      label: 'Fale algo...',
+                      label: 'translate_audio.say_something'.i18n(),
                       minHeight: 100,
                       isWritable: false,
                       iconButtonEnabled: false,
@@ -265,7 +265,8 @@ class _TranslateAudioPageState extends State<TranslateAudioPage> {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text(
-                                'Por favor, selecione os idiomas de origem e destino',
+                                'translate_audio.please_select_languages'
+                                    .i18n(),
                               ),
                               backgroundColor: AppColors.error,
                             ),

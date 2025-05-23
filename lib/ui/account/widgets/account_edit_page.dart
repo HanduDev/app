@@ -6,6 +6,7 @@ import 'package:app/ui/core/themes/app_colors.dart';
 import 'package:app/ui/core/themes/font.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:localization/localization.dart';
 import 'package:provider/provider.dart';
 
 class AccountEditPage extends StatelessWidget {
@@ -75,7 +76,7 @@ class AccountEditPage extends StatelessWidget {
                         const SizedBox(height: 20),
 
                         FlatButton(
-                          text: 'Cancelar',
+                          text: 'common.cancel'.i18n(),
                           onPressed: () {
                             context.pushReplacement(Routes.conta);
                           },
@@ -104,7 +105,6 @@ class AccountEditPage extends StatelessWidget {
                   ),
                 ),
               ),
-
             ],
           ),
         ],

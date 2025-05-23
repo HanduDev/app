@@ -12,6 +12,7 @@ import 'package:app/ui/core/themes/font.dart';
 import 'package:app/ui/lesson/view_model/lesson_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:localization/localization.dart';
 import 'package:provider/provider.dart';
 
 class OptionsLesson extends StatefulWidget {
@@ -33,7 +34,7 @@ class _OptionsLessonState extends State<OptionsLesson> {
   void _checkAnswer(BuildContext context) async {
     try {
       if (!_formKey.currentState!.validate()) {
-        Toast.error(context, 'Selecione uma opção');
+        Toast.error(context, 'common.select_option'.i18n());
         return;
       }
 
@@ -47,19 +48,18 @@ class _OptionsLessonState extends State<OptionsLesson> {
       );
 
       if (!context.mounted) return;
-
-      if (isCorrect) {
-        Toast.success(context, 'Resposta correta!');
-        context.pop();
-        return;
-      }
-
       _lesson = await context.read<LessonViewModel>().initialize(_lesson.id);
       setState(() {});
 
       if (!context.mounted) return;
 
-      Toast.error(context, 'Resposta incorreta!');
+      if (isCorrect) {
+        Toast.success(context, 'lesson.correct'.i18n());
+        context.pop();
+        return;
+      }
+
+      Toast.error(context, 'lesson.incorrect'.i18n());
     } catch (e) {
       Toast.error(context, getErrorMessage(e));
     }
@@ -104,8 +104,8 @@ class _OptionsLessonState extends State<OptionsLesson> {
     }
 
     return SelectableGridColor(
-      backgroundColor: AppColors.white,
-      borderColor: AppColors.grey,
+      backgroundColor: AppColors.green.withValues(alpha: alpha),
+      borderColor: const Color.fromARGB(255, 89, 168, 91),
     );
   }
 
@@ -138,8 +138,11 @@ class _OptionsLessonState extends State<OptionsLesson> {
           if (!_lesson.hasFinished)
             Text(
               attemptCount == 0
-                  ? "Sem tentativas restantes"
-                  : "Você ainda tem ${3 - _lesson.attemptCount} tentativas",
+                  ? "lesson.no_attempts".i18n()
+                  : "lesson.remaining_attempts".i18n().replaceAll(
+                    '{{attempts}}',
+                    (3 - _lesson.attemptCount).toString(),
+                  ),
               style: Font.primary(fontSize: 14, color: AppColors.grey),
             ),
           const SizedBox(height: 16),
@@ -151,7 +154,7 @@ class _OptionsLessonState extends State<OptionsLesson> {
             controller: _controller,
             validator: (value) {
               if (value.isEmpty) {
-                return "Selecione uma opção";
+                return "common.select_option".i18n();
               }
 
               return null;
@@ -180,7 +183,10 @@ class _OptionsLessonState extends State<OptionsLesson> {
           const SizedBox(height: 16),
           PrimaryButton(
             onPressed: () => _checkAnswer(context),
-            text: _lesson.hasFinished ? "Concluído" : "Enviar resposta",
+            text:
+                _lesson.hasFinished
+                    ? "lesson.completed".i18n()
+                    : "lesson.send_answer".i18n(),
             disabled: _lesson.hasFinished,
           ),
         ],

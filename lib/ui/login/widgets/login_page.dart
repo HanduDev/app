@@ -9,6 +9,7 @@ import 'package:app/ui/login/widgets/form_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:localization/localization.dart';
 import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
 
@@ -54,7 +55,7 @@ class LoginPage extends StatelessWidget {
                     ),
                     SizedBox(height: 12),
                     Text(
-                      'Login',
+                      'account.login.title'.i18n(),
                       style: Font.primary(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
@@ -64,7 +65,7 @@ class LoginPage extends StatelessWidget {
                     SizedBox(height: 48),
                     FormValidator(),
                     SizedBox(height: 32),
-                    Text('Ou continue com'),
+                    Text('account.login.subtitle'.i18n()),
                     SizedBox(height: 24),
                     FlatButton(
                       loading: context.watch<AuthProvider>().isGoogleLoading,
@@ -79,7 +80,7 @@ class LoginPage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'Não tem uma conta?',
+                          'account.login.no_account'.i18n(),
                           style: Font.primary(fontSize: 12),
                         ),
                         TextButton(
@@ -87,7 +88,7 @@ class LoginPage extends StatelessWidget {
                             context.pushReplacement(Routes.cadastro);
                           },
                           child: Text(
-                            'Cadastrar',
+                            'account.login.register'.i18n(),
                             style: Font.primary(
                               fontSize: 12,
                               color: AppColors.primary300,

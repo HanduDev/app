@@ -1,3 +1,5 @@
+import 'package:localization/localization.dart';
+
 class Lesson {
   final int id;
   final String name;
@@ -41,10 +43,14 @@ class Lesson {
   }
 
   String get title {
-    return isTheorical ? name.split(":").first.trim() : "Prática";
+    return isTheorical
+        ? name.split(":").first.trim()
+        : "lesson.activity_practice".i18n();
   }
 
   String get subtitle {
-    return isTheorical ? name.split(":").last.trim() : activityType ?? "";
+    return isTheorical
+        ? name.split(":").last.trim()
+        : "lesson.activity_type.$activityType".i18n();
   }
 }

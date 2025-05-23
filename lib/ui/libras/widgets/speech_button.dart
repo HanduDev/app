@@ -2,6 +2,7 @@ import 'package:app/helpers/errors.dart';
 import 'package:app/helpers/toast.dart';
 import 'package:app/ui/core/themes/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 
@@ -88,7 +89,7 @@ class _SpeechButtonState extends State<SpeechButton> {
           await _startListening(context);
         } catch (e) {
           if (!context.mounted) return;
-          Toast.error(context, "Ocorreu um erro ao gravar");
+          Toast.error(context, "errors.speech_error".i18n());
         }
       },
       child: Container(

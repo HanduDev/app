@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'package:app/helpers/errors.dart';
+import 'package:app/helpers/toast.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:app/ui/core/shared/language_selector.dart';
@@ -8,6 +10,7 @@ import 'package:app/ui/core/themes/app_colors.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:go_router/go_router.dart';
+import 'package:localization/localization.dart';
 import 'package:provider/provider.dart';
 import 'package:app/ui/translate_image/view_model/translate_image_view_model.dart';
 import 'package:app/ui/core/shared/chat_field.dart';
@@ -85,7 +88,9 @@ class _TranslateImagePageState extends State<TranslateImagePage>
         }
       }
     } catch (e) {
-      debugPrint('Erro ao inicializar a câmera: $e');
+      if (mounted) {
+        Toast.error(context, getErrorMessage(e));
+      }
       setState(() {
         isCameraInitialized = false;
       });
@@ -100,7 +105,9 @@ class _TranslateImagePageState extends State<TranslateImagePage>
           capturedImage = image;
         });
       } catch (e) {
-        debugPrint('Erro ao capturar a foto: $e');
+        if (mounted) {
+          Toast.error(context, getErrorMessage(e));
+        }
       }
     }
   }
@@ -120,11 +127,9 @@ class _TranslateImagePageState extends State<TranslateImagePage>
         });
       } catch (e) {
         setState(() {
-          translatedText =
-              'Erro de conexão. Verifique sua internet e tente novamente.';
+          translatedText = 'translate_image.network_error'.i18n();
           isTranslating = false;
         });
-        debugPrint('Erro na tradução: $e');
       }
     }
   }
@@ -141,7 +146,9 @@ class _TranslateImagePageState extends State<TranslateImagePage>
       try {
         await flutterTts.speak(text);
       } catch (e) {
-        debugPrint('Erro ao reproduzir áudio: $e');
+        if (mounted) {
+          Toast.error(context, getErrorMessage(e));
+        }
       }
     }
   }
@@ -179,17 +186,17 @@ class _TranslateImagePageState extends State<TranslateImagePage>
                         items: [
                           SegmentedControlItem(
                             key: '/home',
-                            text: "Texto",
+                            text: "segmented_control.text".i18n(),
                             icon: Icons.text_snippet_outlined,
                           ),
                           SegmentedControlItem(
                             key: '/audio',
-                            text: "Áudio",
+                            text: "segmented_control.audio".i18n(),
                             icon: Icons.mic_none_outlined,
                           ),
                           SegmentedControlItem(
                             key: '/image',
-                            text: "Imagem",
+                            text: "segmented_control.image".i18n(),
                             icon: Icons.image_outlined,
                           ),
                         ],
@@ -273,9 +280,12 @@ class _TranslateImagePageState extends State<TranslateImagePage>
                                     try {
                                       await flutterTts.speak(translatedText!);
                                     } catch (e) {
-                                      debugPrint(
-                                        'Erro ao reproduzir áudio: $e',
-                                      );
+                                      if (context.mounted) {
+                                        Toast.error(
+                                          context,
+                                          getErrorMessage(e),
+                                        );
+                                      }
                                     }
                                   }
                                 },
@@ -319,7 +329,9 @@ class _TranslateImagePageState extends State<TranslateImagePage>
                             vertical: 12.0,
                           ),
                         ),
-                        child: const Text("Tirar outra foto"),
+                        child: Text(
+                          "translate_image.take_another_photo".i18n(),
+                        ),
                       ),
                     )
                   else

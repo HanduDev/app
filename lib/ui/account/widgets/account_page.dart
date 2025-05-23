@@ -1,12 +1,15 @@
 import 'package:app/helpers/toast.dart';
 import 'package:app/providers/auth_provider.dart';
+import 'package:app/providers/locale_provider.dart';
 import 'package:app/routes/routes.dart';
 import 'package:app/ui/account/widgets/config_card.dart';
 import 'package:app/ui/account/widgets/config_item.dart';
+import 'package:app/ui/account/widgets/language_selector_dialog.dart';
 import 'package:app/ui/core/themes/app_colors.dart';
 import 'package:app/ui/core/themes/font.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:localization/localization.dart';
 import 'package:provider/provider.dart';
 
 class AccountPage extends StatelessWidget {
@@ -33,7 +36,7 @@ class AccountPage extends StatelessWidget {
                   ),
                 ),
               ),
-      
+
               Center(
                 child: Padding(
                   padding: const EdgeInsets.only(top: 100),
@@ -55,7 +58,7 @@ class AccountPage extends StatelessWidget {
                   ),
                 ),
               ),
-      
+
               Positioned(
                 top: 42,
                 left: 24,
@@ -73,25 +76,26 @@ class AccountPage extends StatelessWidget {
                       color: AppColors.white,
                       onPressed: () async {
                         if (!context.mounted) return;
-      
+
                         final shouldLogout = await showDialog<bool>(
                           context: context,
                           builder:
                               (context) => AlertDialog(
                                 backgroundColor: AppColors.white,
                                 title: Center(
-                                  child: const Text(
-                                    'Sair',
+                                  child: Text(
+                                    'common.logout'.i18n(),
                                     style: TextStyle(
                                       fontSize: 24,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                 ),
-                                content: const Text(
-                                  'Tem certeza que deseja sair?',
+                                content: Text(
+                                  'common.logout_confirmation'.i18n(),
                                 ),
-                                actionsAlignment: MainAxisAlignment.spaceBetween,
+                                actionsAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 actions: [
                                   TextButton(
                                     style: TextButton.styleFrom(
@@ -116,14 +120,14 @@ class AccountPage extends StatelessWidget {
                                 ],
                               ),
                         );
-      
+
                         if (shouldLogout == true) {
                           try {
                             final authProvider = context.read<AuthProvider>();
                             await authProvider.signOut();
-      
+
                             if (!context.mounted) return;
-      
+
                             context.pushReplacement(Routes.intro);
                           } catch (e) {
                             if (!context.mounted) return;
@@ -137,9 +141,9 @@ class AccountPage extends StatelessWidget {
               ),
             ],
           ),
-      
+
           const SizedBox(height: 10),
-      
+
           Text(
             user.fullName,
             style: Font.primary(
@@ -148,77 +152,84 @@ class AccountPage extends StatelessWidget {
               color: AppColors.primary500,
             ),
           ),
-      
+
           const SizedBox(height: 30),
-      
+
           ConfigCard(
             widgets: [
               ConfigItem(
                 icon: Icons.person_outlined,
-                title: 'Perfil',
+                title: 'account.options.profile'.i18n(),
                 onTap: () {
                   context.pushReplacement(Routes.editar);
                 },
               ),
               ConfigItem(
                 icon: Icons.emoji_events_outlined,
-                title: 'Conquistas',
+                title: 'account.options.achievements'.i18n(),
                 onTap: () {
                   showDialog(
                     context: context,
-                    builder: (context) => EmDesenvolvimento(title: 'Conquistas'),
+                    builder:
+                        (context) => EmDesenvolvimento(
+                          title: 'account.options.achievements'.i18n(),
+                        ),
                   );
                 },
               ),
               ConfigItem(
                 icon: Icons.language_outlined,
-                title: 'Idioma do App',
+                title: 'account.options.language'.i18n(),
                 onTap: () {
                   showDialog(
                     context: context,
-                    builder: (context) => EmDesenvolvimento(title: 'Idioma'),
+                    builder: (context) => const LanguageSelectorDialog(),
                   );
                 },
               ),
               ConfigItem(
                 icon: Icons.smartphone_outlined,
-                title: 'Permissões do Dispositivo',
+                title: 'account.options.device_permissions'.i18n(),
                 onTap: () {
                   showDialog(
                     context: context,
                     builder:
-                        (context) =>
-                            EmDesenvolvimento(title: 'Permissões do Dispositivo'),
+                        (context) => EmDesenvolvimento(
+                          title: 'account.options.device_permissions'.i18n(),
+                        ),
                   );
                 },
               ),
             ],
           ),
-      
+
           const SizedBox(height: 40),
-      
+
           ConfigCard(
             widgets: [
               ConfigItem(
                 icon: Icons.contact_support_outlined,
-                title: 'Entre em contato',
+                title: 'account.options.contact'.i18n(),
                 onTap: () {
                   showDialog(
                     context: context,
                     builder:
-                        (context) => EmDesenvolvimento(title: 'Entre em contato'),
+                        (context) => EmDesenvolvimento(
+                          title: 'account.options.contact'.i18n(),
+                        ),
                   );
                 },
               ),
               ConfigItem(
                 icon: Icons.lock_outlined,
-                title: 'Política de privacidade',
+                title: 'account.options.privacy_policy'.i18n(),
                 onTap: () {
                   showDialog(
                     context: context,
                     builder:
-                        (context) =>
-                            EmDesenvolvimento(title: 'Política de privacidade'),
+                        (context) => EmDesenvolvimento(
+                          title: 'account.options.privacy_policy'.i18n(),
+                        ),
                   );
                 },
               ),

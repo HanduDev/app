@@ -112,17 +112,17 @@ class TranslateTextPage extends StatelessWidget {
                       items: [
                         SegmentedControlItem(
                           key: '/home',
-                          text: "translate.segmented_control.text".i18n(),
+                          text: "segmented_control.text".i18n(),
                           icon: Icons.text_snippet_outlined,
                         ),
                         SegmentedControlItem(
                           key: '/audio',
-                          text: "translate.segmented_control.audio".i18n(),
+                          text: "segmented_control.audio".i18n(),
                           icon: Icons.mic_none_outlined,
                         ),
                         SegmentedControlItem(
                           key: '/image',
-                          text: "translate.segmented_control.image".i18n(),
+                          text: "segmented_control.image".i18n(),
                           icon: Icons.image_outlined,
                         ),
                       ],

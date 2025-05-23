@@ -5,6 +5,7 @@ import 'package:app/ui/core/themes/app_colors.dart';
 import 'package:app/ui/core/themes/font.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:localization/localization.dart';
 
 double radius = 30;
 
@@ -60,7 +61,7 @@ class LessonCard extends StatelessWidget {
     return InkWell(
       onTap: () {
         if (!isCurrentLesson && !lesson.hasFinished) {
-          Toast.info(context, "Você ainda não pode acessar esta aula");
+          Toast.info(context, "trail.lesson_card.unpermitted_access".i18n());
           return;
         }
 

@@ -11,7 +11,7 @@ class Option {
     return Option(
       id: id,
       content: json['content'],
-      isCorrect: json['isCorrect'] ?? false,
+      isCorrect: json['correct'] ?? false,
     );
   }
 

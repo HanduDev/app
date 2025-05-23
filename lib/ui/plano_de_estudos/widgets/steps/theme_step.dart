@@ -1,26 +1,26 @@
 import 'package:app/ui/core/shared/selectable_grid/selectable_grid.dart';
 import 'package:app/ui/core/shared/selectable_grid/selectable_grid_controller.dart';
 import 'package:app/ui/core/shared/selectable_grid/selectable_grid_model.dart';
-import 'package:app/ui/core/themes/app_colors.dart';
 import 'package:app/ui/core/themes/font.dart';
 import 'package:app/ui/plano_de_estudos/view_model/forms_container_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
 import 'package:provider/provider.dart';
 
 class ThemeStep extends StatelessWidget {
   ThemeStep({super.key});
 
   final List<String> _themes = [
-    "Música",
-    "Entretenimento",
-    "Esportes",
-    "Moda e Beleza",
-    "Tecnologia",
-    "Programação",
-    "Viagem",
-    "Anime",
-    "Profissão",
-    "Família",
+    "music",
+    "entertainment",
+    "sports",
+    "fashion_and_beauty",
+    "technology",
+    "programming",
+    "travel",
+    "anime",
+    "profession",
+    "family",
   ];
 
   @override
@@ -32,12 +32,11 @@ class ThemeStep extends StatelessWidget {
 
     return SelectableGrid(
       items:
-          _themes
-              .map(
-                (element) =>
-                    SelectableGridModel(value: element, label: element),
-              )
-              .toList(),
+          _themes.map((element) {
+            final label =
+                "plano_de_estudos.steps.themes.options.$element".i18n();
+            return SelectableGridModel(value: label, label: label);
+          }).toList(),
       crossAxisCount: 3,
       render: (item, isSelected, colorData) {
         return Column(

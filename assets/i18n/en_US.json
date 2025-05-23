@@ -1,0 +1,231 @@
+{
+  "common": {
+    "select": "Select",
+    "type_something": "Type something",
+    "close_and_save": "Close and Save",
+    "menu": "Menu",
+    "send": "Send",
+    "cancel": "Cancel",
+    "greetings": "Welcome to Handu",
+    "logout": "Logout",
+    "logout_confirmation": "Are you sure you want to logout?",
+    "login": "Login",
+    "select_option": "Select an option",
+    "save": "Save",
+    "back": "Back"
+  },
+  "translate": {
+    "errors": {
+      "feedback": "Feedback",
+      "what_did_you_think": "What did you think of the translation?",
+      "feedback_please_select": "Please select a rating.",
+      "feedback_error": "Error sending feedback",
+      "feedback_success": "Feedback sent successfully",
+      "feedback_success_message": "Thank you for your feedback!",
+      "feedback_error_message": "Error sending feedback",
+      "translate_need_feedback": "Translation must be filled to send feedback."
+    }
+  },
+  "errors": {
+    "speech_error": "An error occurred while recording"
+  },
+  "segmented_control": {
+    "text": "Text",
+    "audio": "Audio",
+    "image": "Image"
+  },
+  "account": {
+    "options": {
+      "profile": "Profile",
+      "achievements": "Achievements",
+      "language": "App Language",
+      "device_permissions": "Device Permissions",
+      "contact": "Contact Us",
+      "privacy_policy": "Privacy Policy"
+    },
+    "edit": {
+      "name": "Change name",
+      "email": "Change email",
+      "password": "Change password"
+    },
+    "register": {
+      "title": "Register",
+      "name": "Full Name",
+      "email": "Email",
+      "or_continue_with": "Or continue with",
+      "already_have_account": "Already have an account?",
+      "register": "Register account",
+      "password": "Password",
+      "confirm_password": "Confirm password"
+    },
+    "login": {
+      "title": "Login",
+      "subtitle": "Or continue with",
+      "forgot_password": "Forgot password?",
+      "remember_me": "Remember Me",
+      "no_account": "Don't have an account?",
+      "register": "Register"
+    },
+    "email_validation_required": "Email is required",
+    "email_validator": "Invalid email",
+    "name_validation_required": "Name is required",
+    "password_validation_required": "Password is required",
+    "password_confirmation_required": "Password confirmation is required",
+    "password_not_match": "Passwords do not match",
+    "password_validation_min_length": "Password must be at least 8 characters",
+    "password_validation_letters_and_numbers": "Use letters and numbers"
+  },
+  "confirmacao_cadastro": {
+    "verify_email": "Verify your Email",
+    "verify_email_description": "We sent a four-digit code to the email",
+    "verify_email_below": "Enter the code below to verify it",
+    "verify_email_not_received": "Didn't receive the code?",
+    "verify_email_resend_code_success": "Code resent successfully",
+    "verify_email_resend": "Resend",
+    "verify_email_resend_in": "Resend in",
+    "verify_email_go_to_app": "Go to app",
+    "verify_email_join_another_account": "Login with another account"
+  },
+  "educacao": {
+    "title": "What do you want to learn today?",
+    "create_study_plan": "Create Study Plan",
+    "subtitle": "Continue study plans",
+    "progress": "Progress"
+  },
+  "intro": {
+    "title": "Choose an option to continue",
+    "description": "With the inclusion of sign languages to expand your connection.",
+    "description_2": "Gain knowledge in various languages through study plans.",
+    "create_account": "Create account",
+    "login_with_google": "Login with Google",
+    "titles": {
+      "0": "A real-time translator connecting people from various languages.",
+      "1": "With the inclusion of sign languages to expand your connection.",
+      "2": "Gain knowledge in various languages through study plans."
+    }
+  },
+  "lesson": {
+    "finished": "Lesson completed successfully!",
+    "mark_as_finished": "Mark as completed",
+    "completed": "Completed",
+    "send_answer": "Send answer",
+    "activity_type": {
+      "translation": "Translation",
+      "multiple_choice": "Multiple choice",
+      "theorical": "Theoretical"
+    },
+    "activity_practice": "Practice",
+    "correct": "Correct answer!",
+    "incorrect": "Incorrect answer!",
+    "remaining_attempts": "You still have {{attempts}} attempts",
+    "no_attempts": "No attempts remaining",
+    "your_answer": "Your answer",
+    "suggested_answer": "Answer suggested by Handu",
+    "answer_required": "Answer is required"
+  },
+  "libras": {
+    "device_not_supported": "Your device does not support this feature"
+  },
+  "plano_de_estudos": {
+    "title": "Study Plan",
+    "created": "Study plan created successfully!",
+    "try_again": "Try again",
+    "view_study_plan": "View study plan",
+    "after_created_seconds": "Or wait {{seconds}} seconds",
+    "working": "Working on it...",
+    "almost_done": "We're almost there",
+    "error_creating_study_plan": "Error creating study plan",
+    "no_user_found": "No user found",
+    "connecting_to_server": "Connecting to server...",
+    "connection_error": "Connection error: {{error}}",
+    "finish": "Finish",
+    "next": "Next",
+    "select_at_least_one_item": "Select at least one item",
+    "steps": {
+      "development": {
+        "options": {
+          "reading": "Reading",
+          "writing": "Writing",
+          "listening": "Listening",
+          "speaking": "Speaking"
+        },
+        "select_one_at_least": "Select at least one development"
+      },
+      "language": {
+        "select_one_at_least": "Select at least one language"
+      },
+      "levels": {
+        "options": {
+          "beginner": "Beginner",
+          "intermediate": "Intermediate",
+          "advanced": "Advanced"
+        }
+      },
+      "themes": {
+        "options": {
+          "music": "Music",
+          "entertainment": "Entertainment",
+          "sports": "Sports",
+          "fashion_and_beauty": "Fashion and Beauty",
+          "technology": "Technology",
+          "programming": "Programming",
+          "travel": "Travel",
+          "anime": "Anime",
+          "profession": "Profession",
+          "family": "Family"
+        }
+      },
+      "time_to_study": {
+        "options": {
+          "5_min": "5 min/day",
+          "15_min": "15 min/day",
+          "30_min": "30 min/day",
+          "45_min": "45 min/day",
+          "1h": "1h/day"
+        }
+      },
+      "titles": {
+        "0": "Which language do you want to learn?",
+        "1": "What do you want to learn?",
+        "2": "What's your level in {{language}}?",
+        "3": "How much time do you have available per day?",
+        "4": "Would you like to talk about any specific topic? (optional)",
+        "5": "Select one or more items below",
+        "6": "How long do you want to learn?"
+      },
+      "subtitle": {
+        "0": "",
+        "1": "Select one or more items below",
+        "2": "",
+        "3": "",
+        "4": "Select one or more items below",
+        "5": "",
+        "6": ""
+      }
+    },
+    "dialog": {
+      "title": "Create plan?",
+      "content": "Can we proceed with creating your study plan?",
+      "not_now": "Not now",
+      "yes_please": "Yes, please"
+    }
+  },
+  "trail": {
+    "no_data_found": "No data found",
+    "lesson_card": {
+      "unpermitted_access": "You cannot access this lesson yet"
+    }
+  },
+  "translate_audio": {
+    "please_select_languages": "Please select source and target languages",
+    "say_something_to_translate": "Please say something to translate",
+    "select_language": "Select language",
+    "translating": "Translating...",
+    "error_translating": "Error translating. Please try again.",
+    "say_something": "Say something..."
+  },
+  "translate_image": {
+    "network_error": "Connection error. Check your internet and try again",
+    "take_another_photo": "Take another photo"
+  }
+}

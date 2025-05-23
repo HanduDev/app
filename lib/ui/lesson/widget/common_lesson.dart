@@ -7,6 +7,7 @@ import 'package:app/ui/lesson/view_model/lesson_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:go_router/go_router.dart';
+import 'package:localization/localization.dart';
 import 'package:provider/provider.dart';
 
 class CommonLesson extends StatelessWidget {
@@ -24,7 +25,7 @@ class CommonLesson extends StatelessWidget {
 
       if (!context.mounted) return;
 
-      Toast.success(context, 'Aula concluída com sucesso!');
+      Toast.success(context, 'lesson.finished'.i18n());
 
       context.pop();
     } catch (e) {
@@ -46,7 +47,10 @@ class CommonLesson extends StatelessWidget {
         const SizedBox(height: 16),
         PrimaryButton(
           onPressed: () => _updateLesson(context),
-          text: lesson.hasFinished ? "Concluído" : "Marcar como concluído",
+          text:
+              lesson.hasFinished
+                  ? "lesson.completed".i18n()
+                  : "lesson.mark_as_finished".i18n(),
           disabled: lesson.hasFinished,
         ),
       ],

@@ -8,6 +8,7 @@ import 'package:app/ui/core/themes/app_colors.dart';
 import 'package:app/ui/core/themes/font.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:localization/localization.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:app/helpers/text_formatters.dart';
@@ -69,7 +70,7 @@ class _ConfirmacaoCadastroPageState extends State<ConfirmacaoCadastroPage> {
                   Image.asset('assets/images/Logo_1.png', height: 100),
                   SizedBox(height: 24),
                   Text(
-                    'Verifique seu Email',
+                    'confirmacao_cadastro.verify_email'.i18n(),
                     style: Font.primary(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -84,7 +85,7 @@ class _ConfirmacaoCadastroPageState extends State<ConfirmacaoCadastroPage> {
                     direction: Axis.horizontal,
                     children: [
                       Text(
-                        'Enviamos um código de quatro dígitos para o email',
+                        'confirmacao_cadastro.verify_email_description'.i18n(),
                         style: Font.primary(
                           fontSize: 12,
                           fontWeight: FontWeight.normal,
@@ -102,7 +103,7 @@ class _ConfirmacaoCadastroPageState extends State<ConfirmacaoCadastroPage> {
                         textAlign: TextAlign.center,
                       ),
                       Text(
-                        'Entre com o código abaixo para verificá-lo',
+                        'confirmacao_cadastro.verify_email_below'.i18n(),
                         style: Font.primary(
                           fontSize: 12,
                           fontWeight: FontWeight.normal,
@@ -141,7 +142,7 @@ class _ConfirmacaoCadastroPageState extends State<ConfirmacaoCadastroPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'Não recebeu o código?',
+                        'confirmacao_cadastro.verify_email_not_received'.i18n(),
                         style: Font.primary(
                           fontSize: 12,
                           fontWeight: FontWeight.normal,
@@ -163,7 +164,7 @@ class _ConfirmacaoCadastroPageState extends State<ConfirmacaoCadastroPage> {
                                     if (context.mounted) {
                                       Toast.success(
                                         context,
-                                        'Código reenviado!',
+                                        'confirmacao_cadastro.verify_email_resend_code_success'.i18n(),
                                       );
                                     }
                                   } catch (e) {
@@ -174,8 +175,8 @@ class _ConfirmacaoCadastroPageState extends State<ConfirmacaoCadastroPage> {
                                 : null,
                         child: Text(
                           isResendButtonEnabled
-                              ? 'Reenviar'
-                              : 'Reenviar em 00:${resendTime.toInt().toString().padLeft(2, '0')}',
+                              ? 'confirmacao_cadastro.verify_email_resend'.i18n()
+                              : '${'confirmacao_cadastro.verify_email_resend_in'.i18n()} ${resendTime.toInt().toString().padLeft(2, '0')}',
                           style: Font.primary(
                             fontSize: 12,
                             fontWeight: FontWeight.bold,
@@ -190,7 +191,7 @@ class _ConfirmacaoCadastroPageState extends State<ConfirmacaoCadastroPage> {
                   ),
                   SizedBox(height: 52),
                   PrimaryButton(
-                    text: 'Ir para o aplicativo',
+                    text: 'confirmacao_cadastro.verify_email_go_to_app'.i18n(),
                     rounded: true,
                     onPressed: () async {
                       try {
@@ -206,7 +207,7 @@ class _ConfirmacaoCadastroPageState extends State<ConfirmacaoCadastroPage> {
                   ),
                   SizedBox(height: 32),
                   SecondaryButton(
-                    text: 'Entrar com outra conta',
+                    text: 'confirmacao_cadastro.verify_email_join_another_account'.i18n(),
                     rounded: true,
                     onPressed: () async {
                       try {

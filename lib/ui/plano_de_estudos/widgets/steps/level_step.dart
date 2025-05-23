@@ -4,11 +4,12 @@ import 'package:app/ui/core/shared/selectable_grid/selectable_grid_model.dart';
 import 'package:app/ui/core/themes/font.dart';
 import 'package:app/ui/plano_de_estudos/view_model/forms_container_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
 import 'package:provider/provider.dart';
 
 class LevelStep extends StatelessWidget {
   LevelStep({super.key});
-  final List<String> _levels = ["Iniciante", "Intermediário", "Avançado"];
+  final List<String> _levels = ["beginner", "intermediate", "advanced"];
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +22,11 @@ class LevelStep extends StatelessWidget {
       items:
           _levels
               .map(
-                (element) =>
-                    SelectableGridModel(value: element, label: element),
+                (element) => SelectableGridModel(
+                  value: element,
+                  label:
+                      "plano_de_estudos.steps.levels.options.$element".i18n(),
+                ),
               )
               .toList(),
       crossAxisCount: 1,
@@ -34,7 +38,7 @@ class LevelStep extends StatelessWidget {
           children: [
             const SizedBox(width: 12),
             Text(
-              item.value,
+              item.label,
               style: Font.primary(
                 color: colorData.borderColor,
                 fontSize: 16,

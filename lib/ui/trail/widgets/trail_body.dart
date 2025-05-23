@@ -4,6 +4,7 @@ import 'package:app/ui/core/themes/app_colors.dart';
 import 'package:app/ui/trail/view_model/trail_view_model.dart';
 import 'package:app/ui/trail/widgets/lesson_card.dart';
 import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
 import 'package:provider/provider.dart';
 
 class TrailBody extends StatelessWidget {
@@ -83,7 +84,7 @@ class TrailBody extends StatelessWidget {
         final trailInfo = snapshot.data;
 
         if (trailInfo == null) {
-          return const Center(child: Text('Nenhum dado encontrado'));
+          return Center(child: Text('trail.no_data_found'.i18n()));
         }
 
         // Chama a função de scroll quando os dados são carregados

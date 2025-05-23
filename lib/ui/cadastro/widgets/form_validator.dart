@@ -8,6 +8,7 @@ import 'package:app/ui/core/themes/app_colors.dart';
 import 'package:app/ui/core/themes/font.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:localization/localization.dart';
 import 'package:provider/provider.dart';
 
 class FormsValidator extends StatefulWidget {
@@ -36,7 +37,7 @@ class FormsValidatorState extends State<FormsValidator> {
       try {
         if (!_formKey.currentState!.validate()) return;
         if (_passwordController.text != _password2Controller.text) {
-          Toast.error(context, 'As senhas não são iguais');
+          Toast.error(context, 'errors.password_not_match'.i18n());
           return;
         }
 
@@ -64,10 +65,10 @@ class FormsValidatorState extends State<FormsValidator> {
           TextInput(
             keyField: const Key('nameField'),
             controller: _nameController,
-            label: 'Nome Completo',
+            label: 'account.register.name'.i18n(),
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return 'Digite um Nome';
+                return 'account.name_validation_required'.i18n();
               }
               return null;
             },
@@ -77,16 +78,16 @@ class FormsValidatorState extends State<FormsValidator> {
           TextInput(
             keyField: const Key('emailField'),
             controller: _emailController,
-            label: 'Email',
+            label: 'account.register.email'.i18n(),
             keyboardType: TextInputType.emailAddress,
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return 'Digite um e-mail';
+                return 'account.email_validation_required'.i18n();
               }
               if (!RegExp(
                 r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
               ).hasMatch(value)) {
-                return 'Digite um e-mail válido';
+                return 'account.email_validator'.i18n();
               }
               return null;
             },
@@ -96,7 +97,7 @@ class FormsValidatorState extends State<FormsValidator> {
           TextInput(
             keyField: const Key('passwordField'),
             controller: _passwordController,
-            label: 'Senha',
+            label: 'account.register.password'.i18n(),
             obscureText: _obscurePasswordText,
             sufixIcon: IconButton(
               onPressed: () {
@@ -110,13 +111,13 @@ class FormsValidatorState extends State<FormsValidator> {
             ),
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return 'Digite uma senha';
+                return 'account.password_validation_required'.i18n();
               }
               if (value.length < 8) {
-                return 'A senha deve ter pelo menos 8 caracteres';
+                return 'account.password_validation_min_length'.i18n();
               }
               if (!RegExp(r'^(?=.*[a-zA-Z])(?=.*\d)').hasMatch(value)) {
-                return 'A senha deve conter letras e números';
+                return 'account.password_validation_letters_and_numbers'.i18n();
               }
               return null;
             },
@@ -125,7 +126,7 @@ class FormsValidatorState extends State<FormsValidator> {
           Align(
             alignment: Alignment.centerLeft,
             child: Text(
-              'Utilizar letras e números',
+              'account.password_validation_letters_and_numbers'.i18n(),
               style: Font.primary(
                 fontSize: 12,
                 color: AppColors.primary100,
@@ -138,7 +139,7 @@ class FormsValidatorState extends State<FormsValidator> {
           TextInput(
             keyField: const Key('confirmPasswordField'),
             controller: _password2Controller,
-            label: 'Confirmar Senha',
+            label: 'account.register.confirm_password'.i18n(),
             obscureText: _obscureConfirmPasswordText,
             sufixIcon: IconButton(
               onPressed: () {
@@ -154,10 +155,10 @@ class FormsValidatorState extends State<FormsValidator> {
             ),
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return 'Confirme sua senha';
+                return 'account.password_confirmation_required'.i18n();
               }
               if (value != _passwordController.text) {
-                return 'As senhas não são iguais';
+                return 'account.password_not_match'.i18n();
               }
               return null;
             },
@@ -167,7 +168,7 @@ class FormsValidatorState extends State<FormsValidator> {
           Hero(
             tag: 'primary-button',
             child: PrimaryButton(
-              text: ('Cadastrar conta'),
+              text: 'account.register.register'.i18n(),
               rounded: true,
               onPressed: validatedAndSubmit,
               loading: context.watch<AuthProvider>().isAuthenticating,

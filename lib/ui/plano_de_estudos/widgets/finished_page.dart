@@ -4,6 +4,7 @@ import 'package:app/providers/auth_provider.dart';
 import 'package:app/ui/core/themes/app_colors.dart';
 import 'package:app/ui/plano_de_estudos/widgets/create_step_animations/finished.dart';
 import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
 import 'package:provider/provider.dart';
 
 class FinishedPage extends StatelessWidget {
@@ -21,7 +22,7 @@ class FinishedPage extends StatelessWidget {
     final user = context.select<AuthProvider, User?>((value) => value.user);
 
     if (user == null) {
-      return const Center(child: Text('Nenhum usuário encontrado'));
+      return Center(child: Text('plano_de_estudos.no_user_found'.i18n()));
     }
 
     return Scaffold(

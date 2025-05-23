@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
 
 class IntroViewModel extends ChangeNotifier {
   int _currentIndex = 0;
   final List<String> _titles = [
-    'Um tradutor em tempo real conectando pessoas de várias linguas.',
-    'Com a inclusão de linguagens de sinais para expandir sua conexão.',
-    'Garanta conhecimento em diversas línguas a partir de planos de estudos.',
+    'intro.titles.0'.i18n(),
+    'intro.titles.1'.i18n(),
+    'intro.titles.2'.i18n(),
   ];
 
   int get currentIndex => _currentIndex;

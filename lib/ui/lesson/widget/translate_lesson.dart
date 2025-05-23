@@ -7,6 +7,7 @@ import 'package:app/ui/core/themes/app_colors.dart';
 import 'package:app/ui/core/themes/font.dart';
 import 'package:app/ui/lesson/view_model/lesson_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
 import 'package:provider/provider.dart';
 
 class TranslateLesson extends StatefulWidget {
@@ -34,18 +35,17 @@ class _TranslateLessonState extends State<TranslateLesson> {
 
       if (!context.mounted) return;
 
+      _lesson = await context.read<LessonViewModel>().initialize(_lesson.id);
+      setState(() {});
+      if (!context.mounted) return;
+
       if (isCorrect) {
-        Toast.success(context, 'Resposta correta!');
+        Toast.success(context, 'lesson.correct'.i18n());
         _controller.clear();
         return;
       }
 
-      _lesson = await context.read<LessonViewModel>().initialize(_lesson.id);
-      setState(() {});
-
-      if (!context.mounted) return;
-
-      Toast.error(context, 'Resposta incorreta!');
+      Toast.error(context, 'lesson.incorrect'.i18n());
     } catch (e) {
       Toast.error(context, getErrorMessage(e));
     }
@@ -71,8 +71,11 @@ class _TranslateLessonState extends State<TranslateLesson> {
         if (!_lesson.hasFinished)
           Text(
             attemptCount == 0
-                ? "Sem tentativas restantes"
-                : "Você ainda tem ${3 - _lesson.attemptCount} tentativas",
+                ? "lesson.no_attempts".i18n()
+                : "lesson.remaining_attempts".i18n().replaceAll(
+                  '{{attempts}}',
+                  (3 - _lesson.attemptCount).toString(),
+                ),
             style: Font.primary(fontSize: 14, color: AppColors.grey),
           ),
         const SizedBox(height: 16),
@@ -81,7 +84,10 @@ class _TranslateLessonState extends State<TranslateLesson> {
         PrimaryButton(
           loading: isAnswering,
           onPressed: () => _checkAnswer(context),
-          text: _lesson.hasFinished ? "Concluído" : "Enviar resposta",
+          text:
+              _lesson.hasFinished
+                  ? "lesson.completed".i18n()
+                  : "lesson.send_answer".i18n(),
           disabled: _lesson.hasFinished,
         ),
       ],
@@ -93,13 +99,13 @@ class _TranslateLessonState extends State<TranslateLesson> {
       return Form(
         key: _formKey,
         child: TextInput(
-          label: _lesson.hasFinished ? "" : "Digite sua resposta",
+          label: "lesson.your_answer".i18n(),
           enabled: !_lesson.hasFinished,
           maxLines: 3,
           controller: controller,
           validator: (value) {
             if (value == null || value.isEmpty) {
-              return "Resposta é obrigatória";
+              return "lesson.answer_required".i18n();
             }
             return null;
           },
@@ -111,7 +117,7 @@ class _TranslateLessonState extends State<TranslateLesson> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Sua resposta",
+          "lesson.your_answer".i18n(),
           style: Font.primary(
             fontSize: 15,
             fontWeight: FontWeight.bold,
@@ -128,7 +134,7 @@ class _TranslateLessonState extends State<TranslateLesson> {
         ),
         const SizedBox(height: 8),
         Text(
-          "Resposta sugerida pelo Handu",
+          "lesson.suggested_answer".i18n(),
           style: Font.primary(fontSize: 15, fontWeight: FontWeight.bold),
         ),
         Text(_lesson.expectedAnswer ?? '', style: Font.primary(fontSize: 15)),

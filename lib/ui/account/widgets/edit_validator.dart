@@ -6,6 +6,7 @@ import 'package:app/ui/core/shared/primary_button.dart';
 import 'package:app/ui/core/shared/text_input.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:localization/localization.dart';
 import 'package:provider/provider.dart';
 
 class EditValidator extends StatefulWidget {
@@ -31,7 +32,7 @@ class EditValidatorState extends State<EditValidator> {
       try {
         if (!_formKey.currentState!.validate()) return;
         if (_passwordController.text != _password2Controller.text) {
-          Toast.error(context, 'As senhas não são iguais');
+          Toast.error(context, 'account.password_not_match'.i18n());
           return;
         }
 
@@ -59,10 +60,10 @@ class EditValidatorState extends State<EditValidator> {
           TextInput(
             keyField: const Key('nameField'),
             controller: _nameController,
-            label: 'Alterar nome',
+            label: 'account.edit.name'.i18n(),
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return 'Digite um Nome';
+                return 'account.name_validation_required'.i18n();
               }
               return null;
             },
@@ -72,16 +73,16 @@ class EditValidatorState extends State<EditValidator> {
           TextInput(
             keyField: const Key('emailField'),
             controller: _emailController,
-            label: 'Alterar email',
+            label: 'account.edit.email'.i18n(),
             keyboardType: TextInputType.emailAddress,
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return 'Digite um e-mail';
+                return 'account.email_validation_required'.i18n();
               }
               if (!RegExp(
                 r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
               ).hasMatch(value)) {
-                return 'Digite um e-mail válido';
+                return 'account.email_validator'.i18n();
               }
               return null;
             },
@@ -91,7 +92,7 @@ class EditValidatorState extends State<EditValidator> {
           Hero(
             tag: 'primary-button',
             child: PrimaryButton(
-              text: ('Salvar'),
+              text: 'common.save'.i18n(),
               rounded: true,
               onPressed: validatedAndSubmit,
               loading: context.watch<AuthProvider>().isAuthenticating,

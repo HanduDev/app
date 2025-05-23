@@ -8,6 +8,7 @@ import 'package:app/ui/core/themes/app_colors.dart';
 import 'package:app/ui/core/themes/font.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:localization/localization.dart';
 import 'package:provider/provider.dart';
 
 class FormValidator extends StatefulWidget {
@@ -55,17 +56,17 @@ class FormValidatorState extends State<FormValidator> {
         children: [
           TextInput(
             controller: _emailController,
-            label: 'Email',
+            label: 'account.register.email'.i18n(),
             keyboardType: TextInputType.emailAddress,
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return 'Digite um e-mail';
+                return 'account.email_validation_required'.i18n();
               }
               if (!RegExp(
                 r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
               ) // Validar .dominio corretamente
               .hasMatch(value)) {
-                return 'Digite um e-mail válido';
+                return 'account.email_validator'.i18n();
               }
               return null;
             },
@@ -74,7 +75,7 @@ class FormValidatorState extends State<FormValidator> {
 
           TextInput(
             controller: _passwordController,
-            label: 'Senha',
+            label: 'account.register.password'.i18n(),
             obscureText: _obscurePasswordText,
             sufixIcon: IconButton(
               onPressed: () {
@@ -88,13 +89,13 @@ class FormValidatorState extends State<FormValidator> {
             ),
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return 'Digite uma senha';
+                return 'account.password_validation_required'.i18n();
               }
               if (value.length < 8) {
-                return 'A senha deve ter pelo menos 8 caracteres';
+                return 'account.password_validation_min_length'.i18n();
               }
               if (!RegExp(r'^(?=.*[a-zA-Z])(?=.*\d)').hasMatch(value)) {
-                return 'A senha deve conter letras e números';
+                return 'account.password_validation_letters_and_numbers'.i18n();
               }
               return null;
             },
@@ -115,7 +116,7 @@ class FormValidatorState extends State<FormValidator> {
                     },
                   ),
                   Text(
-                    'Lembrar-Me',
+                    'account.login.remember_me'.i18n(),
                     style: Font.primary(
                       fontSize: 12,
                       color: AppColors.primary500,
@@ -126,7 +127,7 @@ class FormValidatorState extends State<FormValidator> {
               TextButton(
                 onPressed: () {},
                 child: Text(
-                  'Esqueceu a senha?',
+                  'account.login.forgot_password'.i18n(),
                   style: Font.primary(
                     fontSize: 12,
                     color: AppColors.primary500,
@@ -139,7 +140,7 @@ class FormValidatorState extends State<FormValidator> {
           Hero(
             tag: 'primary-button',
             child: PrimaryButton(
-              text: 'Entrar',
+              text: 'common.login'.i18n(),
               rounded: true,
               onPressed: validatedAndSubmit,
               loading: context.watch<AuthProvider>().isAuthenticating,

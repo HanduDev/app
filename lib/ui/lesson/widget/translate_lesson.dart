@@ -7,7 +7,10 @@ import 'package:app/ui/core/themes/app_colors.dart';
 import 'package:app/ui/core/themes/font.dart';
 import 'package:app/ui/lesson/view_model/lesson_view_model.dart';
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
 import 'package:localization/localization.dart';
+=======
+>>>>>>> d2d3f77 (HND-70 [Test] Criação dos testes para Trail)
 import 'package:provider/provider.dart';
 
 class TranslateLesson extends StatefulWidget {

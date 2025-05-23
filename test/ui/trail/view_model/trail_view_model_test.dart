@@ -5,7 +5,7 @@ import 'package:app/models/language.dart';
 import 'package:app/models/lesson/lesson.dart';
 import 'package:app/models/trail/trail_info.dart';
 
-import '../../__mocks__/general_mocks.mocks.dart';
+import '../../../__mocks__/general_mocks.mocks.dart';
 
 void main() {
   late MockTrailRepositoryImpl mockTrailRepository;

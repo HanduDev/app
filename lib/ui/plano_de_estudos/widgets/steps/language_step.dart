@@ -52,7 +52,7 @@ class _LanguageStepState extends State<LanguageStep> {
 
         return null;
       },
-      render: (item, isSelected) {
+      render: (item, isSelected, colorData) {
         return Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -64,7 +64,7 @@ class _LanguageStepState extends State<LanguageStep> {
               style: Font.primary(
                 fontSize: 13,
                 fontWeight: FontWeight.w500,
-                color: isSelected ? AppColors.primary500 : AppColors.black,
+                color: colorData.borderColor,
               ),
             ),
           ],

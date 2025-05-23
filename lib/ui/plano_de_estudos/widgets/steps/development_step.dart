@@ -71,7 +71,7 @@ class _DevelopmentStepState extends State<DevelopmentStep> {
 
         return null;
       },
-      render: (item, isSelected) {
+      render: (item, isSelected, colorData) {
         return Row(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -82,7 +82,7 @@ class _DevelopmentStepState extends State<DevelopmentStep> {
             Text(
               item.label,
               style: Font.primary(
-                color: isSelected ? AppColors.primary500 : AppColors.black,
+                color: colorData.borderColor,
                 fontSize: 16,
                 fontWeight: FontWeight.w500,
               ),

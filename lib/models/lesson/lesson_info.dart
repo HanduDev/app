@@ -32,7 +32,10 @@ class LessonInfo extends Lesson {
       activityType: json['activityType'] ?? '',
       question: json['question'] ?? '',
       userAnswer: json['userAnswer'] ?? '',
-      isCorrect: json['isCorrect'],
+      isCorrect:
+          json['isCorrect'] is bool
+              ? json['isCorrect']
+              : json['isCorrect'] == 1,
       attemptCount: json['attemptCount'] ?? 0,
       expectedAnswer: json['expectedAnswer'],
       options:

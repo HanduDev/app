@@ -1,8 +1,10 @@
 import 'package:app/helpers/errors.dart';
 import 'package:app/helpers/toast.dart';
 import 'package:app/models/lesson/lesson_info.dart';
+import 'package:app/models/option.dart';
 import 'package:app/ui/core/shared/primary_button.dart';
 import 'package:app/ui/core/shared/selectable_grid/selectable_grid.dart';
+import 'package:app/ui/core/shared/selectable_grid/selectable_grid_color.dart';
 import 'package:app/ui/core/shared/selectable_grid/selectable_grid_controller.dart';
 import 'package:app/ui/core/shared/selectable_grid/selectable_grid_model.dart';
 import 'package:app/ui/core/themes/app_colors.dart';
@@ -23,19 +25,19 @@ class OptionsLesson extends StatefulWidget {
 
 class _OptionsLessonState extends State<OptionsLesson> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final SelectableGridController _controller = SelectableGridController();
   late LessonInfo _lesson;
 
-  void _checkAnswer(
-    BuildContext context,
-    SelectableGridController controller,
-  ) async {
+  double alpha = 0.2;
+
+  void _checkAnswer(BuildContext context) async {
     try {
       if (!_formKey.currentState!.validate()) {
         Toast.error(context, 'Selecione uma opção');
         return;
       }
 
-      final selectedOption = controller.value?.value;
+      final selectedOption = _controller.value?.value;
 
       if (selectedOption == null) return;
 
@@ -63,9 +65,52 @@ class _OptionsLessonState extends State<OptionsLesson> {
     }
   }
 
+  SelectableGridColor selectedColor(String value) {
+    if (!_lesson.hasFinished) {
+      return SelectableGridColor(
+        backgroundColor: AppColors.white,
+        borderColor: AppColors.lightGrey,
+      );
+    }
+
+    if (_lesson.userAnswer == value) {
+      return _lesson.isCorrect
+          ? SelectableGridColor(
+            backgroundColor: AppColors.green.withValues(alpha: alpha),
+            borderColor: const Color.fromARGB(255, 89, 168, 91),
+          )
+          : SelectableGridColor(
+            backgroundColor: AppColors.error.withValues(alpha: alpha),
+            borderColor: AppColors.error,
+          );
+    }
+
+    if (_lesson.options == null) {
+      return SelectableGridColor(
+        backgroundColor: AppColors.white,
+        borderColor: AppColors.grey,
+      );
+    }
+
+    Option? option = _lesson.options?.firstWhere(
+      (option) => option.id.toString() == value,
+    );
+
+    if (option == null || !option.isCorrect) {
+      return SelectableGridColor(
+        backgroundColor: AppColors.white,
+        borderColor: AppColors.grey,
+      );
+    }
+
+    return SelectableGridColor(
+      backgroundColor: AppColors.white,
+      borderColor: AppColors.grey,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    final controller = SelectableGridController();
     int attemptCount = 3 - _lesson.attemptCount;
 
     List<SelectableGridModel> list =
@@ -100,8 +145,10 @@ class _OptionsLessonState extends State<OptionsLesson> {
           const SizedBox(height: 16),
           SelectableGrid(
             items: list,
+            disabled: _lesson.hasFinished,
             crossAxisCount: 1,
-            controller: controller,
+            onColorChange: _lesson.hasFinished ? selectedColor : null,
+            controller: _controller,
             validator: (value) {
               if (value.isEmpty) {
                 return "Selecione uma opção";
@@ -110,7 +157,7 @@ class _OptionsLessonState extends State<OptionsLesson> {
               return null;
             },
             childAspectRatio: 16 / 3,
-            render: (item, isSelected) {
+            render: (item, isSelected, colorData) {
               return Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -120,8 +167,7 @@ class _OptionsLessonState extends State<OptionsLesson> {
                     child: Text(
                       item.label,
                       style: Font.primary(
-                        color:
-                            isSelected ? AppColors.primary500 : AppColors.black,
+                        color: colorData.borderColor,
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
                       ),
@@ -133,7 +179,7 @@ class _OptionsLessonState extends State<OptionsLesson> {
           ),
           const SizedBox(height: 16),
           PrimaryButton(
-            onPressed: () => _checkAnswer(context, controller),
+            onPressed: () => _checkAnswer(context),
             text: _lesson.hasFinished ? "Concluído" : "Enviar resposta",
             disabled: _lesson.hasFinished,
           ),

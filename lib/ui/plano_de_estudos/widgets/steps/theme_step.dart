@@ -39,7 +39,7 @@ class ThemeStep extends StatelessWidget {
               )
               .toList(),
       crossAxisCount: 3,
-      render: (item, isSelected) {
+      render: (item, isSelected, colorData) {
         return Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -51,7 +51,7 @@ class ThemeStep extends StatelessWidget {
               style: Font.primary(
                 fontSize: 13,
                 fontWeight: FontWeight.w500,
-                color: isSelected ? AppColors.primary500 : AppColors.black,
+                color: colorData.borderColor,
               ),
             ),
           ],

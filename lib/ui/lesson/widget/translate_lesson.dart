@@ -7,7 +7,6 @@ import 'package:app/ui/core/themes/app_colors.dart';
 import 'package:app/ui/core/themes/font.dart';
 import 'package:app/ui/lesson/view_model/lesson_view_model.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class TranslateLesson extends StatefulWidget {

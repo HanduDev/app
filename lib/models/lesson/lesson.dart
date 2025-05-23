@@ -19,7 +19,10 @@ class Lesson {
       name: json['name'],
       hasFinished: json['hasFinished'] ?? false,
       activityType: json['activityType'],
-      isCorrect: json['isCorrect'],
+      isCorrect:
+          json['isCorrect'] is bool
+              ? json['isCorrect']
+              : json['isCorrect'] == 1,
     );
   }
 

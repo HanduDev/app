@@ -70,80 +70,85 @@ class TrailBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: context.read<TrailViewModel>().initialize(trail.id),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
-        }
+    return Column(
+      children: [
+        Expanded(
+          child: FutureBuilder(
+            future: context.read<TrailViewModel>().initialize(trail.id),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(child: CircularProgressIndicator());
+              }
 
-        if (snapshot.hasError) {
-          return Center(child: Text('${snapshot.error}'));
-        }
+              if (snapshot.hasError) {
+                return Center(child: Text('${snapshot.error}'));
+              }
 
-        final trailInfo = snapshot.data;
+              final trailInfo = snapshot.data;
 
-        if (trailInfo == null) {
-          return Center(child: Text('trail.no_data_found'.i18n()));
-        }
+              if (trailInfo == null) {
+                return Center(child: Text('trail.no_data_found'.i18n()));
+              }
 
-        // Chama a função de scroll quando os dados são carregados
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          scrollToCurrentLesson(trailInfo.lessons);
-        });
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                scrollToCurrentLesson(trailInfo.lessons);
+              });
 
-        return Expanded(
-          child: ListView.separated(
-            controller: scrollController,
-            itemCount: trailInfo.lessons.length,
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 32),
-            shrinkWrap: true,
-            separatorBuilder: (context, index) {
-              final lesson = trailInfo.lessons[index];
-              bool isCurrent = isCurrentLesson(index, trailInfo.lessons);
+              return ListView.separated(
+                controller: scrollController,
+                itemCount: trailInfo.lessons.length,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 32,
+                ),
+                separatorBuilder: (context, index) {
+                  final lesson = trailInfo.lessons[index];
+                  bool isCurrent = isCurrentLesson(index, trailInfo.lessons);
 
-              final color =
-                  lesson.hasFinished
-                      ? lesson.isCorrect || lesson.isTheorical
-                          ? AppColors.green
-                          : AppColors.error
-                      : isCurrent
-                      ? AppColors.primary300
-                      : AppColors.lightGrey;
+                  final color =
+                      lesson.hasFinished
+                          ? (lesson.isCorrect || lesson.isTheorical
+                              ? AppColors.green
+                              : AppColors.error)
+                          : (isCurrent
+                              ? AppColors.primary300
+                              : AppColors.lightGrey);
 
-              return Row(
-                children: [
-                  const SizedBox(width: 27),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  return Row(
                     children: [
-                      const SizedBox(height: 8),
-                      Container(
-                        height: 12,
-                        width: 4,
-                        decoration: BoxDecoration(
-                          color: color,
-                          borderRadius: BorderRadius.circular(100),
-                        ),
+                      const SizedBox(width: 27),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: 8),
+                          Container(
+                            height: 12,
+                            width: 4,
+                            decoration: BoxDecoration(
+                              color: color,
+                              borderRadius: BorderRadius.circular(100),
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                        ],
                       ),
-                      const SizedBox(height: 8),
                     ],
-                  ),
-                ],
-              );
-            },
-            itemBuilder: (context, index) {
-              final lesson = trailInfo.lessons[index];
+                  );
+                },
+                itemBuilder: (context, index) {
+                  final lesson = trailInfo.lessons[index];
 
-              return LessonCard(
-                lesson: lesson,
-                isCurrentLesson: isCurrentLesson(index, trailInfo.lessons),
-                icon: lessonIcon(lesson),
+                  return LessonCard(
+                    lesson: lesson,
+                    isCurrentLesson: isCurrentLesson(index, trailInfo.lessons),
+                    icon: lessonIcon(lesson),
+                  );
+                },
               );
             },
           ),
-        );
-      },
+        ),
+      ],
     );
   }
 }

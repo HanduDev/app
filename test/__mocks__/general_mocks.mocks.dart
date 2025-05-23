@@ -9,16 +9,16 @@ import 'dart:ui' as _i15;
 import 'package:app/data/repositories/auth/auth_repository.dart' as _i9;
 import 'package:app/data/repositories/language/language_repository.dart'
     as _i22;
-import 'package:app/data/repositories/trail/trail_repository.dart' as _i23;
+import 'package:app/data/repositories/trail/trail_repository.dart' as _i24;
 import 'package:app/data/repositories/translate/translate_repository.dart'
     as _i16;
 import 'package:app/data/services/google_auth.dart' as _i10;
 import 'package:app/data/services/http.dart' as _i12;
 import 'package:app/data/services/secure_storage.dart' as _i11;
 import 'package:app/models/language.dart' as _i21;
-import 'package:app/models/trail/trail.dart' as _i25;
+import 'package:app/models/trail/trail.dart' as _i26;
 import 'package:app/models/trail/trail_info.dart' as _i8;
-import 'package:app/models/trail/trail_request.dart' as _i24;
+import 'package:app/models/trail/trail_request.dart' as _i25;
 import 'package:app/models/translate/translate.dart' as _i5;
 import 'package:app/models/translate/translate_text_request.dart' as _i17;
 import 'package:app/models/user.dart' as _i2;
@@ -28,6 +28,7 @@ import 'package:app/ui/core/shared/dropdown/dropdown_button_controller.dart'
     as _i6;
 import 'package:app/ui/traducao_texto/view_model/translate_text_view_model.dart'
     as _i18;
+import 'package:app/ui/trail/view_model/trail_view_model.dart' as _i23;
 import 'package:flutter/services.dart' as _i19;
 import 'package:flutter_tts/flutter_tts.dart' as _i7;
 import 'package:google_sign_in/google_sign_in.dart' as _i4;
@@ -1091,17 +1092,65 @@ class MockLanguageRepositoryImpl extends _i1.Mock
           as _i3.Future<List<_i21.Language>>);
 }
 
+/// A class which mocks [TrailViewModel].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockTrailViewModel extends _i1.Mock implements _i23.TrailViewModel {
+  MockTrailViewModel() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  bool get hasListeners =>
+      (super.noSuchMethod(Invocation.getter(#hasListeners), returnValue: false)
+          as bool);
+
+  @override
+  _i3.Future<_i8.TrailInfo> initialize(int? id) =>
+      (super.noSuchMethod(
+            Invocation.method(#initialize, [id]),
+            returnValue: _i3.Future<_i8.TrailInfo>.value(
+              _FakeTrailInfo_6(this, Invocation.method(#initialize, [id])),
+            ),
+          )
+          as _i3.Future<_i8.TrailInfo>);
+
+  @override
+  void addListener(_i15.VoidCallback? listener) => super.noSuchMethod(
+    Invocation.method(#addListener, [listener]),
+    returnValueForMissingStub: null,
+  );
+
+  @override
+  void removeListener(_i15.VoidCallback? listener) => super.noSuchMethod(
+    Invocation.method(#removeListener, [listener]),
+    returnValueForMissingStub: null,
+  );
+
+  @override
+  void dispose() => super.noSuchMethod(
+    Invocation.method(#dispose, []),
+    returnValueForMissingStub: null,
+  );
+
+  @override
+  void notifyListeners() => super.noSuchMethod(
+    Invocation.method(#notifyListeners, []),
+    returnValueForMissingStub: null,
+  );
+}
+
 /// A class which mocks [TrailRepositoryImpl].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockTrailRepositoryImpl extends _i1.Mock
-    implements _i23.TrailRepositoryImpl {
+    implements _i24.TrailRepositoryImpl {
   MockTrailRepositoryImpl() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i3.Future<void> create(_i24.TrailRequest? trailRequest) =>
+  _i3.Future<void> create(_i25.TrailRequest? trailRequest) =>
       (super.noSuchMethod(
             Invocation.method(#create, [trailRequest]),
             returnValue: _i3.Future<void>.value(),
@@ -1110,12 +1159,12 @@ class MockTrailRepositoryImpl extends _i1.Mock
           as _i3.Future<void>);
 
   @override
-  _i3.Future<List<_i25.Trail>> getAll() =>
+  _i3.Future<List<_i26.Trail>> getAll() =>
       (super.noSuchMethod(
             Invocation.method(#getAll, []),
-            returnValue: _i3.Future<List<_i25.Trail>>.value(<_i25.Trail>[]),
+            returnValue: _i3.Future<List<_i26.Trail>>.value(<_i26.Trail>[]),
           )
-          as _i3.Future<List<_i25.Trail>>);
+          as _i3.Future<List<_i26.Trail>>);
 
   @override
   _i3.Future<_i8.TrailInfo> getById(int? id) =>

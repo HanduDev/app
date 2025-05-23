@@ -1,5 +1,6 @@
 import 'package:app/data/repositories/auth/auth_repository.dart';
 import 'package:app/data/repositories/language/language_repository.dart';
+import 'package:app/data/repositories/trail/trail_repository.dart';
 import 'package:app/data/repositories/translate/translate_repository.dart';
 import 'package:app/data/services/google_auth.dart';
 import 'package:app/data/services/http.dart';
@@ -24,5 +25,6 @@ import 'package:mockito/annotations.dart';
   FlutterTts,
   LanguagesProvider,
   LanguageRepositoryImpl,
+  TrailRepositoryImpl,
 ])
 void main() {}

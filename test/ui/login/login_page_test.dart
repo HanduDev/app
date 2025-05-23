@@ -63,7 +63,7 @@ void main() {
     await pumpLogin(tester);
 
     await tester.tap(find.text('Login'));
-    await tester.pump();
+    await tester.pumpAndSettle();
 
     expect(find.byType(SnackBar), findsOneWidget);
     expect(find.textContaining('Erro'), findsOneWidget);

@@ -1,4 +1,5 @@
 import 'package:app/data/services/secure_storage.dart';
+import 'package:app/providers/languages_provider.dart';
 import 'package:app/providers/locale_provider.dart';
 import 'package:app/ui/core/themes/app_colors.dart';
 import 'package:country_flags/country_flags.dart';
@@ -23,6 +24,8 @@ class LanguageSelectorDialog extends StatelessWidget {
 
     final secureStorage = context.read<SecureStorageImpl>();
 
+    final languagesProvider = context.read<LanguagesProvider>();
+
     return AlertDialog(
       backgroundColor: AppColors.white,
       title: Text('account.options.language'.i18n()),
@@ -33,8 +36,10 @@ class LanguageSelectorDialog extends StatelessWidget {
         onChanged: (value) async {
           final split = value!.split('-');
 
+
           onLocaleChange(Locale(split[0], split[1]));
           await secureStorage.write('locale', value.toString());
+          await languagesProvider.getAllLanguages();
         },
         items:
             supportedLocales

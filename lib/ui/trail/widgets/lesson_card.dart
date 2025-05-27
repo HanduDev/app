@@ -95,7 +95,7 @@ class LessonCard extends StatelessWidget {
           const SizedBox(width: 16),
           Flexible(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
                   lesson.title,

@@ -1,4 +1,6 @@
+import 'package:app/models/language.dart';
 import 'package:app/providers/auth_provider.dart';
+import 'package:app/providers/languages_provider.dart';
 import 'package:app/ui/core/shared/chat_field.dart';
 import 'package:app/ui/traducao_texto/widgets/pop_up_feedback.dart';
 import 'package:flutter/services.dart';
@@ -26,6 +28,10 @@ class TranslateTextPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final user = context.watch<AuthProvider>().user;
     final viewModel = context.watch<TranslateTextViewModel>();
+
+    final initialLanguage = context.select<LanguagesProvider, Language?>(
+      (value) => value.defaultLanguage,
+    );
 
     return Scaffold(
       backgroundColor: AppColors.white,
@@ -138,6 +144,7 @@ class TranslateTextPage extends StatelessWidget {
                           child: LanguageSelector(
                             width: double.infinity,
                             controller: viewModel.fromlanguageController,
+                            initialValue: initialLanguage,
                           ),
                         ),
                         Padding(

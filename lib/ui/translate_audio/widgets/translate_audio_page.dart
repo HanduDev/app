@@ -1,4 +1,6 @@
+import 'package:app/models/language.dart';
 import 'package:app/providers/auth_provider.dart';
+import 'package:app/providers/languages_provider.dart';
 import 'package:app/ui/core/shared/chat_field.dart';
 import 'package:app/ui/core/shared/dropdown/dropdown_button_controller.dart';
 import 'package:app/ui/core/shared/gradient_background.dart';
@@ -113,6 +115,10 @@ class _TranslateAudioPageState extends State<TranslateAudioPage> {
     final user = context.watch<AuthProvider>().user;
     final viewModel = context.watch<TranslateTextViewModel>();
 
+    final initialLanguage = context.select<LanguagesProvider, Language?>(
+      (value) => value.defaultLanguage,
+    );
+
     return GradientBackground(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24.0),
@@ -205,6 +211,7 @@ class _TranslateAudioPageState extends State<TranslateAudioPage> {
                     Expanded(
                       child: LanguageSelector(
                         controller: fromLanguageController,
+                        initialValue: initialLanguage,
                       ),
                     ),
                     Padding(

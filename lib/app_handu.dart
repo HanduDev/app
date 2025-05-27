@@ -39,6 +39,7 @@ class AppHandu extends StatelessWidget {
       languageRepository: LanguageRepositoryRemote(
         httpService: HttpService(secureStorage: secureStorage),
       ),
+      secureStorage: secureStorage,
     );
 
     Future<Null> initialize() async {

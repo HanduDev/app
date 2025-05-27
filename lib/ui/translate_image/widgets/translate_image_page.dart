@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'package:app/helpers/errors.dart';
 import 'package:app/helpers/toast.dart';
+import 'package:app/models/language.dart';
+import 'package:app/providers/languages_provider.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:app/ui/core/shared/language_selector.dart';
@@ -157,6 +159,10 @@ class _TranslateImagePageState extends State<TranslateImagePage>
   Widget build(BuildContext context) {
     final viewModel = context.watch<TranslateImageViewModel>();
 
+    final initialLanguage = context.select<LanguagesProvider, Language?>(
+      (value) => value.defaultLanguage,
+    );
+
     return Scaffold(
       body: Stack(
         children: [
@@ -215,6 +221,7 @@ class _TranslateImagePageState extends State<TranslateImagePage>
                             Expanded(
                               child: LanguageSelector(
                                 controller: viewModel.fromlanguageController,
+                                initialValue: initialLanguage,
                               ),
                             ),
                             Padding(

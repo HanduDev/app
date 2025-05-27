@@ -1,6 +1,5 @@
 import 'package:app/helpers/toast.dart';
 import 'package:app/providers/auth_provider.dart';
-import 'package:app/providers/locale_provider.dart';
 import 'package:app/routes/routes.dart';
 import 'package:app/ui/account/widgets/config_card.dart';
 import 'package:app/ui/account/widgets/config_item.dart';

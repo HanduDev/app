@@ -12,6 +12,7 @@ class LanguageSelector extends StatelessWidget {
   final Language? value;
   final DropdownButtonController controller;
   final String? Function(Language?)? validator;
+  final Language? initialValue;
 
   const LanguageSelector({
     super.key,
@@ -19,6 +20,7 @@ class LanguageSelector extends StatelessWidget {
     this.onChanged,
     this.value,
     this.validator,
+    this.initialValue,
     required this.controller,
   });
 
@@ -27,6 +29,10 @@ class LanguageSelector extends StatelessWidget {
     final languages = context.select<LanguagesProvider, List<Language>>(
       (provider) => provider.languages,
     );
+
+    if (initialValue != null) {
+      controller.value = initialValue;
+    }
 
     return Dropdown<Language>(
       data: languages,

@@ -131,41 +131,42 @@ class _EducacaoPageState extends State<EducacaoPage> {
               ),
             ),
             const SizedBox(height: 40),
-            Padding(
-              padding: const EdgeInsets.only(right: 80),
-              child: Text(
-                'educacao.subtitle'.i18n(),
-                style: TextStyle(
-                  fontSize: 18,
-                  color: AppColors.grey,
-                  fontWeight: FontWeight.bold,
-                ),
+            Text(
+              'educacao.subtitle'.i18n(),
+              style: TextStyle(
+                fontSize: 18,
+                color: AppColors.grey,
+                fontWeight: FontWeight.bold,
               ),
             ),
 
             const SizedBox(height: 30),
 
-            SizedBox(
-              height: 100,
-              child: ListView.separated(
-                scrollDirection: Axis.horizontal,
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                itemCount: trails.length,
-                separatorBuilder: (context, index) => const SizedBox(width: 20),
-                itemBuilder: (context, index) {
-                  final trail = trails[index];
-                  return CardProgressBar(
-                    id: trail.id,
-                    title: trail.language.name,
-                    progress: trail.progress,
-                    progressText:
-                        '${(trail.progress * 100).toStringAsFixed(0)}%',
-                    onTap: () {
-                      context.push(Routes.trilha, extra: {'trail': trail});
-                    },
-                  );
-                },
+            GridView.builder(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: 1.1,
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 10,
               ),
+              shrinkWrap: true,
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: trails.length,
+              itemBuilder: (context, index) {
+                final trail = trails[index];
+
+                return CardProgressBar(
+                  id: trail.id,
+                  title: trail.language.name,
+                  countryCode: trail.language.code,
+                  progress: trail.progress,
+                  progressText: '${(trail.progress * 100).toStringAsFixed(0)}%',
+                  onTap: () {
+                    context.push(Routes.trilha, extra: {'trail': trail});
+                  },
+                );
+              },
             ),
           ],
         ),

@@ -18,7 +18,7 @@ class User {
       id: json['id'],
       email: json['email'],
       fullName: json['fullName'],
-      photoURL: json['photoURL'],
+      photoURL: json['photoUrl'],
       isEmailConfirmed: json['isEmailConfirmed'],
     );
   }

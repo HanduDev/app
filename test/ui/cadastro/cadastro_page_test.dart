@@ -74,5 +74,14 @@ void main() {
 
       expect(find.text(confirmacao), findsOneWidget);
     });
+
+      testWidgets('Da erro caso o nome não seja preenchido',
+        (WidgetTester tester) async {
+      await pumpForm(tester);
+
+      await tester.tap(find.byKey(const Key('nextButton')));
+
+      expect(find.text('Nome é obrigatório'), findsOneWidget);
+    });
   });
 }

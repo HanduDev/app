@@ -55,7 +55,6 @@ class TrailPage extends StatelessWidget {
                 ],
               ),
             ),
-
             TrailBody(trail: trail),
           ],
         ),

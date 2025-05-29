@@ -74,7 +74,10 @@ class TrailBody extends StatelessWidget {
       future: context.read<TrailViewModel>().initialize(trail.id),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: const Center(child: CircularProgressIndicator()),
+          );
         }
 
         if (snapshot.hasError) {

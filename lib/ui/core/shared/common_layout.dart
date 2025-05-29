@@ -4,6 +4,7 @@ import 'package:app/ui/core/themes/app_colors.dart';
 import 'package:app/ui/core/themes/font.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:localization/localization.dart';
 import 'package:provider/provider.dart';
 
 class CommonLayout extends StatelessWidget {
@@ -14,10 +15,16 @@ class CommonLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const destinations = [
-      Destination(label: 'Tradução', icon: Icons.translate),
-      Destination(label: 'Libras', icon: Icons.sign_language_outlined),
-      Destination(label: 'Educação', icon: Icons.school),
-      Destination(label: 'Conta', icon: Icons.person_outline),
+      Destination(label: 'bottom_navigation.translate', icon: Icons.translate),
+      Destination(
+        label: 'bottom_navigation.libras',
+        icon: Icons.sign_language_outlined,
+      ),
+      Destination(label: 'bottom_navigation.education', icon: Icons.school),
+      Destination(
+        label: 'bottom_navigation.account',
+        icon: Icons.person_outline,
+      ),
     ];
 
     return Scaffold(
@@ -59,7 +66,7 @@ class CommonLayout extends StatelessWidget {
                             color: AppColors.disabledIcon,
                             size: 30,
                           ),
-                          label: destination.label,
+                          label: destination.label.i18n(),
                           selectedIcon: Icon(
                             destination.icon,
                             color: AppColors.white,

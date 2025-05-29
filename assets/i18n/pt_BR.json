@@ -232,5 +232,11 @@
   "translate_image": {
     "network_error": "Erro de conexão. Verifique sua internet e tente novamente",
     "take_another_photo": "Tirar outra foto"
+  },
+  "bottom_navigation": {
+    "translate": "Tradução",
+    "libras": "Libras",
+    "education": "Educação",
+    "account": "Conta"
   }
 }

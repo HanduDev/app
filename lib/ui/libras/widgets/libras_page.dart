@@ -42,7 +42,7 @@ class LibrasPage extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(24.0),
                 child: SegmentedControl(
-                  initialIndex: 1,
+                  initialIndex: 0,
                   onChange: (value) {},
                   items: [
                     SegmentedControlItem(
@@ -51,7 +51,7 @@ class LibrasPage extends StatelessWidget {
                       icon: Icons.text_snippet_outlined,
                     ),
                     SegmentedControlItem(
-                      key: '/intro',
+                      key: '/intro/image',
                       text: "segmented_control.image".i18n(),
                       icon: Icons.image_outlined,
                     ),

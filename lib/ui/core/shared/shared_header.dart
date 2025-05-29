@@ -30,6 +30,7 @@ class SharedHeader extends StatelessWidget {
         ),
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -46,6 +47,7 @@ class SharedHeader extends StatelessWidget {
 
               Flexible(
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     title,
                     if (subtitle != null) const SizedBox(height: 8),

@@ -50,6 +50,9 @@ class _EducacaoPageState extends State<EducacaoPage> {
     final trails = context.select<EducacaoViewModel, List<Trail>>(
       (value) => value.trails,
     );
+    final isLoading = context.select<EducacaoViewModel, bool>(
+      (value) => value.isLoading,
+    );
 
     return Scaffold(
       backgroundColor: AppColors.primary100,
@@ -142,31 +145,45 @@ class _EducacaoPageState extends State<EducacaoPage> {
 
             const SizedBox(height: 30),
 
-            GridView.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                childAspectRatio: 1.1,
-                crossAxisSpacing: 10,
-                mainAxisSpacing: 10,
-              ),
-              shrinkWrap: true,
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: trails.length,
-              itemBuilder: (context, index) {
-                final trail = trails[index];
+            Visibility(
+              visible: trails.isNotEmpty,
+              child: GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 16,
+                  mainAxisSpacing: 16,
+                  mainAxisExtent: 130,
+                ),
+                shrinkWrap: true,
+                padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: trails.length,
+                itemBuilder: (context, index) {
+                  final trail = trails[index];
 
-                return CardProgressBar(
-                  id: trail.id,
-                  title: trail.language.name,
-                  countryCode: trail.language.code,
-                  progress: trail.progress,
-                  progressText: '${(trail.progress * 100).toStringAsFixed(0)}%',
-                  onTap: () {
-                    context.push(Routes.trilha, extra: {'trail': trail});
-                  },
-                );
-              },
+                  return CardProgressBar(
+                    id: trail.id,
+                    title: trail.language.name,
+                    countryCode: trail.language.code,
+                    progress: trail.progress,
+                    progressText:
+                        '${(trail.progress * 100).toStringAsFixed(0)}%',
+                    onTap: () {
+                      context.push(Routes.trilha, extra: {'trail': trail});
+                    },
+                  );
+                },
+              ),
+            ),
+
+            Visibility(
+              visible: trails.isEmpty && !isLoading,
+              child: Center(child: Text('educacao.no_trails'.i18n())),
+            ),
+
+            Visibility(
+              visible: isLoading,
+              child: const Center(child: CircularProgressIndicator()),
             ),
           ],
         ),

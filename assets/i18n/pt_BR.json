@@ -94,7 +94,8 @@
     "title": "O que deseja aprender hoje?",
     "create_study_plan": "Criar Plano de Estudos",
     "subtitle": "Continuar planos de estudos",
-    "progress": "Progresso"
+    "progress": "Progresso",
+    "no_trails": "Nenhuma trilha encontrada"
   },
   "intro": {
     "title": "'Escolha uma opção para continuar'",

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:app/helpers/errors.dart';
 import 'package:app/helpers/toast.dart';
 import 'package:app/providers/auth_provider.dart';
@@ -24,16 +26,18 @@ class ConfirmacaoCadastroPage extends StatefulWidget {
 class _ConfirmacaoCadastroPageState extends State<ConfirmacaoCadastroPage> {
   String code = '';
   int resendTime = 30;
+  Timer? _resendTimer;
 
   void startResendTimer() {
-    Future.delayed(const Duration(seconds: 1), () {
-      if (!mounted) return;
+    _resendTimer?.cancel();
 
+    _resendTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (resendTime > 0) {
         setState(() {
           resendTime--;
         });
-        startResendTimer();
+      } else {
+        timer.cancel();
       }
     });
   }
@@ -48,6 +52,7 @@ class _ConfirmacaoCadastroPageState extends State<ConfirmacaoCadastroPage> {
 
   @override
   void dispose() {
+    _resendTimer?.cancel();
     super.dispose();
   }
 
@@ -164,7 +169,8 @@ class _ConfirmacaoCadastroPageState extends State<ConfirmacaoCadastroPage> {
                                     if (context.mounted) {
                                       Toast.success(
                                         context,
-                                        'confirmacao_cadastro.verify_email_resend_code_success'.i18n(),
+                                        'confirmacao_cadastro.verify_email_resend_code_success'
+                                            .i18n(),
                                       );
                                     }
                                   } catch (e) {
@@ -175,8 +181,10 @@ class _ConfirmacaoCadastroPageState extends State<ConfirmacaoCadastroPage> {
                                 : null,
                         child: Text(
                           isResendButtonEnabled
-                              ? 'confirmacao_cadastro.verify_email_resend'.i18n()
+                              ? 'confirmacao_cadastro.verify_email_resend'
+                                  .i18n()
                               : '${'confirmacao_cadastro.verify_email_resend_in'.i18n()} ${resendTime.toInt().toString().padLeft(2, '0')}',
+                          key: const Key('resend_text'),
                           style: Font.primary(
                             fontSize: 12,
                             fontWeight: FontWeight.bold,
@@ -191,6 +199,7 @@ class _ConfirmacaoCadastroPageState extends State<ConfirmacaoCadastroPage> {
                   ),
                   SizedBox(height: 52),
                   PrimaryButton(
+                    key: const Key('confirm_button_verify_email_go_to_app'),
                     text: 'confirmacao_cadastro.verify_email_go_to_app'.i18n(),
                     rounded: true,
                     onPressed: () async {
@@ -207,7 +216,12 @@ class _ConfirmacaoCadastroPageState extends State<ConfirmacaoCadastroPage> {
                   ),
                   SizedBox(height: 32),
                   SecondaryButton(
-                    text: 'confirmacao_cadastro.verify_email_join_another_account'.i18n(),
+                    key: const Key(
+                      'confirm_button_verify_email_join_another_account',
+                    ),
+                    text:
+                        'confirmacao_cadastro.verify_email_join_another_account'
+                            .i18n(),
                     rounded: true,
                     onPressed: () async {
                       try {

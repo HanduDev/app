@@ -122,6 +122,7 @@ class AccountPage extends StatelessWidget {
 
                         if (shouldLogout == true) {
                           try {
+                            // ignore: use_build_context_synchronously
                             final authProvider = context.read<AuthProvider>();
                             await authProvider.signOut();
 

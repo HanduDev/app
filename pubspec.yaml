@@ -37,7 +37,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   intl: any
-  localization:
+  localization: any
 
 dev_dependencies:
   flutter_test:
@@ -47,6 +47,7 @@ dev_dependencies:
   flutter_lints: ^5.0.0
   mockito: ^5.4.5
   build_runner: ^2.4.15
+  network_image_mock: ^2.1.1
 
 flutter:
   uses-material-design: true

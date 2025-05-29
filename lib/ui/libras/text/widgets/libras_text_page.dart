@@ -1,18 +1,20 @@
+import 'package:app/routes/routes.dart';
 import 'package:app/ui/core/shared/chat_field.dart';
 import 'package:app/ui/core/shared/segmented_control/segmented_control.dart';
 import 'package:app/ui/core/shared/segmented_control/segmented_control_item.dart';
 import 'package:app/ui/core/themes/app_colors.dart';
 import 'package:app/ui/core/themes/font.dart';
-import 'package:app/ui/libras/view_model/libras_view_model.dart';
-import 'package:app/ui/libras/widgets/speech_button.dart';
-import 'package:app/ui/libras/widgets/vlibras_web_view.dart';
+import 'package:app/ui/libras/text/view_model/libras_view_model.dart';
+import 'package:app/ui/libras/text/widgets/speech_button.dart';
+import 'package:app/ui/libras/text/widgets/vlibras_web_view.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:localization/localization.dart';
 
-class LibrasPage extends StatelessWidget {
-  const LibrasPage({super.key});
+class LibrasTextPage extends StatelessWidget {
+  const LibrasTextPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -43,15 +45,17 @@ class LibrasPage extends StatelessWidget {
                 padding: const EdgeInsets.all(24.0),
                 child: SegmentedControl(
                   initialIndex: 0,
-                  onChange: (value) {},
+                  onChange: (value) {
+                    context.go(value);
+                  },
                   items: [
                     SegmentedControlItem(
-                      key: '/intro',
+                      key: Routes.librasText,
                       text: "segmented_control.text".i18n(),
                       icon: Icons.text_snippet_outlined,
                     ),
                     SegmentedControlItem(
-                      key: '/intro/image',
+                      key: Routes.librasImage,
                       text: "segmented_control.image".i18n(),
                       icon: Icons.image_outlined,
                     ),

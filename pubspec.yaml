@@ -30,7 +30,7 @@ dependencies:
   lottie: ^3.3.1
   flutter_tts: ^3.6.3
   flutter_markdown: ^0.7.7
-  camera: ^0.11.0+1
+  camera: ^0.10.5+2
   gal: ^2.3.0
   web_socket_channel: ^3.0.3
   http_parser: ^4.0.2

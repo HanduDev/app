@@ -1,6 +1,9 @@
+import 'package:app/data/repositories/translate/translate_repository.dart';
 import 'package:app/routes/routes.dart';
-import 'package:app/ui/libras/view_model/libras_view_model.dart';
-import 'package:app/ui/libras/widgets/libras_page.dart';
+import 'package:app/ui/libras/image/view_model/libras_image_view_model.dart';
+import 'package:app/ui/libras/image/widgets/libras_image_page.dart';
+import 'package:app/ui/libras/text/view_model/libras_view_model.dart';
+import 'package:app/ui/libras/text/widgets/libras_text_page.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
@@ -8,12 +11,21 @@ List<StatefulShellBranch> librasBranches = [
   StatefulShellBranch(
     routes: [
       GoRoute(
-        path: Routes.libras,
+        path: Routes.librasText,
         builder:
             (context, state) => ChangeNotifierProvider(
               create: (context) => LibrasViewModel(),
-              child: LibrasPage(),
+              child: LibrasTextPage(),
             ),
+      ),
+      GoRoute(
+        path: Routes.librasImage,
+        builder: (context, state) => ChangeNotifierProvider(
+          create: (context) => LibrasImageViewModel(
+            translateRepository: context.read<TranslateRepositoryVideoImpl>(),
+          ),
+          child: LibrasImagePage(),
+        ),
       ),
     ],
   ),

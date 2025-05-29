@@ -5,7 +5,8 @@ abstract final class Routes {
   static const home = '/home';
   static const audio = '/audio';
   static const image = '/image';
-  static const libras = '/libras';
+  static const librasText = '/libras/text';
+  static const librasImage = '/libras/image';
   static const educacao = '/educacao';
   static const conta = '/conta';
   static const editar = '/editar';

@@ -1,4 +1,4 @@
-import 'package:app/ui/libras/view_model/libras_view_model.dart';
+import 'package:app/ui/libras/text/view_model/libras_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';

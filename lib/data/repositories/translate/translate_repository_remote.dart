@@ -4,9 +4,13 @@ import 'package:app/models/translate/translate.dart';
 import 'package:app/models/translate/translate_image_request.dart';
 import 'package:app/models/translate/translate_text_request.dart';
 import 'dart:io';
+import 'package:app/models/translate/translate_video_request.dart';
 
 class TranslateRepositoryRemote
-    implements TranslateRepositoryImpl, TranslateRepositoryImageImpl {
+    implements
+        TranslateRepositoryImpl,
+        TranslateRepositoryImageImpl,
+        TranslateRepositoryVideoImpl {
   final HttpServiceImpl _httpService;
 
   TranslateRepositoryRemote({required HttpServiceImpl httpService})
@@ -34,6 +38,15 @@ class TranslateRepositoryRemote
       },
       {'translate[image]': imageBytes},
     );
+
+    return Translate.fromJson(response);
+  }
+
+  @override
+  Future<Translate> createVideo(TranslateVideoRequest translateRequest) async {
+    var response = await _httpService.postMultipart('/translate_video', {}, {
+      'translate[video]': translateRequest.getImageBytes(),
+    });
 
     return Translate.fromJson(response);
   }

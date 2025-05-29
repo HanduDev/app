@@ -66,6 +66,10 @@
       "no_account": "Não tem uma conta?",
       "register": "Cadastrar"
     },
+    "contact": {
+      "send_feedback": "Enviar feedback",
+      "type_feedback": "Descreva seu feedback"
+    },
     "email_validation_required": "Email é obrigatório",
     "email_validator": "Email inválido",
     "name_validation_required": "Nome é obrigatório",

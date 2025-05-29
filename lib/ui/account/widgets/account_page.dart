@@ -210,13 +210,7 @@ class AccountPage extends StatelessWidget {
                 icon: Icons.contact_support_outlined,
                 title: 'account.options.contact'.i18n(),
                 onTap: () {
-                  showDialog(
-                    context: context,
-                    builder:
-                        (context) => EmDesenvolvimento(
-                          title: 'account.options.contact'.i18n(),
-                        ),
-                  );
+                  context.push(Routes.contato);
                 },
               ),
               ConfigItem(

@@ -6,7 +6,6 @@ import 'package:app/routes/branches/education_branches.dart';
 import 'package:app/routes/branches/libras_branches.dart';
 import 'package:app/routes/branches/trail_branches.dart';
 import 'package:app/routes/branches/translate_branches.dart';
-import 'package:app/ui/account/widgets/account_edit_page.dart';
 import 'package:app/ui/confirmacao_cadastro/widgets/confirmacao_cadastro_page.dart';
 import 'package:app/ui/core/shared/common_layout.dart';
 import 'package:go_router/go_router.dart';
@@ -42,10 +41,6 @@ GoRouter router() {
       GoRoute(
         path: Routes.confirmacaoCadastro,
         builder: (context, state) => ConfirmacaoCadastroPage(),
-      ),
-      GoRoute(
-        path: Routes.editar,
-        builder: (context, state) => AccountEditPage(),
       ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) => navigationShell,

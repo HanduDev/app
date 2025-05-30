@@ -12,7 +12,9 @@
     "login": "Entrar",
     "select_option": "Selecione uma opção",
     "save": "Salvar",
-    "back": "Voltar"
+    "back": "Voltar",
+    "in_development": "Em desenvolvimento",
+    "close": "Fechar"
   },
   "translate": {
     "errors": {
@@ -46,7 +48,8 @@
     "edit": {
       "name": "Alterar nome",
       "email": "Alterar email",
-      "password": "Alterar senha"
+      "password": "Alterar senha",
+      "success": "Perfil atualizado com sucesso"
     },
     "register": {
       "title": "Cadastro",

@@ -12,13 +12,15 @@
     "login": "Iniciar sesión",
     "select_option": "Selecciona una opción",
     "save": "Guardar",
-    "back": "Atrás"
+    "back": "Volver",
+    "in_development": "En desarrollo",
+    "close": "Cerrar"
   },
   "translate": {
     "errors": {
       "feedback": "Comentarios",
       "what_did_you_think": "¿Qué te pareció la traducción?",
-      "feedback_please_select": "Por favor selecciona una calificación.",
+      "feedback_please_select": "Por favor, selecciona una calificación.",
       "feedback_error": "Error al enviar comentarios",
       "feedback_success": "Comentarios enviados con éxito",
       "feedback_success_message": "¡Gracias por tus comentarios!",
@@ -27,7 +29,7 @@
     }
   },
   "errors": {
-    "speech_error": "Ocurrió un error durante la grabación"
+    "speech_error": "Ocurrió un error al grabar"
   },
   "segmented_control": {
     "text": "Texto",
@@ -38,19 +40,20 @@
     "options": {
       "profile": "Perfil",
       "achievements": "Logros",
-      "language": "Idioma de la aplicación",
-      "device_permissions": "Permisos del dispositivo",
+      "language": "Idioma de la App",
+      "device_permissions": "Permisos del Dispositivo",
       "contact": "Contáctanos",
       "privacy_policy": "Política de privacidad"
     },
     "edit": {
       "name": "Cambiar nombre",
-      "email": "Cambiar correo electrónico",
-      "password": "Cambiar contraseña"
+      "email": "Cambiar correo",
+      "password": "Cambiar contraseña",
+      "success": "Perfil actualizado con éxito"
     },
     "register": {
-      "title": "Registrarse",
-      "name": "Nombre completo",
+      "title": "Registro",
+      "name": "Nombre Completo",
       "email": "Correo electrónico",
       "or_continue_with": "O continuar con",
       "already_have_account": "¿Ya tienes una cuenta?",
@@ -70,8 +73,8 @@
       "send_feedback": "Enviar comentarios",
       "type_feedback": "Describe tus comentarios"
     },
-    "email_validation_required": "El correo electrónico es obligatorio",
-    "email_validator": "Correo electrónico inválido",
+    "email_validation_required": "El correo es obligatorio",
+    "email_validator": "Correo inválido",
     "name_validation_required": "El nombre es obligatorio",
     "password_validation_required": "La contraseña es obligatoria",
     "password_confirmation_required": "La confirmación de contraseña es obligatoria",
@@ -80,7 +83,7 @@
     "password_validation_letters_and_numbers": "Usa letras y números"
   },
   "confirmacao_cadastro": {
-    "verify_email": "Verifica tu correo electrónico",
+    "verify_email": "Verifica tu Correo",
     "verify_email_description": "Enviamos un código de cuatro dígitos al correo",
     "verify_email_below": "Ingresa el código a continuación para verificarlo",
     "verify_email_not_received": "¿No recibiste el código?",
@@ -88,31 +91,32 @@
     "verify_email_resend": "Reenviar",
     "verify_email_resend_in": "Reenviar en",
     "verify_email_go_to_app": "Ir a la aplicación",
-    "verify_email_join_another_account": "Iniciar sesión con otra cuenta"
+    "verify_email_join_another_account": "Iniciar sesión con otra cuenta",
+    "verify_email_success": "Correo verificado con éxito"
   },
   "educacao": {
     "title": "¿Qué quieres aprender hoy?",
-    "create_study_plan": "Crear plan de estudios",
+    "create_study_plan": "Crear Plan de Estudios",
     "subtitle": "Continuar planes de estudio",
     "progress": "Progreso",
-    "no_trails": "No se encontraron planes de estudio"
+    "no_trails": "No se encontraron rutas"
   },
   "intro": {
-    "title": "Elige una opción para continuar",
+    "title": "'Elige una opción para continuar'",
     "description": "Con la inclusión de lenguas de señas para expandir tu conexión.",
-    "description_2": "Adquiere conocimientos en varios idiomas a través de planes de estudio.",
+    "description_2": "Asegura conocimiento en varios idiomas a través de planes de estudio.",
     "create_account": "Crear cuenta",
     "login_with_google": "Iniciar sesión con Google",
     "titles": {
       "0": "Un traductor en tiempo real conectando personas de varios idiomas.",
       "1": "Con la inclusión de lenguas de señas para expandir tu conexión.",
-      "2": "Adquiere conocimientos en varios idiomas a través de planes de estudio."
+      "2": "Asegura conocimiento en varios idiomas a través de planes de estudio."
     }
   },
   "lesson": {
     "finished": "¡Lección completada con éxito!",
-    "mark_as_finished": "Marcar como completada",
-    "completed": "Completada",
+    "mark_as_finished": "Marcar como completado",
+    "completed": "Completado",
     "send_answer": "Enviar respuesta",
     "activity_type": {
       "translation": "Traducción",
@@ -122,25 +126,25 @@
     "activity_practice": "Práctica",
     "correct": "¡Respuesta correcta!",
     "incorrect": "¡Respuesta incorrecta!",
-    "remaining_attempts": "Todavía tienes {{attempts}} intentos",
-    "no_attempts": "No quedan intentos",
+    "remaining_attempts": "Aún tienes {{attempts}} intentos",
+    "no_attempts": "Sin intentos restantes",
     "your_answer": "Tu respuesta",
     "suggested_answer": "Respuesta sugerida por Handu",
     "answer_required": "La respuesta es obligatoria"
   },
   "libras": {
-    "device_not_supported": "Tu dispositivo no soporta esta función"
+    "device_not_supported": "Tu dispositivo no es compatible con esta función"
   },
   "plano_de_estudos": {
-    "title": "Plan de estudios",
+    "title": "Plan de Estudios",
     "created": "¡Plan de estudios creado con éxito!",
     "try_again": "Intentar de nuevo",
     "view_study_plan": "Ver plan de estudios",
     "after_created_seconds": "O espera {{seconds}} segundos",
     "working": "Trabajando en ello...",
-    "almost_done": "Casi terminamos",
-    "error_creating_study_plan": "Error al crear el plan de estudios",
-    "no_user_found": "Usuario no encontrado",
+    "almost_done": "Ya casi terminamos",
+    "error_creating_study_plan": "Error al crear plan de estudios",
+    "no_user_found": "No se encontró usuario",
     "connecting_to_server": "Conectando al servidor...",
     "connection_error": "Error de conexión: {{error}}",
     "finish": "Finalizar",
@@ -151,8 +155,8 @@
         "options": {
           "reading": "Lectura",
           "writing": "Escritura",
-          "listening": "Comprensión auditiva",
-          "speaking": "Expresión oral"
+          "listening": "Escucha",
+          "speaking": "Habla"
         },
         "select_one_at_least": "Selecciona al menos un desarrollo"
       },
@@ -171,7 +175,7 @@
           "music": "Música",
           "entertainment": "Entretenimiento",
           "sports": "Deportes",
-          "fashion_and_beauty": "Moda y belleza",
+          "fashion_and_beauty": "Moda y Belleza",
           "technology": "Tecnología",
           "programming": "Programación",
           "travel": "Viajes",
@@ -196,7 +200,7 @@
         "3": "¿Cuánto tiempo tienes disponible por día?",
         "4": "¿Te gustaría hablar sobre algún tema específico? (opcional)",
         "5": "Selecciona uno o más elementos a continuación",
-        "6": "¿Cuánto tiempo quieres aprender?"
+        "6": "¿En cuánto tiempo quieres aprender?"
       },
       "subtitle": {
         "0": "",
@@ -222,20 +226,20 @@
     }
   },
   "translate_audio": {
-    "please_select_languages": "Por favor selecciona los idiomas de origen y destino",
-    "say_something_to_translate": "Por favor di algo para traducir",
-    "select_language": "Seleccionar idioma",
+    "please_select_languages": "Por favor, selecciona los idiomas de origen y destino",
+    "say_something_to_translate": "Por favor, di algo para traducir",
+    "select_language": "Selecciona el idioma",
     "translating": "Traduciendo...",
-    "error_translating": "Error al traducir. Por favor intenta de nuevo.",
+    "error_translating": "Error al traducir. Por favor, inténtalo de nuevo.",
     "say_something": "Di algo..."
   },
   "translate_image": {
-    "network_error": "Error de conexión. Verifica tu internet e intenta de nuevo",
+    "network_error": "Error de conexión. Verifica tu internet e inténtalo de nuevo",
     "take_another_photo": "Tomar otra foto"
   },
   "bottom_navigation": {
     "translate": "Traducción",
-    "libras": "Libras",
+    "libras": "Lengua de Señas",
     "education": "Educación",
     "account": "Cuenta"
   }

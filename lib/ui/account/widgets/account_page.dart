@@ -251,7 +251,7 @@ class EmDesenvolvimento extends StatelessWidget {
           style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
       ),
-      content: const Text('Em desenvolvimento'),
+      content: Text('common.in_development'.i18n()),
       actionsAlignment: MainAxisAlignment.spaceBetween,
       actions: [
         TextButton(
@@ -261,7 +261,7 @@ class EmDesenvolvimento extends StatelessWidget {
             minimumSize: const Size(100, 40),
           ),
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Fechar'),
+          child: Text('common.close'.i18n()),
         ),
       ],
     );

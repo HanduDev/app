@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 import 'package:app/data/repositories/translate/translate_repository.dart';
 import 'package:app/models/translate/translate_image_request.dart';
 import 'package:camera/camera.dart';

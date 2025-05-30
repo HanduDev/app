@@ -1,6 +1,5 @@
 import 'package:app/helpers/errors.dart';
 import 'package:app/helpers/toast.dart';
-import 'package:app/models/user.dart';
 import 'package:app/providers/auth_provider.dart';
 import 'package:app/routes/routes.dart';
 import 'package:app/ui/core/shared/primary_button.dart';

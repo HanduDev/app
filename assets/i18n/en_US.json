@@ -12,7 +12,9 @@
     "login": "Login",
     "select_option": "Select an option",
     "save": "Save",
-    "back": "Back"
+    "back": "Back",
+    "in_development": "In development",
+    "close": "Close"
   },
   "translate": {
     "errors": {
@@ -46,7 +48,8 @@
     "edit": {
       "name": "Change name",
       "email": "Change email",
-      "password": "Change password"
+      "password": "Change password",
+      "success": "Profile updated successfully"
     },
     "register": {
       "title": "Register",
@@ -88,7 +91,8 @@
     "verify_email_resend": "Resend",
     "verify_email_resend_in": "Resend in",
     "verify_email_go_to_app": "Go to app",
-    "verify_email_join_another_account": "Login with another account"
+    "verify_email_join_another_account": "Login with another account",
+    "verify_email_success": "Email verified successfully"
   },
   "educacao": {
     "title": "What do you want to learn today?",
@@ -98,15 +102,15 @@
     "no_trails": "No trails found"
   },
   "intro": {
-    "title": "Choose an option to continue",
+    "title": "'Choose an option to continue'",
     "description": "With the inclusion of sign languages to expand your connection.",
-    "description_2": "Gain knowledge in various languages through study plans.",
+    "description_2": "Ensure knowledge in various languages through study plans.",
     "create_account": "Create account",
     "login_with_google": "Login with Google",
     "titles": {
       "0": "A real-time translator connecting people from various languages.",
       "1": "With the inclusion of sign languages to expand your connection.",
-      "2": "Gain knowledge in various languages through study plans."
+      "2": "Ensure knowledge in various languages through study plans."
     }
   },
   "lesson": {
@@ -190,7 +194,7 @@
         }
       },
       "titles": {
-        "0": "Which language do you want to learn?",
+        "0": "What language do you want to learn?",
         "1": "What do you want to learn?",
         "2": "What's your level in {{language}}?",
         "3": "How much time do you have available per day?",
@@ -234,8 +238,8 @@
     "take_another_photo": "Take another photo"
   },
   "bottom_navigation": {
-    "translate": "Translate",
-    "libras": "Libras",
+    "translate": "Translation",
+    "libras": "Sign Language",
     "education": "Education",
     "account": "Account"
   }

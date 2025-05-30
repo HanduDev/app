@@ -29,6 +29,7 @@ dependencies:
   country_flags: ^3.0.0
   lottie: ^3.3.1
   flutter_tts: ^3.6.3
+  path_provider: ^2.1.2
   flutter_markdown: ^0.7.7
   camera: ^0.10.5+2
   gal: ^2.3.0

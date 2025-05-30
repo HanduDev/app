@@ -16,7 +16,9 @@ import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:app/helpers/text_formatters.dart';
 
 class ConfirmacaoCadastroPage extends StatefulWidget {
-  const ConfirmacaoCadastroPage({super.key});
+  final String? email;
+
+  const ConfirmacaoCadastroPage({super.key, this.email});
 
   @override
   State<ConfirmacaoCadastroPage> createState() =>
@@ -63,6 +65,19 @@ class _ConfirmacaoCadastroPageState extends State<ConfirmacaoCadastroPage> {
 
     return Scaffold(
       backgroundColor: AppColors.white,
+      appBar:
+          widget.email == null
+              ? null
+              : AppBar(
+                title: Text('confirmacao_cadastro.verify_email'.i18n()),
+                centerTitle: true,
+                leading: IconButton(
+                  onPressed: () {
+                    context.pop();
+                  },
+                  icon: Icon(Icons.arrow_back),
+                ),
+              ),
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
@@ -99,7 +114,7 @@ class _ConfirmacaoCadastroPageState extends State<ConfirmacaoCadastroPage> {
                         textAlign: TextAlign.center,
                       ),
                       Text(
-                        authProvider.user?.email ?? '',
+                        widget.email ?? authProvider.user?.email ?? '',
                         style: Font.primary(
                           fontSize: 12,
                           fontWeight: FontWeight.bold,
@@ -160,7 +175,10 @@ class _ConfirmacaoCadastroPageState extends State<ConfirmacaoCadastroPage> {
                             isResendButtonEnabled
                                 ? () async {
                                   try {
-                                    await authProvider.resendCode(code: code);
+                                    await authProvider.resendCode(
+                                      code: code,
+                                      email: widget.email,
+                                    );
                                     setState(() {
                                       resendTime = 30;
                                     });
@@ -204,9 +222,27 @@ class _ConfirmacaoCadastroPageState extends State<ConfirmacaoCadastroPage> {
                     rounded: true,
                     onPressed: () async {
                       try {
-                        await authProvider.verifyCode(code: code);
+                        await authProvider.verifyCode(
+                          code: code,
+                          email: widget.email,
+                        );
+
                         if (context.mounted) {
-                          context.pushReplacement(Routes.home);
+                          if (widget.email != null) {
+                            Toast.success(
+                              context,
+                              'confirmacao_cadastro.verify_email_success'
+                                  .i18n(),
+                            );
+                            context.pop();
+                          } else {
+                            Toast.success(
+                              context,
+                              'confirmacao_cadastro.verify_email_success'
+                                  .i18n(),
+                            );
+                            context.pushReplacement(Routes.home);
+                          }
                         }
                       } catch (e) {
                         if (!context.mounted) return;

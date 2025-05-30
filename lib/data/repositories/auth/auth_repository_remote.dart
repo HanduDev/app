@@ -97,16 +97,27 @@ class AuthRepositoryRemote extends AuthRepositoryImpl {
   }
 
   @override
-  Future<User> verifyCode({required String code}) async {
+  Future<User> verifyCode({required String code, required String? email}) async {
     var response = await _httpService.post("/users/confirm_email", {
-      'user': {'code': code},
+      'user': {'code': code, 'email': email},
     });
 
     return User.fromJson(response);
   }
 
   @override
-  Future<void> resendCode({required String code}) async {
-    await _httpService.post("/users/resend_email_confirmation", {});
+  Future<void> resendCode({required String code, required String? email}) async {
+    await _httpService.post("/users/resend_email_confirmation", {
+      'user': {'email': email},
+    });
+  }
+
+  @override
+  Future<User> updateUser({required String name, required String email}) async {
+    var response = await _httpService.put("/users/me", {
+      'user': {'full_name': name, 'email': email},
+    });
+
+    return User.fromJson(response);
   }
 }

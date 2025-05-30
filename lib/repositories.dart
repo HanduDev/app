@@ -50,12 +50,6 @@ class Repositories {
               httpService: context.read<HttpServiceImpl>(),
             ),
       ),
-      Provider<TranslateRepositoryVideoImpl>(
-        create:
-            (context) => TranslateRepositoryRemote(
-              httpService: context.read<HttpServiceImpl>(),
-            ),
-      ),
       Provider<LessonRepositoryImpl>(
         create:
             (context) => LessonRepositoryRemote(

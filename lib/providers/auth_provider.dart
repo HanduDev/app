@@ -11,8 +11,9 @@ abstract class AuthProviderImpl extends ChangeNotifier {
     required String email,
     required String password,
   });
-  Future<void> verifyCode({required String code});
-  Future<void> resendCode({required String code});
+  Future<void> verifyCode({required String code, required String? email});
+  Future<void> resendCode({required String code, required String? email});
+  Future<void> updateUser({required String name, required String email});
 }
 
 class AuthProvider extends ChangeNotifier implements AuthProviderImpl {
@@ -110,12 +111,14 @@ class AuthProvider extends ChangeNotifier implements AuthProviderImpl {
   }
 
   @override
-  Future<void> verifyCode({required String code}) async {
+  Future<void> verifyCode({
+    required String code,
+    required String? email,
+  }) async {
     try {
       _isAuthenticating = true;
       notifyListeners();
-
-      _user = await _authRepository.verifyCode(code: code);
+      _user = await _authRepository.verifyCode(code: code, email: email);
 
       _isAuthenticating = false;
       notifyListeners();
@@ -126,14 +129,33 @@ class AuthProvider extends ChangeNotifier implements AuthProviderImpl {
   }
 
   @override
-  Future<void> resendCode({required String code}) async {
+  Future<void> resendCode({
+    required String code,
+    required String? email,
+  }) async {
     try {
       _isAuthenticating = true;
       notifyListeners();
 
-      await _authRepository.resendCode(code: code);
+      await _authRepository.resendCode(code: code, email: email);
 
       _isAuthenticating = false;
+      notifyListeners();
+    } finally {
+      _isAuthenticating = false;
+      notifyListeners();
+    }
+  }
+
+  @override
+  Future<void> updateUser({required String name, required String email}) async {
+    try {
+      _isAuthenticating = true;
+      notifyListeners();
+
+      User user = await _authRepository.updateUser(name: name, email: email);
+
+      _user = user;
       notifyListeners();
     } finally {
       _isAuthenticating = false;

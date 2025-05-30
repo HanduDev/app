@@ -172,6 +172,28 @@ class _LibrasTextPageState extends State<LibrasImagePage>
                           ),
                         ),
                       const Spacer(),
+
+                      if (viewModel.translatedText.isNotEmpty)
+                        Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Container(
+                            width: double.infinity,
+                            padding: const EdgeInsets.all(16.0),
+                            decoration: BoxDecoration(
+                              color: AppColors.white,
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                            child: Text(
+                              viewModel.translatedText,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+
                       Padding(
                         padding: const EdgeInsets.all(16.0),
                         child: Stack(

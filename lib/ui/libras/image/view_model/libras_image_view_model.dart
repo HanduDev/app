@@ -1,15 +1,15 @@
 import 'dart:async';
-
+import 'dart:io';
 import 'package:app/data/repositories/translate/translate_repository.dart';
-import 'package:app/models/translate/translate_video_request.dart';
+import 'package:app/models/translate/translate_image_request.dart';
 import 'package:camera/camera.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 
 class LibrasImageViewModel extends ChangeNotifier {
-  final TranslateRepositoryVideoImpl _translateRepository;
+  final TranslateRepositoryImageImpl _translateRepository;
 
   LibrasImageViewModel({
-    required TranslateRepositoryVideoImpl translateRepository,
+    required TranslateRepositoryImageImpl translateRepository,
   }) : _translateRepository = translateRepository;
 
   bool _isRecording = false;
@@ -18,34 +18,48 @@ class LibrasImageViewModel extends ChangeNotifier {
   bool get isRecording => _isRecording;
   CameraController? get cameraController => _cameraController;
 
-  final int translateTime = 200;
-  Timer? _translateTimer;
+  final int translateTime = 100;
 
-  final int maxTimeInSeconds = 10;
-  int _currentRecordingTime = 0;
+  final int maxTimeInSeconds = 60;
+  double _currentRecordingTime = 0;
 
   String translatedText = '';
 
   get progress => _currentRecordingTime / maxTimeInSeconds;
 
+  bool _isTakingPicture = false;
+
   Future<void> _initTranslateTimer(CameraImage image) async {
-    if (_translateTimer?.isActive ?? false) return;
+    await Future.delayed(Duration(milliseconds: 100));
 
-    _translateTimer = Timer(Duration(milliseconds: translateTime), () async {
-      _translateTimer?.cancel();
+    _currentRecordingTime += 0.1;
+    notifyListeners();
 
-      _currentRecordingTime++;
+    if (_currentRecordingTime >= maxTimeInSeconds) {
+      _stopRecording();
+      _currentRecordingTime = 0;
       notifyListeners();
+      return;
+    }
 
-      if (_currentRecordingTime >= maxTimeInSeconds) {
-        _stopRecording();
-        _currentRecordingTime = 0;
-        notifyListeners();
-        return;
-      }
+    if (_isTakingPicture) return;
 
-      await _translateRepository.createVideo(TranslateVideoRequest(video: image));
-    });
+    _isTakingPicture = true;
+    notifyListeners();
+
+    final XFile frame = await cameraController!.takePicture();
+    final translation = await _translateRepository.createImage(
+      TranslateImageRequest(
+        fromLanguage: 'libras',
+        toLanguage: 'pt',
+        image: frame,
+      ),
+    );
+
+    _isTakingPicture = false;
+
+    translatedText = translation.message;
+    notifyListeners();
   }
 
   Future<void> _startRecording() async {
@@ -53,17 +67,16 @@ class LibrasImageViewModel extends ChangeNotifier {
       return;
     }
 
-    await _cameraController!.startVideoRecording(
-      onAvailable: _initTranslateTimer,
-    );
+    await _cameraController!.startImageStream(_initTranslateTimer);
     _isRecording = true;
     notifyListeners();
   }
 
   Future<void> _stopRecording() async {
     if (_isRecording) {
-      await _cameraController!.stopVideoRecording();
+      await _cameraController!.stopImageStream();
       _isRecording = false;
+      _currentRecordingTime = 0;
       notifyListeners();
     }
   }
@@ -76,9 +89,14 @@ class LibrasImageViewModel extends ChangeNotifier {
     List<CameraDescription> cameras = await availableCameras();
 
     if (cameras.isNotEmpty) {
+      final frontCamera = cameras.firstWhere(
+        (camera) => camera.lensDirection == CameraLensDirection.front,
+        orElse: () => cameras.first,
+      );
+
       _cameraController = CameraController(
-        cameras.first,
-        ResolutionPreset.high,
+        frontCamera,
+        ResolutionPreset.medium,
       );
 
       await _cameraController!.initialize();

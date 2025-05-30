@@ -40,7 +40,12 @@ GoRouter router() {
     routes: [
       GoRoute(
         path: Routes.confirmacaoCadastro,
-        builder: (context, state) => ConfirmacaoCadastroPage(),
+        builder: (context, state) {
+          final thisState = state.extra as Map<String, dynamic>?;
+          final email = thisState?['email'] as String?;
+
+          return ConfirmacaoCadastroPage(email: email);
+        },
       ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) => navigationShell,

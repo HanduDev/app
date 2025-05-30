@@ -88,7 +88,8 @@
     "verify_email_resend": "Reenviar",
     "verify_email_resend_in": "Reenviar em",
     "verify_email_go_to_app": "Ir para o aplicativo",
-    "verify_email_join_another_account": "Entrar com outra conta"
+    "verify_email_join_another_account": "Entrar com outra conta",
+    "verify_email_success": "Email verificado com sucesso"
   },
   "educacao": {
     "title": "O que deseja aprender hoje?",

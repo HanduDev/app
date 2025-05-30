@@ -10,6 +10,7 @@ abstract class AuthRepositoryImpl {
     required String password,
   });
   Future<User?> me();
-  Future<User> verifyCode({required String code});
-  Future<void> resendCode({required String code});
+  Future<User> verifyCode({required String code, required String? email});
+  Future<void> resendCode({required String code, required String? email});
+  Future<User> updateUser({required String name, required String email});
 }

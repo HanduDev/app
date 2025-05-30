@@ -22,7 +22,8 @@ List<StatefulShellBranch> librasBranches = [
         path: Routes.librasImage,
         builder: (context, state) => ChangeNotifierProvider(
           create: (context) => LibrasImageViewModel(
-            translateRepository: context.read<TranslateRepositoryVideoImpl>(),
+            translateRepository:
+                context.read<TranslateRepositoryImageImpl>(),
           ),
           child: LibrasImagePage(),
         ),

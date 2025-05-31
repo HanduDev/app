@@ -1,10 +1,12 @@
 import 'package:app/providers/auth_provider.dart';
-import 'package:app/ui/auth/register/widgets/form_validator.dart';
+import 'package:app/ui/auth/register/widgets/register_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:localization/localization.dart';
 import 'package:mockito/mockito.dart';
 import 'package:provider/provider.dart';
-import '../../__mocks__/general_mocks.mocks.dart';
+import '../../../__mocks__/general_mocks.mocks.dart';
+import '../../../create_app_with_localization.dart';
 
 void main() {
   late MockAuthRepositoryImpl mockAuthRepository;
@@ -15,12 +17,17 @@ void main() {
     authProvider = AuthProvider(authRepository: mockAuthRepository);
   });
 
+  setUpAll(() async {
+    LocalJsonLocalization.delegate.directories = ['assets/i18n'];
+    await LocalJsonLocalization.delegate.load(Locale('pt', 'BR'));
+  });
+
   Future<void> pumpForm(WidgetTester tester) async {
     await tester.pumpWidget(
-      MaterialApp(
-        home: ChangeNotifierProvider<AuthProvider>.value(
+      createAppWithLocalization(
+        ChangeNotifierProvider<AuthProvider>.value(
           value: authProvider,
-          child: Scaffold(body: FormsValidator()),
+          child: Scaffold(body: RegisterPage()),
         ),
       ),
     );
@@ -75,11 +82,13 @@ void main() {
       expect(find.text(confirmacao), findsOneWidget);
     });
 
-      testWidgets('Da erro caso o nome não seja preenchido',
-        (WidgetTester tester) async {
+    testWidgets('Da erro caso o nome não seja preenchido', (
+      WidgetTester tester,
+    ) async {
       await pumpForm(tester);
 
-      await tester.tap(find.byKey(const Key('nextButton')));
+      await tester.tap(find.byKey(const Key('registerButton')));
+      await tester.pumpAndSettle();
 
       expect(find.text('Nome é obrigatório'), findsOneWidget);
     });

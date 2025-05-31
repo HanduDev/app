@@ -6,7 +6,7 @@ import 'package:app/routes/branches/education_branches.dart';
 import 'package:app/routes/branches/libras_branches.dart';
 import 'package:app/routes/branches/trail_branches.dart';
 import 'package:app/routes/branches/translate_branches.dart';
-import 'package:app/ui/confirmacao_cadastro/widgets/confirmacao_cadastro_page.dart';
+import 'package:app/ui/email_confirmation/widgets/email_confirmation_page.dart';
 import 'package:app/ui/core/shared/common_layout.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -44,7 +44,7 @@ GoRouter router() {
           final thisState = state.extra as Map<String, dynamic>?;
           final email = thisState?['email'] as String?;
 
-          return ConfirmacaoCadastroPage(email: email);
+          return EmailConfirmationPage(email: email);
         },
       ),
       StatefulShellRoute.indexedStack(

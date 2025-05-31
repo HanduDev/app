@@ -1,10 +1,10 @@
 import 'package:app/data/repositories/trail/trail_repository.dart';
 import 'package:app/models/trail/trail.dart';
 import 'package:app/routes/routes.dart';
-import 'package:app/ui/plano_de_estudos/view_model/forms_container_view_model.dart';
-import 'package:app/ui/plano_de_estudos/widgets/creating_step_page.dart';
-import 'package:app/ui/plano_de_estudos/widgets/estudos_container.dart';
-import 'package:app/ui/plano_de_estudos/widgets/finished_page.dart';
+import 'package:app/ui/study_plan/view_model/forms_container_view_model.dart';
+import 'package:app/ui/study_plan/widgets/creating_step_page.dart';
+import 'package:app/ui/study_plan/widgets/studies_container.dart';
+import 'package:app/ui/study_plan/widgets/finished_page.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
@@ -24,7 +24,7 @@ List<StatefulShellBranch> createTrailBranches = [
         routes: [
           GoRoute(
             path: Routes.planoDeEstudos,
-            builder: (context, state) => EstudosContainer(),
+            builder: (context, state) => StudiesContainer(),
           ),
           GoRoute(
             path: Routes.criandoPlanoDeEstudos,

@@ -1,8 +1,8 @@
 import 'package:app/routes/routes.dart';
-import 'package:app/ui/cadastro/widgets/cadastro_page.dart';
-import 'package:app/ui/intro/view_model/intro_view_model.dart';
-import 'package:app/ui/intro/widgets/intro_page.dart';
-import 'package:app/ui/login/widgets/login_page.dart';
+import 'package:app/ui/auth/register/widgets/register_page.dart';
+import 'package:app/ui/auth/introducton/view_model/introduction_view_model.dart';
+import 'package:app/ui/auth/introducton/widgets/introduction_page.dart';
+import 'package:app/ui/auth/login/widgets/login_page.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
@@ -13,8 +13,8 @@ List<StatefulShellBranch> authBranches = [
         path: Routes.intro,
         builder: (context, state) {
           return ChangeNotifierProvider(
-            create: (context) => IntroViewModel(),
-            child: IntroPage(),
+            create: (context) => IntroductionViewModel(),
+            child: IntroductionPage(),
           );
         },
       ),
@@ -27,7 +27,7 @@ List<StatefulShellBranch> authBranches = [
       GoRoute(
         path: Routes.cadastro,
         builder: (context, state) {
-          return CadastroPage();
+          return RegisterPage();
         },
       ),
     ],

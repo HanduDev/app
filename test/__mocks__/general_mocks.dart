@@ -9,7 +9,7 @@ import 'package:app/models/user.dart';
 import 'package:app/providers/auth_provider.dart';
 import 'package:app/providers/languages_provider.dart';
 import 'package:app/ui/core/shared/dropdown/dropdown_button_controller.dart';
-import 'package:app/ui/traducao_texto/view_model/translate_text_view_model.dart';
+import 'package:app/ui/translate/translate_text/view_model/translate_text_view_model.dart';
 import 'package:app/ui/trail/view_model/trail_view_model.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:go_router/go_router.dart';

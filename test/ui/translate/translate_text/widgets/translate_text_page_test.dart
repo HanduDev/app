@@ -5,7 +5,7 @@ import 'package:app/models/translate/translate_text_request.dart';
 import 'package:app/models/translate/translate.dart';
 import 'package:app/ui/core/shared/dropdown/dropdown_button_controller.dart';
 import 'package:app/ui/translate/translate_text/view_model/translate_text_view_model.dart';
-import '../../../__mocks__/general_mocks.mocks.dart';
+import '../../../../__mocks__/general_mocks.mocks.dart';
 
 void main() {
   late MockTranslateRepositoryImpl mockTranslateRepository;

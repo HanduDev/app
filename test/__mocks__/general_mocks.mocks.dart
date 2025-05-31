@@ -26,7 +26,7 @@ import 'package:app/providers/auth_provider.dart' as _i20;
 import 'package:app/providers/languages_provider.dart' as _i27;
 import 'package:app/ui/core/shared/dropdown/dropdown_button_controller.dart'
     as _i6;
-import 'package:app/ui/traducao_texto/view_model/translate_text_view_model.dart'
+import 'package:app/ui/translate/translate_text/view_model/translate_text_view_model.dart'
     as _i24;
 import 'package:app/ui/trail/view_model/trail_view_model.dart' as _i29;
 import 'package:flutter/material.dart' as _i10;

@@ -1,7 +1,7 @@
 import 'package:app/data/repositories/trail/trail_repository.dart';
 import 'package:app/routes/routes.dart';
-import 'package:app/ui/educacao/view_model/educacao_view_model.dart';
-import 'package:app/ui/educacao/widgets/educacao_page.dart';
+import 'package:app/ui/education/view_model/education_view_model.dart';
+import 'package:app/ui/education/widgets/education_page.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
@@ -13,10 +13,10 @@ List<StatefulShellBranch> educationBranches = [
         builder:
             (context, state) => ChangeNotifierProvider(
               create:
-                  (context) => EducacaoViewModel(
+                  (context) => EducationViewModel(
                     trailRepository: context.read<TrailRepositoryImpl>(),
                   ),
-              child: EducacaoPage(),
+              child: EducationPage(),
             ),
       ),
     ],

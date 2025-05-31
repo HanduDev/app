@@ -166,12 +166,12 @@ void main() {
         isEmailConfirmed: true,
       );
       when(
-        mockAuthRepository.verifyCode(code: anyNamed('code')),
+        mockAuthRepository.verifyCode(code: anyNamed('code'), email: 'teste@gmail.com'),
       ).thenAnswer((_) async => verifiedUser);
 
       expect(authProvider.isAuthenticating, isFalse);
 
-      await authProvider.verifyCode(code: '123456');
+      await authProvider.verifyCode(code: '123456', email: 'teste@gmail.com');
 
       expect(authProvider.isAuthenticating, isFalse);
       expect(authProvider.user, isNotNull);
@@ -180,22 +180,22 @@ void main() {
       expect(authProvider.user?.email, 'verify@example.com');
       expect(authProvider.user?.isEmailConfirmed, isTrue);
 
-      verify(mockAuthRepository.verifyCode(code: '123456')).called(1);
+      verify(mockAuthRepository.verifyCode(code: '123456', email: 'teste@gmail.com')).called(1);
     });
 
     test(
       'resendCode calls repository and updates authenticating state',
       () async {
         when(
-          mockAuthRepository.resendCode(code: anyNamed('code')),
+          mockAuthRepository.resendCode(code: anyNamed('code'), email: 'teste@gmail.com'),
         ).thenAnswer((_) async {});
 
         expect(authProvider.isAuthenticating, isFalse);
 
-        await authProvider.resendCode(code: '123456');
+        await authProvider.resendCode(code: '123456', email: 'teste@gmail.com');
 
         expect(authProvider.isAuthenticating, isFalse);
-        verify(mockAuthRepository.resendCode(code: '123456')).called(1);
+        verify(mockAuthRepository.resendCode(code: '123456', email: 'teste@gmail.com')).called(1);
       },
     );
   });

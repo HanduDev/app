@@ -1,6 +1,5 @@
 import 'package:app/models/user.dart';
 import 'package:app/ui/confirmacao_cadastro/widgets/confirmacao_cadastro_page.dart';
-import 'package:app/ui/core/themes/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -9,9 +8,17 @@ import 'package:provider/provider.dart';
 import 'package:mockito/mockito.dart';
 import 'package:go_router/go_router.dart';
 import 'package:app/providers/auth_provider.dart';
-import 'package:fake_async/fake_async.dart';
 
 import '../../../__mocks__/general_mocks.mocks.dart';
+
+class Routes {
+  static const home = '/home';
+  static const intro = '/intro';
+}
+
+// GlobalKey para ScaffoldMessenger, usado pelo Toast e testes
+final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
+    GlobalKey<ScaffoldMessengerState>();
 
 void main() {
   late MockAuthProvider mockAuthProvider;
@@ -25,15 +32,29 @@ void main() {
     when(mockAuthProvider.user).thenReturn(mockUser);
   });
 
-  Future<void> pumpPage(WidgetTester tester) async {
-    await tester.pumpWidget(
-      MaterialApp(
-        home: ChangeNotifierProvider<AuthProvider>.value(
-          value: mockAuthProvider,
-          child: const ConfirmacaoCadastroPage(),
+  Future<void> pumpPage(WidgetTester tester, {String? email}) async {
+    final router = GoRouter(
+      routes: [
+        GoRoute(
+          path: '/',
+          builder:
+              (context, state) => ChangeNotifierProvider<AuthProvider>.value(
+                value: mockAuthProvider,
+                child: ConfirmacaoCadastroPage(email: email),
+              ),
         ),
+      ],
+    );
+
+    await tester.pumpWidget(
+      MaterialApp.router(
+        scaffoldMessengerKey:
+            scaffoldMessengerKey, // <-- importante para snackbars/toasts
+        routerConfig: router,
+        // builder opcional, não precisa envolver em Scaffold aqui pois ConfirmacaoCadastroPage já deve ter.
       ),
     );
+    await tester.pumpAndSettle();
   }
 
   group('Testes Unitários', () {
@@ -59,8 +80,6 @@ void main() {
   group('Testes de Widget', () {
     testWidgets('renderiza logo e textos principais', (tester) async {
       await pumpPage(tester);
-
-      await tester.pump(const Duration(seconds: 1));
 
       expect(find.byType(Image), findsOneWidget);
       expect(find.textContaining('confirmacao_cadastro'), findsWidgets);
@@ -100,108 +119,93 @@ void main() {
       expect(find.text(disabledText), findsOneWidget);
       expect(find.byKey(const Key('resend_text')), findsOneWidget);
     });
-
-    testWidgets('chama resendCode quando botão de reenviar é habilitado', (
-      tester,
-    ) async {
-      when(
-        mockAuthProvider.resendCode(code: anyNamed('code')),
-      ).thenAnswer((_) async => null);
-
-      await pumpPage(tester); // AQUI IMPORTANTE o await
-
-      expect(
-        find.textContaining(
-          'confirmacao_cadastro.verify_email_resend_in'.i18n(),
-        ),
-        findsOneWidget,
-      );
-
-      // Avança o tempo 30 segundos (simulate timer expiring)
-      await tester.pump(const Duration(seconds: 30));
-
-      // Re-renderiza a UI para refletir mudanças
-      await tester.pump();
-
-      final btn = find.textContaining(
-        'confirmacao_cadastro.verify_email_resend'.i18n(),
-      );
-      expect(btn, findsOneWidget);
-
-      // Clica no botão
-      await tester.tap(btn);
-      await tester.pump();
-
-      verify(mockAuthProvider.resendCode(code: anyNamed('code'))).called(1);
-    });
   });
 
-  group('Testes de Integração', () {
-    Future<void> pumpWithRouter(WidgetTester tester) async {
-      final router = GoRouter(routes: []);
-      await tester.pumpWidget(
-        MaterialApp.router(
-          routerConfig: router,
-          builder:
-              (context, child) => ChangeNotifierProvider<AuthProvider>.value(
-                value: mockAuthProvider,
-                child: child!,
-              ),
+  group('Testes de integração', () {
+    testWidgets('deve chamar verifyCode ao confirmar com código válido', (
+      tester,
+    ) async {
+      when(
+        mockAuthProvider.verifyCode(
+          code: anyNamed('code'),
+          email: anyNamed('email'),
         ),
+      ).thenAnswer((_) async => Future.value());
+
+      await pumpPage(tester, email: 'usuario@teste.com');
+
+      // Simula o usuário digitando o código no campo OTP
+      final otpField = tester.widget<OtpTextField>(find.byType(OtpTextField));
+      otpField.onSubmit?.call('ABCD');
+      await tester.pump();
+
+      // Clica no botão confirmar
+      final confirmButton = find.byKey(
+        const Key('confirm_button_verify_email_go_to_app'),
       );
-    }
+      expect(confirmButton, findsOneWidget);
+      await tester.tap(confirmButton);
+      await tester.pumpAndSettle();
 
-    testWidgets('chama verifyCode ao pressionar botão principal', (
-      tester,
-    ) async {
-      when(
-        mockAuthProvider.verifyCode(code: anyNamed('code')),
-      ).thenAnswer((_) async => null);
-
-      await pumpPage(tester);
-
-      final btn = find.textContaining('verify_email_go_to_app');
-      expect(btn, findsOneWidget);
-
-      await tester.tap(btn);
-      await tester.pump();
-
-      verify(mockAuthProvider.verifyCode(code: anyNamed('code'))).called(1);
+      // Verifica se o método verifyCode foi chamado com os parâmetros corretos
+      verify(
+        mockAuthProvider.verifyCode(code: 'ABCD', email: 'usuario@teste.com'),
+      ).called(1);
     });
 
-    testWidgets('chama resendCode quando botão de reenviar é habilitado', (
-      tester,
-    ) async {
-      when(
-        mockAuthProvider.resendCode(code: anyNamed('code')),
-      ).thenAnswer((_) async => null);
+    testWidgets(
+      'deve chamar resendCode quando botão reenviar habilitado e clicado',
+      (tester) async {
+        when(
+          mockAuthProvider.resendCode(
+            code: anyNamed('code'),
+            email: anyNamed('email'),
+          ),
+        ).thenAnswer((_) async => Future.value());
 
-      await pumpPage(tester);
+        await pumpPage(tester, email: 'usuario@teste.com');
 
-      // Supondo que o botão de reenviar tenha texto que contenha 'resend'
-      final btn = find.textContaining('resend');
-      expect(btn, findsOneWidget);
+        // Força o timer para 0 para habilitar o botão
+        await tester.pump(const Duration(seconds: 31));
+        await tester.pumpAndSettle();
 
-      await tester.tap(btn);
-      await tester.pump();
+        // Verifica se o botão de reenviar está habilitado (texto mudou)
+        final resendTextFinder = find.byKey(const Key('resend_text'));
+        expect(resendTextFinder, findsOneWidget);
+        final textWidget = tester.widget<Text>(resendTextFinder);
+        expect(textWidget.data?.contains('resend'), true);
 
-      verify(mockAuthProvider.resendCode(code: anyNamed('code'))).called(1);
-    });
+        // Clica no texto de reenviar
+        await tester.tap(resendTextFinder);
+        await tester.pumpAndSettle();
 
-    testWidgets('chama signOut ao clicar em "Entrar com outra conta"', (
-      tester,
-    ) async {
-      when(mockAuthProvider.signOut()).thenAnswer((_) async => null);
+        verify(
+          mockAuthProvider.resendCode(code: '', email: 'usuario@teste.com'),
+        ).called(1);
+      },
+    );
 
-      await pumpPage(tester);
+    testWidgets(
+      'deve chamar signOut e navegar para intro ao clicar em entrar com outra conta',
+      (tester) async {
+        when(
+          mockAuthProvider.signOut(),
+        ).thenAnswer((_) async => Future.value());
 
-      final btn = find.textContaining('verify_email_join_another_account');
-      expect(btn, findsOneWidget);
+        await pumpPage(tester);
 
-      await tester.tap(btn);
-      await tester.pump();
+        final anotherAccountButton = find.byKey(
+          const Key('confirm_button_verify_email_join_another_account'),
+        );
+        expect(anotherAccountButton, findsOneWidget);
 
-      verify(mockAuthProvider.signOut()).called(1);
-    });
+        await tester.tap(anotherAccountButton);
+        await tester.pumpAndSettle();
+
+        verify(mockAuthProvider.signOut()).called(1);
+        // Como usamos GoRouter no teste sem rotas definidas,
+        // não testamos o pushReplacement, mas você pode mockar navigator para isso
+      },
+    );
   });
 }

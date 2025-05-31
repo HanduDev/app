@@ -133,7 +133,7 @@ void main() {
         },
       );
 
-      final user = await repository.verifyCode(code: '123456');
+      final user = await repository.verifyCode(code: '123456', email: 'teste@gmail.com');
 
       expect(user.fullName, 'Verificado');
     });
@@ -143,7 +143,7 @@ void main() {
         http.post('/users/resend_email_confirmation', any),
       ).thenAnswer((_) async => {});
 
-      await repository.resendCode(code: '123');
+      await repository.resendCode(code: '123', email: 'teste@gmail.com');
 
       verify(http.post('/users/resend_email_confirmation', {})).called(1);
     });

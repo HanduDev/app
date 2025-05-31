@@ -15,7 +15,7 @@ import 'package:app/data/repositories/translate/translate_repository.dart'
 import 'package:app/data/services/google_auth.dart' as _i16;
 import 'package:app/data/services/http.dart' as _i18;
 import 'package:app/data/services/secure_storage.dart' as _i17;
-import 'package:app/models/language.dart' as _i27;
+import 'package:app/models/language.dart' as _i25;
 import 'package:app/models/trail/trail.dart' as _i32;
 import 'package:app/models/trail/trail_info.dart' as _i8;
 import 'package:app/models/trail/trail_request.dart' as _i31;
@@ -23,14 +23,14 @@ import 'package:app/models/translate/translate.dart' as _i5;
 import 'package:app/models/translate/translate_text_request.dart' as _i23;
 import 'package:app/models/user.dart' as _i2;
 import 'package:app/providers/auth_provider.dart' as _i20;
-import 'package:app/providers/languages_provider.dart' as _i26;
+import 'package:app/providers/languages_provider.dart' as _i27;
 import 'package:app/ui/core/shared/dropdown/dropdown_button_controller.dart'
     as _i6;
 import 'package:app/ui/traducao_texto/view_model/translate_text_view_model.dart'
     as _i24;
 import 'package:app/ui/trail/view_model/trail_view_model.dart' as _i29;
 import 'package:flutter/material.dart' as _i10;
-import 'package:flutter/services.dart' as _i25;
+import 'package:flutter/services.dart' as _i26;
 import 'package:flutter_tts/flutter_tts.dart' as _i7;
 import 'package:go_router/src/configuration.dart' as _i9;
 import 'package:go_router/src/delegate.dart' as _i11;
@@ -215,26 +215,54 @@ class MockAuthRepositoryImpl extends _i1.Mock
           as _i3.Future<_i2.User?>);
 
   @override
-  _i3.Future<_i2.User> verifyCode({required String? code}) =>
+  _i3.Future<_i2.User> verifyCode({
+    required String? code,
+    required String? email,
+  }) =>
       (super.noSuchMethod(
-            Invocation.method(#verifyCode, [], {#code: code}),
+            Invocation.method(#verifyCode, [], {#code: code, #email: email}),
             returnValue: _i3.Future<_i2.User>.value(
               _FakeUser_0(
                 this,
-                Invocation.method(#verifyCode, [], {#code: code}),
+                Invocation.method(#verifyCode, [], {
+                  #code: code,
+                  #email: email,
+                }),
               ),
             ),
           )
           as _i3.Future<_i2.User>);
 
   @override
-  _i3.Future<void> resendCode({required String? code}) =>
+  _i3.Future<void> resendCode({
+    required String? code,
+    required String? email,
+  }) =>
       (super.noSuchMethod(
-            Invocation.method(#resendCode, [], {#code: code}),
+            Invocation.method(#resendCode, [], {#code: code, #email: email}),
             returnValue: _i3.Future<void>.value(),
             returnValueForMissingStub: _i3.Future<void>.value(),
           )
           as _i3.Future<void>);
+
+  @override
+  _i3.Future<_i2.User> updateUser({
+    required String? name,
+    required String? email,
+  }) =>
+      (super.noSuchMethod(
+            Invocation.method(#updateUser, [], {#name: name, #email: email}),
+            returnValue: _i3.Future<_i2.User>.value(
+              _FakeUser_0(
+                this,
+                Invocation.method(#updateUser, [], {
+                  #name: name,
+                  #email: email,
+                }),
+              ),
+            ),
+          )
+          as _i3.Future<_i2.User>);
 }
 
 /// A class which mocks [GoogleAuthImpl].
@@ -390,6 +418,7 @@ class MockHttpServiceImpl extends _i1.Mock implements _i18.HttpServiceImpl {
 /// A class which mocks [GoogleSignInAccount].
 ///
 /// See the documentation for Mockito's code generation for more information.
+// ignore: must_be_immutable
 class MockGoogleSignInAccount extends _i1.Mock
     implements _i4.GoogleSignInAccount {
   MockGoogleSignInAccount() {
@@ -555,18 +584,36 @@ class MockAuthProvider extends _i1.Mock implements _i20.AuthProvider {
           as _i3.Future<void>);
 
   @override
-  _i3.Future<void> verifyCode({required String? code}) =>
+  _i3.Future<void> verifyCode({
+    required String? code,
+    required String? email,
+  }) =>
       (super.noSuchMethod(
-            Invocation.method(#verifyCode, [], {#code: code}),
+            Invocation.method(#verifyCode, [], {#code: code, #email: email}),
             returnValue: _i3.Future<void>.value(),
             returnValueForMissingStub: _i3.Future<void>.value(),
           )
           as _i3.Future<void>);
 
   @override
-  _i3.Future<void> resendCode({required String? code}) =>
+  _i3.Future<void> resendCode({
+    required String? code,
+    required String? email,
+  }) =>
       (super.noSuchMethod(
-            Invocation.method(#resendCode, [], {#code: code}),
+            Invocation.method(#resendCode, [], {#code: code, #email: email}),
+            returnValue: _i3.Future<void>.value(),
+            returnValueForMissingStub: _i3.Future<void>.value(),
+          )
+          as _i3.Future<void>);
+
+  @override
+  _i3.Future<void> updateUser({
+    required String? name,
+    required String? email,
+  }) =>
+      (super.noSuchMethod(
+            Invocation.method(#updateUser, [], {#name: name, #email: email}),
             returnValue: _i3.Future<void>.value(),
             returnValueForMissingStub: _i3.Future<void>.value(),
           )
@@ -690,6 +737,12 @@ class MockTranslateTextViewModel extends _i1.Mock
   @override
   void swapLanguages() => super.noSuchMethod(
     Invocation.method(#swapLanguages, []),
+    returnValueForMissingStub: null,
+  );
+
+  @override
+  void setDefaultLanguage(_i25.Language? language) => super.noSuchMethod(
+    Invocation.method(#setDefaultLanguage, [language]),
     returnValueForMissingStub: null,
   );
 
@@ -1052,7 +1105,7 @@ class MockFlutterTts extends _i1.Mock implements _i7.FlutterTts {
   );
 
   @override
-  _i3.Future<dynamic> platformCallHandler(_i25.MethodCall? call) =>
+  _i3.Future<dynamic> platformCallHandler(_i26.MethodCall? call) =>
       (super.noSuchMethod(
             Invocation.method(#platformCallHandler, [call]),
             returnValue: _i3.Future<dynamic>.value(),
@@ -1063,18 +1116,18 @@ class MockFlutterTts extends _i1.Mock implements _i7.FlutterTts {
 /// A class which mocks [LanguagesProvider].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockLanguagesProvider extends _i1.Mock implements _i26.LanguagesProvider {
+class MockLanguagesProvider extends _i1.Mock implements _i27.LanguagesProvider {
   MockLanguagesProvider() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  List<_i27.Language> get languages =>
+  List<_i25.Language> get languages =>
       (super.noSuchMethod(
             Invocation.getter(#languages),
-            returnValue: <_i27.Language>[],
+            returnValue: <_i25.Language>[],
           )
-          as List<_i27.Language>);
+          as List<_i25.Language>);
 
   @override
   bool get hasListeners =>
@@ -1089,6 +1142,19 @@ class MockLanguagesProvider extends _i1.Mock implements _i26.LanguagesProvider {
             returnValueForMissingStub: _i3.Future<void>.value(),
           )
           as _i3.Future<void>);
+
+  @override
+  _i25.Language? getLanguageByCode(String? code) =>
+      (super.noSuchMethod(Invocation.method(#getLanguageByCode, [code]))
+          as _i25.Language?);
+
+  @override
+  bool compareLanguageCodes(String? code1, String? code2) =>
+      (super.noSuchMethod(
+            Invocation.method(#compareLanguageCodes, [code1, code2]),
+            returnValue: false,
+          )
+          as bool);
 
   @override
   void addListener(_i21.VoidCallback? listener) => super.noSuchMethod(
@@ -1125,14 +1191,14 @@ class MockLanguageRepositoryImpl extends _i1.Mock
   }
 
   @override
-  _i3.Future<List<_i27.Language>> getAllLanguages() =>
+  _i3.Future<List<_i25.Language>> getAllLanguages() =>
       (super.noSuchMethod(
             Invocation.method(#getAllLanguages, []),
-            returnValue: _i3.Future<List<_i27.Language>>.value(
-              <_i27.Language>[],
+            returnValue: _i3.Future<List<_i25.Language>>.value(
+              <_i25.Language>[],
             ),
           )
-          as _i3.Future<List<_i27.Language>>);
+          as _i3.Future<List<_i25.Language>>);
 }
 
 /// A class which mocks [TrailViewModel].

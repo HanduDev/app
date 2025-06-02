@@ -1,3 +1,4 @@
+import 'package:app/ui/core/shared/progress_bar.dart';
 import 'package:app/ui/core/themes/app_colors.dart';
 import 'package:country_flags/country_flags.dart';
 import 'package:flutter/material.dart';
@@ -60,38 +61,10 @@ class CardProgressBar extends StatelessWidget {
 
               Hero(
                 tag: '$id-progress',
-                child: SizedBox(
+                child: ProgressBar(
+                  value: progress,
                   height: 8,
-                  child: Stack(
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(4),
-                        child: Container(
-                          width: double.infinity,
-                          color: AppColors.primary400,
-                        ),
-                      ),
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(4),
-                        child: Container(
-                          width:
-                              MediaQuery.of(context).size.width *
-                              progress *
-                              0.35,
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              begin: Alignment.centerLeft,
-                              end: Alignment.centerRight,
-                              colors: [
-                                AppColors.progressGradient[0],
-                                AppColors.progressGradient[1],
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                  fullFillBackground: AppColors.green,
                 ),
               ),
 

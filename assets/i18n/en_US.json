@@ -143,6 +143,7 @@
     "after_created_seconds": "Or wait {{seconds}} seconds",
     "working": "Working on it...",
     "almost_done": "We're almost there",
+    "longer_than_expected": "The creation is taking longer than expected, please wait a few moments",
     "error_creating_study_plan": "Error creating study plan",
     "no_user_found": "No user found",
     "connecting_to_server": "Connecting to server...",

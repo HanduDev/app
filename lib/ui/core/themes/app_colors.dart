@@ -16,9 +16,10 @@ abstract final class AppColors {
   static const Color disabledIcon = Color.fromARGB(255, 163, 160, 160);
   static const Color lightPurple = Color(0xFF9862DF);
   static const List<Color> progressGradient = [
-    Color(0xFF9862DF),
+    AppColors.lightPurple,
     Color(0xFFE3E3EF),
   ];
   static const Color error = Color(0xFFEA3A3A);
+  static const Color errorLight = Color.fromARGB(255, 241, 247, 169);
   static const Color green = Color.fromARGB(255, 127, 212, 130);
 }

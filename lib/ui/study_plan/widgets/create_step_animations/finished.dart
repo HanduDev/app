@@ -42,7 +42,10 @@ class _FinishedState extends State<Finished> with TickerProviderStateMixin {
             return;
           }
 
-          context.go(Routes.trilha, extra: {"trail": widget.trail});
+          context.pushReplacement(
+            Routes.trilha,
+            extra: {"trail": widget.trail},
+          );
         }
       }
     });
@@ -107,13 +110,18 @@ class _FinishedState extends State<Finished> with TickerProviderStateMixin {
                         return;
                       }
 
-                      context.go(Routes.trilha, extra: {"trail": widget.trail});
+                      context.pushReplacement(
+                        Routes.trilha,
+                        extra: {"trail": widget.trail},
+                      );
                     },
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    "plano_de_estudos.after_created_seconds".i18n(
-                    ).replaceAll("{{seconds}}", _afterCreatedSeconds.toString()),
+                    "plano_de_estudos.after_created_seconds".i18n().replaceAll(
+                      "{{seconds}}",
+                      _afterCreatedSeconds.toString(),
+                    ),
                     style: Font.primary(fontSize: 13, color: AppColors.white),
                   ),
                 ],

@@ -143,6 +143,7 @@
     "after_created_seconds": "Ou aguarde {{seconds}} segundos",
     "working": "Trabalhando nisso...",
     "almost_done": "Já estamos quase lá",
+    "longer_than_expected": "A criação está demorando mais do que o esperado, por favor, aguarde alguns instantes",
     "error_creating_study_plan": "Erro ao criar plano de estudos",
     "no_user_found": "Nenhum usuário encontrado",
     "connecting_to_server": "Conectando ao servidor...",

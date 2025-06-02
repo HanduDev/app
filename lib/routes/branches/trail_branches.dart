@@ -8,6 +8,7 @@ import 'package:app/ui/lesson/view_model/lesson_view_model.dart';
 import 'package:app/ui/lesson/widget/lesson_page.dart';
 import 'package:app/ui/trail/view_model/trail_view_model.dart';
 import 'package:app/ui/trail/widgets/trail_page.dart';
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
@@ -25,7 +26,13 @@ List<StatefulShellBranch> trailBranches = [
                 (context) => TrailViewModel(
                   trailRepository: context.read<TrailRepositoryImpl>(),
                 ),
-            child: TrailPage(trail: trailData),
+            child: PopScope(
+              canPop: false,
+              onPopInvokedWithResult: (didPop, result) {
+                context.pushReplacement(Routes.educacao);
+              },
+              child: TrailPage(trail: trailData),
+            ),
           );
         },
       ),

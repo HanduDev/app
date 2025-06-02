@@ -176,7 +176,7 @@ class StudiesContainer extends StatelessWidget {
                         padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
                         child: ProgressBar(
                           value: currentIndex / (viewModel.totalSteps - 1),
-                          backgroundColor: AppColors.grey.withAlpha(35),
+                          emptyBackground: AppColors.grey.withAlpha(35),
                         ),
                       ),
                     ],
@@ -225,7 +225,7 @@ class StudiesContainer extends StatelessWidget {
                       currentIndex > 0
                           ? Flexible(
                             child: SecondaryButton(
-                              text: "plano_de_estudos.back".i18n(),
+                              text: "common.back".i18n(),
                               width: 150,
                               onPressed: () {
                                 if (currentIndex > 0) {

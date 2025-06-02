@@ -29,7 +29,7 @@ class TrailPage extends StatelessWidget {
                 ),
               ),
               onBackPressed: () {
-                context.pushReplacement(Routes.educacao);
+                context.go(Routes.educacao);
               },
               subtitle: Row(
                 children: [

@@ -10,17 +10,17 @@ import 'package:provider/provider.dart';
 class ThemeStep extends StatelessWidget {
   ThemeStep({super.key});
 
-  final List<String> _themes = [
-    "music",
-    "entertainment",
-    "sports",
-    "fashion_and_beauty",
-    "technology",
-    "programming",
-    "travel",
-    "anime",
-    "profession",
-    "family",
+  final List<Map<String, dynamic>> _themes = [
+    {"value": "music", "icon": Icons.music_note},
+    {"value": "entertainment", "icon": Icons.movie},
+    {"value": "sports", "icon": Icons.sports_soccer},
+    {"value": "fashion_and_beauty", "icon": Icons.face},
+    {"value": "technology", "icon": Icons.memory},
+    {"value": "programming", "icon": Icons.code},
+    {"value": "travel", "icon": Icons.flight},
+    {"value": "anime", "icon": Icons.animation},
+    {"value": "profession", "icon": Icons.work},
+    {"value": "family", "icon": Icons.family_restroom},
   ];
 
   @override
@@ -34,8 +34,14 @@ class ThemeStep extends StatelessWidget {
       items:
           _themes.map((element) {
             final label =
-                "plano_de_estudos.steps.themes.options.$element".i18n();
-            return SelectableGridModel(value: label, label: label);
+                "plano_de_estudos.steps.themes.options.${element['value']}"
+                    .i18n();
+
+            return SelectableGridModel(
+              value: label,
+              label: label,
+              icon: Icon(element['icon']),
+            );
           }).toList(),
       crossAxisCount: 3,
       render: (item, isSelected, colorData) {
@@ -47,6 +53,7 @@ class ThemeStep extends StatelessWidget {
             const SizedBox(height: 8),
             Text(
               item.label,
+              textAlign: TextAlign.center,
               style: Font.primary(
                 fontSize: 13,
                 fontWeight: FontWeight.w500,

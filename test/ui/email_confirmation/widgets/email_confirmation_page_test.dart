@@ -17,7 +17,6 @@ class Routes {
   static const intro = '/intro';
 }
 
-// GlobalKey para ScaffoldMessenger, usado pelo Toast e testes
 final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
     GlobalKey<ScaffoldMessengerState>();
 
@@ -132,12 +131,10 @@ void main() {
 
       await pumpPage(tester, email: 'usuario@teste.com');
 
-      // Simula o usuário digitando o código no campo OTP
       final otpField = tester.widget<OtpTextField>(find.byType(OtpTextField));
       otpField.onSubmit?.call('ABCD');
       await tester.pump();
 
-      // Clica no botão confirmar
       final confirmButton = find.byKey(
         const Key('confirm_button_verify_email_go_to_app'),
       );
@@ -145,7 +142,6 @@ void main() {
       await tester.tap(confirmButton);
       await tester.pumpAndSettle();
 
-      // Verifica se o método verifyCode foi chamado com os parâmetros corretos
       verify(
         mockAuthProvider.verifyCode(code: 'ABCD', email: 'usuario@teste.com'),
       ).called(1);

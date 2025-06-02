@@ -25,31 +25,35 @@ class ProgressBar extends StatelessWidget {
             ? fullFillBackground
             : AppColors.progressGradient[0];
 
-    return Stack(
-      children: [
-        Container(
-          width: double.infinity,
-          decoration: BoxDecoration(
-            color: emptyBackground ?? AppColors.primary400,
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-          child: SizedBox(height: height),
-        ),
-        Container(
-          width: MediaQuery.of(context).size.width * value,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                background ?? AppColors.progressGradient[0],
-                AppColors.progressGradient[1],
-              ],
-              stops: valueStop,
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return Stack(
+          children: [
+            Container(
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: emptyBackground ?? AppColors.primary400,
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              child: SizedBox(height: height),
             ),
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-          child: SizedBox(height: height),
-        ),
-      ],
+            Container(
+              width: constraints.maxWidth * value,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    background ?? AppColors.progressGradient[0],
+                    AppColors.progressGradient[1],
+                  ],
+                  stops: valueStop,
+                ),
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              child: SizedBox(height: height),
+            ),
+          ],
+        );
+      },
     );
   }
 }

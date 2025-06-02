@@ -168,6 +168,7 @@ class FormsValidatorState extends State<FormsValidator> {
           Hero(
             tag: 'primary-button',
             child: PrimaryButton(
+              key: const Key('registerButton'),
               text: 'account.register.register'.i18n(),
               rounded: true,
               onPressed: validatedAndSubmit,

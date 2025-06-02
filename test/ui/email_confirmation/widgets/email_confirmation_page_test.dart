@@ -10,6 +10,7 @@ import 'package:go_router/go_router.dart';
 import 'package:app/providers/auth_provider.dart';
 
 import '../../../__mocks__/general_mocks.mocks.dart';
+import '../../../create_app_with_localization.dart';
 
 class Routes {
   static const home = '/home';
@@ -46,14 +47,8 @@ void main() {
       ],
     );
 
-    await tester.pumpWidget(
-      MaterialApp.router(
-        scaffoldMessengerKey:
-            scaffoldMessengerKey, // <-- importante para snackbars/toasts
-        routerConfig: router,
-        // builder opcional, não precisa envolver em Scaffold aqui pois ConfirmacaoCadastroPage já deve ter.
-      ),
-    );
+    await tester.pumpWidget(createAppWithLocalization(router: router));
+
     await tester.pumpAndSettle();
   }
 
@@ -82,7 +77,10 @@ void main() {
       await pumpPage(tester);
 
       expect(find.byType(Image), findsOneWidget);
-      expect(find.textContaining('confirmacao_cadastro'), findsWidgets);
+
+      final textFinder = find.text('confirmacao_cadastro.verify_email'.i18n());
+
+      expect(textFinder, findsWidgets);
     });
 
     testWidgets('renderiza campo de código OTP', (tester) async {
@@ -165,17 +163,20 @@ void main() {
 
         await pumpPage(tester, email: 'usuario@teste.com');
 
-        // Força o timer para 0 para habilitar o botão
         await tester.pump(const Duration(seconds: 31));
         await tester.pumpAndSettle();
 
-        // Verifica se o botão de reenviar está habilitado (texto mudou)
         final resendTextFinder = find.byKey(const Key('resend_text'));
         expect(resendTextFinder, findsOneWidget);
-        final textWidget = tester.widget<Text>(resendTextFinder);
-        expect(textWidget.data?.contains('resend'), true);
 
-        // Clica no texto de reenviar
+        final textWidget = tester.widget<Text>(resendTextFinder);
+        expect(
+          textWidget.data?.contains(
+            'confirmacao_cadastro.verify_email_resend'.i18n(),
+          ),
+          true,
+        );
+
         await tester.tap(resendTextFinder);
         await tester.pumpAndSettle();
 
@@ -197,14 +198,13 @@ void main() {
         final anotherAccountButton = find.byKey(
           const Key('confirm_button_verify_email_join_another_account'),
         );
+
         expect(anotherAccountButton, findsOneWidget);
 
         await tester.tap(anotherAccountButton);
         await tester.pumpAndSettle();
 
         verify(mockAuthProvider.signOut()).called(1);
-        // Como usamos GoRouter no teste sem rotas definidas,
-        // não testamos o pushReplacement, mas você pode mockar navigator para isso
       },
     );
   });

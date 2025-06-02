@@ -95,56 +95,54 @@ class TrailBody extends StatelessWidget {
           scrollToCurrentLesson(trailInfo.lessons);
         });
 
-        return Expanded(
-          child: ListView.separated(
-            controller: scrollController,
-            itemCount: trailInfo.lessons.length,
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 32),
-            shrinkWrap: true,
-            separatorBuilder: (context, index) {
-              final lesson = trailInfo.lessons[index];
-              bool isCurrent = isCurrentLesson(index, trailInfo.lessons);
+        return ListView.separated(
+          controller: scrollController,
+          itemCount: trailInfo.lessons.length,
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 32),
+          shrinkWrap: true,
+          separatorBuilder: (context, index) {
+            final lesson = trailInfo.lessons[index];
+            bool isCurrent = isCurrentLesson(index, trailInfo.lessons);
 
-              final color =
-                  lesson.hasFinished
-                      ? lesson.isCorrect || lesson.isTheorical
-                          ? AppColors.green
-                          : AppColors.error
-                      : isCurrent
-                      ? AppColors.primary300
-                      : AppColors.lightGrey;
+            final color =
+                lesson.hasFinished
+                    ? lesson.isCorrect || lesson.isTheorical
+                        ? AppColors.green
+                        : AppColors.error
+                    : isCurrent
+                    ? AppColors.primary300
+                    : AppColors.lightGrey;
 
-              return Row(
-                children: [
-                  const SizedBox(width: 27),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(height: 8),
-                      Container(
-                        height: 12,
-                        width: 4,
-                        decoration: BoxDecoration(
-                          color: color,
-                          borderRadius: BorderRadius.circular(100),
-                        ),
+            return Row(
+              children: [
+                const SizedBox(width: 27),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 8),
+                    Container(
+                      height: 12,
+                      width: 4,
+                      decoration: BoxDecoration(
+                        color: color,
+                        borderRadius: BorderRadius.circular(100),
                       ),
-                      const SizedBox(height: 8),
-                    ],
-                  ),
-                ],
-              );
-            },
-            itemBuilder: (context, index) {
-              final lesson = trailInfo.lessons[index];
+                    ),
+                    const SizedBox(height: 8),
+                  ],
+                ),
+              ],
+            );
+          },
+          itemBuilder: (context, index) {
+            final lesson = trailInfo.lessons[index];
 
-              return LessonCard(
-                lesson: lesson,
-                isCurrentLesson: isCurrentLesson(index, trailInfo.lessons),
-                icon: lessonIcon(lesson),
-              );
-            },
-          ),
+            return LessonCard(
+              lesson: lesson,
+              isCurrentLesson: isCurrentLesson(index, trailInfo.lessons),
+              icon: lessonIcon(lesson),
+            );
+          },
         );
       },
     );

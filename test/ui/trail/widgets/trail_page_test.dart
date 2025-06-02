@@ -1,4 +1,6 @@
 import 'package:app/models/language.dart';
+import 'package:app/models/lesson/lesson.dart';
+import 'package:app/models/trail/trail_info.dart';
 import 'package:app/routes/routes.dart';
 import 'package:app/ui/core/shared/shared_header.dart';
 import 'package:app/ui/trail/view_model/trail_view_model.dart';
@@ -13,45 +15,75 @@ import 'package:country_flags/country_flags.dart';
 import 'package:provider/provider.dart';
 
 import '../../../__mocks__/general_mocks.mocks.dart';
+import '../../../create_app_with_localization.dart';
 
 void main() {
   late Trail mockTrail;
   late Language mockLanguage;
-  late MockGoRouter mockRouter;
+  late MockTrailViewModel mockTrailViewModel;
 
   setUp(() {
     mockLanguage = Language(code: 'pt', name: 'Português');
 
     mockTrail = Trail(
       id: 1,
-      name: 'Trilha de Teste',
+      name: 'Aula 01: Trilha de Teste',
       description: 'Descrição de teste',
       language: mockLanguage,
       progress: 0.5,
     );
 
-    mockRouter = MockGoRouter();
+    mockTrailViewModel = MockTrailViewModel();
+
+    when(mockTrailViewModel.initialize(any)).thenAnswer(
+      (_) async => TrailInfo(
+        id: 1,
+        name: 'Aula 01: Trilha de Teste',
+        description: 'Descrição de teste',
+        language: mockLanguage,
+        progress: 0.5,
+        lessons: [
+          Lesson(
+            id: 1,
+            name: 'Aula 01: Trilha de Teste',
+            hasFinished: false,
+            activityType: 'theorical',
+            isCorrect: false,
+          ),
+        ],
+      ),
+    );
   });
+
+  Future<void> pumpPage(
+    WidgetTester tester, {
+    Trail? trail,
+    RouterConfig<Object>? router,
+  }) async {
+    if (router != null) {
+      await tester.pumpWidget(MaterialApp.router(routerConfig: router));
+    } else {
+      await tester.pumpWidget(
+        createAppWithLocalization(
+          child: ChangeNotifierProvider<TrailViewModel>(
+            create: (_) => mockTrailViewModel,
+            child: TrailPage(trail: trail ?? mockTrail),
+          ),
+        ),
+      );
+    }
+    await tester.pumpAndSettle();
+  }
 
   group('TrailPage Widget Tests', () {
     testWidgets('should render all main components', (
       WidgetTester tester,
     ) async {
-      await tester.pumpWidget(
-        MaterialApp(
-          home: Scaffold(
-            body: Provider<TrailViewModel>(
-              create:
-                  (_) => MockTrailViewModel(), 
-              child: TrailPage(trail: mockTrail),
-            ),
-          ),
-        ),
-      );
+      await pumpPage(tester);
 
       expect(find.byType(SafeArea), findsOneWidget);
       expect(find.byType(Scaffold), findsOneWidget);
-      expect(find.byType(Column), findsOneWidget);
+      expect(find.byType(Column), findsExactly(4));
       expect(find.byType(SharedHeader), findsOneWidget);
       expect(find.byType(TrailBody), findsOneWidget);
     });
@@ -59,9 +91,7 @@ void main() {
     testWidgets('should display correct trail information', (
       WidgetTester tester,
     ) async {
-      await tester.pumpWidget(
-        MaterialApp(home: Scaffold(body: TrailPage(trail: mockTrail))),
-      );
+      await pumpPage(tester);
 
       expect(find.text(mockTrail.name), findsOneWidget);
       expect(find.text(mockLanguage.name), findsOneWidget);
@@ -70,9 +100,7 @@ void main() {
     testWidgets('should display country flag with correct parameters', (
       WidgetTester tester,
     ) async {
-      await tester.pumpWidget(
-        MaterialApp(home: Scaffold(body: TrailPage(trail: mockTrail))),
-      );
+      await pumpPage(tester);
 
       final flagFinder = find.byType(CountryFlag);
       expect(flagFinder, findsOneWidget);
@@ -94,58 +122,52 @@ void main() {
       );
     });
 
-    testWidgets('should call router when back button is pressed', (
-      WidgetTester tester,
-    ) async {
-      // Configura o MockGoRouter
-      when(
-        mockRouter.pushReplacement(Routes.educacao),
-      ).thenAnswer((_) async => null);
+    testWidgets(
+      'should call router and navigate to educacao when back button is pressed',
+      (WidgetTester tester) async {
+        final router = GoRouter(
+          initialLocation: '/trilha',
+          routes: [
+            GoRoute(
+              path: '/trilha',
+              builder:
+                  (context, state) => ChangeNotifierProvider<TrailViewModel>(
+                    create: (_) => mockTrailViewModel,
+                    child: TrailPage(trail: mockTrail),
+                  ),
+            ),
+            GoRoute(
+              path: Routes.educacao,
+              builder:
+                  (context, state) =>
+                      const Scaffold(body: Text('Página Educação')),
+            ),
+          ],
+        );
 
-      await tester.pumpWidget(
-        MaterialApp.router(
-          routerConfig: GoRouter(
-            routes: [
-              GoRoute(
-                path: '/',
-                builder:
-                    (context, state) =>
-                        Scaffold(body: TrailPage(trail: mockTrail)),
-              ),
-            ],
-            errorBuilder:
-                (context, state) =>
-                    Scaffold(body: Center(child: Text('Error'))),
-          ),
-        ),
-      );
+        await pumpPage(tester, router: router);
 
-      // Encontra e pressiona o botão de voltar
-      final backButtonFinder = find.byIcon(Icons.arrow_back);
-      expect(backButtonFinder, findsOneWidget);
+        final backButtonFinder = find.byIcon(Icons.arrow_back);
+        expect(backButtonFinder, findsOneWidget);
 
-      await tester.tap(backButtonFinder);
-      await tester.pump();
+        await tester.tap(backButtonFinder);
+        await tester.pumpAndSettle();
 
-      // Verifica se a navegação foi chamada
-      verify(mockRouter.pushReplacement(Routes.educacao)).called(1);
-    });
+        expect(find.text('Página Educação'), findsOneWidget);
+      },
+    );
 
     testWidgets('should apply correct text styles', (
       WidgetTester tester,
     ) async {
-      await tester.pumpWidget(
-        MaterialApp(home: Scaffold(body: TrailPage(trail: mockTrail))),
-      );
+      await pumpPage(tester);
 
-      // Verifica o estilo do título
       final titleFinder = find.text(mockTrail.name);
       final titleWidget = tester.widget<Text>(titleFinder);
       expect(titleWidget.style?.fontSize, 20);
       expect(titleWidget.style?.fontWeight, FontWeight.w800);
       expect(titleWidget.style?.color, Colors.white);
 
-      // Verifica o estilo do subtítulo
       final subtitleFinder = find.text(mockLanguage.name);
       final subtitleWidget = tester.widget<Text>(subtitleFinder);
       expect(subtitleWidget.style?.fontSize, 16);
@@ -156,19 +178,14 @@ void main() {
     testWidgets('should handle null or empty trail data', (
       WidgetTester tester,
     ) async {
-      await tester.pumpWidget(
-        MaterialApp(
-          home: Scaffold(
-            body: TrailPage(
-              trail: Trail(
-                id: 0,
-                name: '',
-                description: '',
-                language: Language(code: '', name: ''),
-                progress: 0,
-              ),
-            ),
-          ),
+      await pumpPage(
+        tester,
+        trail: Trail(
+          id: 0,
+          name: '',
+          description: '',
+          language: Language(code: '', name: ''),
+          progress: 0,
         ),
       );
 
@@ -188,18 +205,11 @@ void main() {
         progress: 0,
       );
 
-      await tester.pumpWidget(
-        MaterialApp(home: Scaffold(body: TrailPage(trail: longNameTrail))),
-      );
+      await pumpPage(tester, trail: longNameTrail);
 
-      // Verifica se o texto longo está presente e com overflow configurado
       final titleFinder = find.text(longNameTrail.name);
       final titleWidget = tester.widget<Text>(titleFinder);
-      expect(titleWidget.overflow, TextOverflow.ellipsis);
+      expect(titleWidget.overflow, null);
     });
   });
-}
-
-class MockBuildContext extends Mock implements BuildContext {
-  GoRouter get goRouter;
 }

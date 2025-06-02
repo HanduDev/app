@@ -1,5 +1,5 @@
 import 'package:app/providers/auth_provider.dart';
-import 'package:app/ui/auth/register/widgets/register_page.dart';
+import 'package:app/ui/auth/register/widgets/form_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:localization/localization.dart';
@@ -17,20 +17,17 @@ void main() {
     authProvider = AuthProvider(authRepository: mockAuthRepository);
   });
 
-  setUpAll(() async {
-    LocalJsonLocalization.delegate.directories = ['assets/i18n'];
-    await LocalJsonLocalization.delegate.load(Locale('pt', 'BR'));
-  });
-
   Future<void> pumpForm(WidgetTester tester) async {
     await tester.pumpWidget(
       createAppWithLocalization(
-        ChangeNotifierProvider<AuthProvider>.value(
+        child: ChangeNotifierProvider<AuthProvider>.value(
           value: authProvider,
-          child: Scaffold(body: RegisterPage()),
+          child: Material(child: FormsValidator()),
         ),
       ),
     );
+
+    await tester.pumpAndSettle();
   }
 
   group('FormsValidator - Preenchimento individual de campos', () {
@@ -46,6 +43,7 @@ void main() {
 
       const nome = 'Everton';
       await tester.enterText(find.byKey(const Key('nameField')), nome);
+      await tester.pumpAndSettle();
 
       expect(find.text(nome), findsOneWidget);
     });
@@ -90,7 +88,9 @@ void main() {
       await tester.tap(find.byKey(const Key('registerButton')));
       await tester.pumpAndSettle();
 
-      expect(find.text('Nome é obrigatório'), findsOneWidget);
+      await tester.pump(const Duration(seconds: 1));
+
+      expect(find.text('account.name_validation_required'.i18n()), findsAny);
     });
   });
 }

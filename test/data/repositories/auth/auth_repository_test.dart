@@ -145,7 +145,9 @@ void main() {
 
       await repository.resendCode(code: '123', email: 'teste@gmail.com');
 
-      verify(http.post('/users/resend_email_confirmation', {})).called(1);
+      verify(http.post('/users/resend_email_confirmation', {
+        'user': {'email': 'teste@gmail.com'},
+      })).called(1);
     });
   });
 }

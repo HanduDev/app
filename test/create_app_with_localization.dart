@@ -1,21 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:localization/localization.dart';
 
-Widget createAppWithLocalization(Widget child) {
-  return MaterialApp(
-    localizationsDelegates: [
-      GlobalMaterialLocalizations.delegate,
-      GlobalWidgetsLocalizations.delegate,
-      GlobalCupertinoLocalizations.delegate,
-      LocalJsonLocalization.delegate,
-    ],
-    supportedLocales: const [
-      Locale('pt', 'BR'),
-      Locale('en', 'US'),
-      Locale('es', 'ES'),
-    ],
-    locale: const Locale('pt', 'BR'),
-    home: child,
-  );
+final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
+    GlobalKey<ScaffoldMessengerState>();
+
+Widget createAppWithLocalization({
+  Widget? child,
+  RouterConfig<Object>? router,
+}) {
+  bool hasDelegated = LocalJsonLocalization.delegate.directories.isNotEmpty;
+
+  if (!hasDelegated) {
+    LocalJsonLocalization.delegate.directories = ['assets/i18n'];
+  }
+
+  if (router != null) {
+    return MaterialApp.router(
+      scaffoldMessengerKey: scaffoldMessengerKey,
+      routerConfig: router,
+    );
+  }
+
+  return MaterialApp(scaffoldMessengerKey: scaffoldMessengerKey, home: child);
 }

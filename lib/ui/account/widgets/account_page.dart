@@ -19,217 +19,219 @@ class AccountPage extends StatelessWidget {
     final user = context.read<AuthProvider>().user!;
 
     return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Stack(
-            children: [
-              Container(
-                width: double.infinity,
-                height: 130,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage('assets/images/appbar.png'),
-                    fit: BoxFit.fill,
-                  ),
-                ),
-              ),
-
-              Center(
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 100),
-                  child: CircleAvatar(
-                    radius: 60,
-                    backgroundImage:
-                        user.photoURL != null
-                            ? NetworkImage(user.photoURL!)
-                            : null,
-                    backgroundColor: AppColors.primary100,
-                    child:
-                        user.photoURL == null
-                            ? Icon(
-                              Icons.person_outlined,
-                              size: 60,
-                              color: AppColors.white,
-                            )
-                            : null,
-                  ),
-                ),
-              ),
-
-              Positioned(
-                top: 42,
-                left: 24,
-                right: 16,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    IconButton(
-                      icon: const Icon(Icons.notifications_outlined, size: 31),
-                      color: Colors.white,
-                      onPressed: () {},
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Stack(
+              children: [
+                Container(
+                  width: double.infinity,
+                  height: 130,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('assets/images/appbar.png'),
+                      fit: BoxFit.fill,
                     ),
-                    IconButton(
-                      icon: const Icon(Icons.logout_outlined, size: 31),
-                      color: AppColors.white,
-                      onPressed: () async {
-                        if (!context.mounted) return;
+                  ),
+                ),
 
-                        final shouldLogout = await showDialog<bool>(
-                          context: context,
-                          builder:
-                              (context) => AlertDialog(
-                                backgroundColor: AppColors.white,
-                                title: Center(
-                                  child: Text(
-                                    'common.logout'.i18n(),
-                                    style: TextStyle(
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.bold,
+                Center(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 100),
+                    child: CircleAvatar(
+                      radius: 60,
+                      backgroundImage:
+                          user.photoURL != null
+                              ? NetworkImage(user.photoURL!)
+                              : null,
+                      backgroundColor: AppColors.primary100,
+                      child:
+                          user.photoURL == null
+                              ? Icon(
+                                Icons.person_outlined,
+                                size: 60,
+                                color: AppColors.white,
+                              )
+                              : null,
+                    ),
+                  ),
+                ),
+
+                Positioned(
+                  top: 42,
+                  left: 24,
+                  right: 16,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      IconButton(
+                        icon: const Icon(Icons.notifications_outlined, size: 31),
+                        color: Colors.white,
+                        onPressed: () {},
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.logout_outlined, size: 31),
+                        color: AppColors.white,
+                        onPressed: () async {
+                          if (!context.mounted) return;
+
+                          final shouldLogout = await showDialog<bool>(
+                            context: context,
+                            builder:
+                                (context) => AlertDialog(
+                                  backgroundColor: AppColors.white,
+                                  title: Center(
+                                    child: Text(
+                                      'common.logout'.i18n(),
+                                      style: TextStyle(
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                   ),
+                                  content: Text(
+                                    'common.logout_confirmation'.i18n(),
+                                  ),
+                                  actionsAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  actions: [
+                                    TextButton(
+                                      style: TextButton.styleFrom(
+                                        backgroundColor: AppColors.white,
+                                        foregroundColor: AppColors.primary500,
+                                        minimumSize: const Size(100, 40),
+                                      ),
+                                      onPressed:
+                                          () => Navigator.of(context).pop(false),
+                                      child: const Text('Não'),
+                                    ),
+                                    TextButton(
+                                      style: TextButton.styleFrom(
+                                        backgroundColor: AppColors.primary500,
+                                        foregroundColor: AppColors.white,
+                                        minimumSize: const Size(120, 40),
+                                      ),
+                                      onPressed:
+                                          () => Navigator.of(context).pop(true),
+                                      child: const Text('Sim'),
+                                    ),
+                                  ],
                                 ),
-                                content: Text(
-                                  'common.logout_confirmation'.i18n(),
-                                ),
-                                actionsAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                actions: [
-                                  TextButton(
-                                    style: TextButton.styleFrom(
-                                      backgroundColor: AppColors.white,
-                                      foregroundColor: AppColors.primary500,
-                                      minimumSize: const Size(100, 40),
-                                    ),
-                                    onPressed:
-                                        () => Navigator.of(context).pop(false),
-                                    child: const Text('Não'),
-                                  ),
-                                  TextButton(
-                                    style: TextButton.styleFrom(
-                                      backgroundColor: AppColors.primary500,
-                                      foregroundColor: AppColors.white,
-                                      minimumSize: const Size(120, 40),
-                                    ),
-                                    onPressed:
-                                        () => Navigator.of(context).pop(true),
-                                    child: const Text('Sim'),
-                                  ),
-                                ],
-                              ),
-                        );
+                          );
 
-                        if (shouldLogout == true) {
-                          try {
-                            // ignore: use_build_context_synchronously
-                            final authProvider = context.read<AuthProvider>();
-                            await authProvider.signOut();
+                          if (shouldLogout == true) {
+                            try {
+                              // ignore: use_build_context_synchronously
+                              final authProvider = context.read<AuthProvider>();
+                              await authProvider.signOut();
 
-                            if (!context.mounted) return;
+                              if (!context.mounted) return;
 
-                            context.pushReplacement(Routes.intro);
-                          } catch (e) {
-                            if (!context.mounted) return;
-                            Toast.error(context, 'Erro ao sair');
+                              context.pushReplacement(Routes.intro);
+                            } catch (e) {
+                              if (!context.mounted) return;
+                              Toast.error(context, 'Erro ao sair');
+                            }
                           }
-                        }
-                      },
-                    ),
-                  ],
+                        },
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
-          ),
-
-          const SizedBox(height: 10),
-
-          Text(
-            user.fullName,
-            style: Font.primary(
-              fontSize: 28,
-              fontWeight: FontWeight.bold,
-              color: AppColors.primary500,
+              ],
             ),
-          ),
 
-          const SizedBox(height: 30),
+            const SizedBox(height: 10),
 
-          ConfigCard(
-            widgets: [
-              ConfigItem(
-                icon: Icons.person_outlined,
-                title: 'account.options.profile'.i18n(),
-                onTap: () {
-                  context.pushReplacement(Routes.editar);
-                },
+            Text(
+              user.fullName,
+              style: Font.primary(
+                fontSize: 28,
+                fontWeight: FontWeight.bold,
+                color: AppColors.primary500,
               ),
-              ConfigItem(
-                icon: Icons.emoji_events_outlined,
-                title: 'account.options.achievements'.i18n(),
-                onTap: () {
-                  showDialog(
-                    context: context,
-                    builder:
-                        (context) => EmDesenvolvimento(
-                          title: 'account.options.achievements'.i18n(),
-                        ),
-                  );
-                },
-              ),
-              ConfigItem(
-                icon: Icons.language_outlined,
-                title: 'account.options.language'.i18n(),
-                onTap: () {
-                  showDialog(
-                    context: context,
-                    builder: (context) => const LanguageSelectorDialog(),
-                  );
-                },
-              ),
-              ConfigItem(
-                icon: Icons.smartphone_outlined,
-                title: 'account.options.device_permissions'.i18n(),
-                onTap: () {
-                  showDialog(
-                    context: context,
-                    builder:
-                        (context) => EmDesenvolvimento(
-                          title: 'account.options.device_permissions'.i18n(),
-                        ),
-                  );
-                },
-              ),
-            ],
-          ),
+            ),
 
-          const SizedBox(height: 40),
+            const SizedBox(height: 30),
 
-          ConfigCard(
-            widgets: [
-              ConfigItem(
-                icon: Icons.contact_support_outlined,
-                title: 'account.options.contact'.i18n(),
-                onTap: () {
-                  context.push(Routes.contato);
-                },
-              ),
-              ConfigItem(
-                icon: Icons.lock_outlined,
-                title: 'account.options.privacy_policy'.i18n(),
-                onTap: () {
-                  showDialog(
-                    context: context,
-                    builder:
-                        (context) => EmDesenvolvimento(
-                          title: 'account.options.privacy_policy'.i18n(),
-                        ),
-                  );
-                },
-              ),
-            ],
-          ),
-        ],
+            ConfigCard(
+              widgets: [
+                ConfigItem(
+                  icon: Icons.person_outlined,
+                  title: 'account.options.profile'.i18n(),
+                  onTap: () {
+                    context.pushReplacement(Routes.editar);
+                  },
+                ),
+                ConfigItem(
+                  icon: Icons.emoji_events_outlined,
+                  title: 'account.options.achievements'.i18n(),
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder:
+                          (context) => EmDesenvolvimento(
+                            title: 'account.options.achievements'.i18n(),
+                          ),
+                    );
+                  },
+                ),
+                ConfigItem(
+                  icon: Icons.language_outlined,
+                  title: 'account.options.language'.i18n(),
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) => const LanguageSelectorDialog(),
+                    );
+                  },
+                ),
+                ConfigItem(
+                  icon: Icons.smartphone_outlined,
+                  title: 'account.options.device_permissions'.i18n(),
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder:
+                          (context) => EmDesenvolvimento(
+                            title: 'account.options.device_permissions'.i18n(),
+                          ),
+                    );
+                  },
+                ),
+              ],
+            ),
+
+            const SizedBox(height: 40),
+
+            ConfigCard(
+              widgets: [
+                ConfigItem(
+                  icon: Icons.contact_support_outlined,
+                  title: 'account.options.contact'.i18n(),
+                  onTap: () {
+                    context.push(Routes.contato);
+                  },
+                ),
+                ConfigItem(
+                  icon: Icons.lock_outlined,
+                  title: 'account.options.privacy_policy'.i18n(),
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder:
+                          (context) => EmDesenvolvimento(
+                            title: 'account.options.privacy_policy'.i18n(),
+                          ),
+                    );
+                  },
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

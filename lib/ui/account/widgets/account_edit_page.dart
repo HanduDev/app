@@ -17,26 +17,31 @@ class AccountEditPage extends StatelessWidget {
     final user = context.read<AuthProvider>().user!;
 
     return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Stack(
-            children: [
-              Container(
-                width: double.infinity,
-                height: 130,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage('assets/images/appbar.png'),
-                    fit: BoxFit.fill,
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Stack(
+              children: [
+                Container(
+                  width: double.infinity,
+                  height: 130,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('assets/images/appbar.png'),
+                      fit: BoxFit.fill,
+                    ),
                   ),
                 ),
-              ),
-              Center(
-                child: SingleChildScrollView(
+                Center(
                   child: Padding(
-                    padding: EdgeInsets.only(top: 100, left: 40, right: 40),
+                    padding: EdgeInsets.only(
+                      top: 100,
+                      bottom: 24,
+                      left: 24,
+                      right: 24,
+                    ),
                     child: Column(
                       children: [
                         SizedBox(
@@ -85,29 +90,29 @@ class AccountEditPage extends StatelessWidget {
                     ),
                   ),
                 ),
-              ),
 
-              Positioned(
-                left: 200,
-                bottom: 350,
-                child: Container(
-                  width: 36,
-                  height: 36,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: AppColors.white,
-                    border: Border.all(color: Colors.white, width: 5),
-                  ),
-                  child: IconButton(
-                    icon: const Icon(Icons.edit_outlined),
-                    color: AppColors.black,
-                    onPressed: () {},
+                Positioned(
+                  left: 200,
+                  bottom: 350,
+                  child: Container(
+                    width: 36,
+                    height: 36,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: AppColors.white,
+                      border: Border.all(color: Colors.white, width: 5),
+                    ),
+                    child: IconButton(
+                      icon: const Icon(Icons.edit_outlined),
+                      color: AppColors.black,
+                      onPressed: () {},
+                    ),
                   ),
                 ),
-              ),
-            ],
-          ),
-        ],
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
